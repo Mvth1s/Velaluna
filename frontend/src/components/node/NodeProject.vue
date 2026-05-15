@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { NodeProject } from '../../types/velaluna'
+import type { NodeProject, Difficulty } from '../../types/velaluna'
 
 defineProps<{
   project: NodeProject
@@ -7,13 +7,19 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{ complete: [] }>()
+
+const DIFFICULTY_LABELS: Record<Difficulty, string> = {
+  beginner: 'Débutant',
+  intermediate: 'Intermédiaire',
+  advanced: 'Avancé'
+}
 </script>
 
 <template>
   <div class="node-project" :class="{ 'node-project--completed': completed }">
     <div class="node-project__header">
       <strong>{{ project.label }}</strong>
-      <span class="node-project__difficulty">{{ project.difficulty }}</span>
+      <span class="node-project__difficulty">{{ DIFFICULTY_LABELS[project.difficulty] }}</span>
     </div>
     <p class="node-project__description">{{ project.description }}</p>
     <details class="node-project__hint">

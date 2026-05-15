@@ -116,10 +116,11 @@ export function useCytoscape(
     cy.nodes().forEach(node => {
       node.data('status', statuses.value[node.id()] ?? 'locked')
     })
+    cy.style().update()
   }
 
   onMounted(init)
   onUnmounted(() => cy?.destroy())
-  watch(() => nodes.value, init)
-  watch(() => statuses.value, updateStatuses, { deep: true })
+  watch(nodes, init)
+  watch(statuses, updateStatuses, { deep: true })
 }

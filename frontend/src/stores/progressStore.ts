@@ -67,11 +67,9 @@ export const useProgressStore = defineStore('progress', () => {
   }
 
   function resetTechProgress(techId: string) {
-    if (data.value.progress[techId]) {
-      delete data.value.progress[techId]
-      data.value = { ...data.value }
-      save()
-    }
+    const { [techId]: _removed, ...remainingProgress } = data.value.progress
+    data.value = { version: data.value.version, progress: remainingProgress }
+    save()
   }
 
   function resetProgress() {

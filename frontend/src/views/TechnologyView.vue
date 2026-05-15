@@ -33,6 +33,10 @@ const completedCount = computed(() =>
   Object.values(statuses.value).filter(s => s === 'completed').length
 )
 
+const isCompleted = computed(() =>
+  nodes.value.length > 0 && completedCount.value === nodes.value.length
+)
+
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') selectedNode.value = null
 }
@@ -80,6 +84,13 @@ function onComplete(projectId: string) {
   progressStore.completeNode(techId.value, selectedNode.value.id, projectId)
   showToast('Concept validé !')
 }
+
+function confirmReset() {
+  if (confirm(`Réinitialiser la progression pour ${technology.value?.label ?? techId.value} ?`)) {
+    progressStore.resetTechProgress(techId.value)
+    selectedNode.value = null
+  }
+}
 </script>
 
 <template>
@@ -92,10 +103,28 @@ function onComplete(projectId: string) {
           {{ technology.description }}
         </p>
       </div>
-      <div v-if="!loading" class="technology-view__progress">
-        {{ completedCount }}<span>/{{ nodes.length }}</span>
+      <div v-if="!loading" class="technology-view__header-right">
+        <div class="technology-view__progress" :class="{ 'technology-view__progress--done': isCompleted }">
+          {{ completedCount }}<span>/{{ nodes.length }}</span>
+        </div>
+        <button
+          v-if="completedCount > 0"
+          class="technology-view__reset"
+          title="Réinitialiser la progression"
+          @click="confirmReset"
+        >↺</button>
       </div>
     </header>
+
+    <Transition name="completion">
+      <div v-if="isCompleted" class="technology-view__completion">
+        <span class="technology-view__completion-icon">🎉</span>
+        <div>
+          <strong>{{ technology?.label }} complété !</strong>
+          <span>Tu as maîtrisé tous les concepts.</span>
+        </div>
+      </div>
+    </Transition>
 
     <GraphLegend />
 
@@ -159,6 +188,13 @@ function onComplete(projectId: string) {
   line-height: 1.3;
 }
 
+.technology-view__header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
 .technology-view__progress {
   font-size: 1.125rem;
   font-weight: 700;
@@ -166,10 +202,55 @@ function onComplete(projectId: string) {
   white-space: nowrap;
 }
 
+.technology-view__progress--done {
+  color: #16a34a;
+}
+
 .technology-view__progress span {
   font-weight: 400;
   color: #9ca3af;
   font-size: 0.9375rem;
+}
+
+.technology-view__reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #9ca3af;
+  font-size: 1rem;
+  padding: 0.25rem;
+  line-height: 1;
+  border-radius: 4px;
+}
+
+.technology-view__reset:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.technology-view__completion {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  background: #f0fdf4;
+  border-bottom: 1px solid #bbf7d0;
+  color: #15803d;
+}
+
+.technology-view__completion-icon {
+  font-size: 1.375rem;
+  line-height: 1;
+}
+
+.technology-view__completion strong {
+  display: block;
+  font-size: 0.9375rem;
+}
+
+.technology-view__completion span {
+  font-size: 0.8125rem;
+  opacity: 0.8;
 }
 
 .technology-view__back {
@@ -199,6 +280,17 @@ function onComplete(projectId: string) {
   flex: 1;
   display: flex;
   overflow: hidden;
+}
+
+.completion-enter-active,
+.completion-leave-active {
+  transition: all 0.3s ease;
+}
+
+.completion-enter-from,
+.completion-leave-to {
+  opacity: 0;
+  transform: translateY(-0.5rem);
 }
 
 .technology-view__toast {

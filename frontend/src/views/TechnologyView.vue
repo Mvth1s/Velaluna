@@ -6,7 +6,7 @@ import { useProgressStore } from '../stores/progressStore'
 import NodeGraph from '../components/graph/NodeGraph.vue'
 import GraphLegend from '../components/graph/GraphLegend.vue'
 import NodeCard from '../components/node/NodeCard.vue'
-import type { Node, NodeStatus } from '../types/velaluna'
+import type { Node, NodeStatus, Technology } from '../types/velaluna'
 
 const route = useRoute()
 const router = useRouter()
@@ -14,6 +14,7 @@ const contentStore = useContentStore()
 const progressStore = useProgressStore()
 
 const techId = computed(() => route.params.id as string)
+const technology = ref<Technology | null>(null)
 const nodes = ref<Node[]>([])
 const selectedNode = ref<Node | null>(null)
 const loading = ref(true)
@@ -28,8 +29,15 @@ const statuses = computed<Record<string, NodeStatus>>(() => {
   return result
 })
 
+const completedCount = computed(() =>
+  Object.values(statuses.value).filter(s => s === 'completed').length
+)
+
 onMounted(async () => {
-  nodes.value = await contentStore.fetchNodes(techId.value)
+  ;[technology.value, nodes.value] = await Promise.all([
+    contentStore.fetchTechnology(techId.value),
+    contentStore.fetchNodes(techId.value)
+  ])
   loading.value = false
 })
 
@@ -61,7 +69,15 @@ function onComplete(projectId: string) {
   <div class="technology-view">
     <header class="technology-view__header">
       <button class="technology-view__back" @click="router.push('/')">← Retour</button>
-      <h1>{{ techId }}</h1>
+      <div class="technology-view__title">
+        <h1>{{ technology?.label ?? techId }}</h1>
+        <p v-if="technology?.description" class="technology-view__description">
+          {{ technology.description }}
+        </p>
+      </div>
+      <div v-if="!loading" class="technology-view__progress">
+        {{ completedCount }}<span>/{{ nodes.length }}</span>
+      </div>
     </header>
 
     <GraphLegend />
@@ -103,15 +119,40 @@ function onComplete(projectId: string) {
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 0.875rem 1.5rem;
+  padding: 0.75rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
   background: #ffffff;
+  min-height: 56px;
 }
 
-.technology-view__header h1 {
-  font-size: 1.125rem;
+.technology-view__title {
+  flex: 1;
+}
+
+.technology-view__title h1 {
+  font-size: 1.0625rem;
   font-weight: 600;
-  text-transform: capitalize;
+  line-height: 1.3;
+}
+
+.technology-view__description {
+  font-size: 0.8125rem;
+  color: #6b7280;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.technology-view__progress {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #111827;
+  white-space: nowrap;
+}
+
+.technology-view__progress span {
+  font-weight: 400;
+  color: #9ca3af;
+  font-size: 0.9375rem;
 }
 
 .technology-view__back {
@@ -121,6 +162,8 @@ function onComplete(projectId: string) {
   color: #3b82f6;
   font-size: 0.875rem;
   padding: 0;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .technology-view__back:hover {

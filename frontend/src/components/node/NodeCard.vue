@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Node, NodeStatus } from '../../types/velaluna'
+import type { Node, NodeStatus, Difficulty } from '../../types/velaluna'
 import NodeExample from './NodeExample.vue'
 import NodeProject from './NodeProject.vue'
 
@@ -12,6 +12,12 @@ const emit = defineEmits<{
   close: []
   complete: [projectId: string]
 }>()
+
+const DIFFICULTY_LABELS: Record<Difficulty, string> = {
+  beginner: 'Débutant',
+  intermediate: 'Intermédiaire',
+  advanced: 'Avancé'
+}
 </script>
 
 <template>
@@ -19,7 +25,7 @@ const emit = defineEmits<{
     <header class="node-card__header">
       <div class="node-card__title">
         <h2>{{ node.label }}</h2>
-        <span class="node-card__difficulty">{{ node.difficulty }}</span>
+        <span class="node-card__difficulty">{{ DIFFICULTY_LABELS[node.difficulty] }}</span>
       </div>
       <button class="node-card__close" aria-label="Fermer" @click="emit('close')">✕</button>
     </header>

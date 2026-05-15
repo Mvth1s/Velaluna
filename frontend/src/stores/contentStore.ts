@@ -23,6 +23,15 @@ export const useContentStore = defineStore('content', () => {
     return data
   }
 
+  async function fetchTechnology(id: string): Promise<Technology> {
+    const cached = technologies.value.find(t => t.id === id)
+    if (cached) return cached
+    const res = await fetch(`${API}/technologies/${id}`)
+    const { data } = (await res.json()) as { data: Technology }
+    if (!technologies.value.find(t => t.id === id)) technologies.value.push(data)
+    return data
+  }
+
   async function fetchNodes(techId: string): Promise<Node[]> {
     const res = await fetch(`${API}/technologies/${techId}/nodes`)
     const { data } = (await res.json()) as { data: Node[] }
@@ -40,5 +49,5 @@ export const useContentStore = defineStore('content', () => {
     return data
   }
 
-  return { themes, technologies, nodesCache, fetchThemes, fetchTechnologies, fetchNodes, fetchNode }
+  return { themes, technologies, nodesCache, fetchThemes, fetchTechnologies, fetchTechnology, fetchNodes, fetchNode }
 })

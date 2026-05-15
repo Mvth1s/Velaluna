@@ -66,10 +66,16 @@ export const useProgressStore = defineStore('progress', () => {
     return Object.values(techProgress).filter(n => n.status === 'completed').length
   }
 
+  function resetTechProgress(techId: string) {
+    const { [techId]: _removed, ...remainingProgress } = data.value.progress
+    data.value = { version: data.value.version, progress: remainingProgress }
+    save()
+  }
+
   function resetProgress() {
     data.value = { version: 1, progress: {} }
     save()
   }
 
-  return { getNodeStatus, startNode, completeNode, getCompletedCountForTech, resetProgress }
+  return { getNodeStatus, startNode, completeNode, getCompletedCountForTech, resetTechProgress, resetProgress }
 })

@@ -38,5 +38,7 @@ useCytoscape(containerRef, nodesRef, statusesRef, {
   flex: 1;
   min-height: 500px;
   background: #ffffff;
+  overflow: hidden;
+  position: relative;
 }
 </style>

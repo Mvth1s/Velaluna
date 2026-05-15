@@ -93,10 +93,12 @@ export function useCytoscape(
   handlers: Handlers
 ) {
   let cy: Core | null = null
+  let resizeObserver: ResizeObserver | null = null
 
   function init() {
     if (!container.value) return
     cy?.destroy()
+    resizeObserver?.disconnect()
 
     cy = cytoscape({
       container: container.value,
@@ -109,6 +111,12 @@ export function useCytoscape(
       const node = event.target
       handlers.onNodeTap(node.id() as string, node.data('status') as NodeStatus)
     })
+
+    resizeObserver = new ResizeObserver(() => {
+      cy?.resize()
+      cy?.fit()
+    })
+    resizeObserver.observe(container.value)
   }
 
   function updateStatuses() {
@@ -120,7 +128,10 @@ export function useCytoscape(
   }
 
   onMounted(init)
-  onUnmounted(() => cy?.destroy())
+  onUnmounted(() => {
+    cy?.destroy()
+    resizeObserver?.disconnect()
+  })
   watch(nodes, init)
   watch(statuses, updateStatuses, { deep: true })
 }

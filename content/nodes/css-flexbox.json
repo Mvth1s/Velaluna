@@ -1,0 +1,24 @@
+{
+  "id": "css-flexbox",
+  "label": "CSS — Flexbox",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "Flexbox est un système de mise en page CSS qui permet d'aligner et de distribuer des éléments dans un conteneur, en ligne ou en colonne. Il résout en quelques propriétés des problèmes de mise en page qui prenaient des dizaines de lignes avant.",
+  "analogy": "Imagine que tu ranges des livres sur une étagère. Flexbox, c'est l'étagère intelligente : tu lui dis 'mets les livres côte à côte, centrés, avec le même espace entre chaque' et elle s'en occupe. Toi tu n'as pas à calculer la position de chaque livre.",
+  "example": {
+    "language": "css",
+    "code": ".conteneur {\n  display: flex;              /* active flexbox */\n  flex-direction: row;        /* direction : row (défaut) ou column */\n  justify-content: center;    /* alignement sur l'axe principal */\n  align-items: center;        /* alignement sur l'axe secondaire */\n  gap: 16px;                  /* espace entre les éléments */\n  flex-wrap: wrap;            /* retour à la ligne si nécessaire */\n}\n\n/* Les enfants directs deviennent des flex items */\n.item {\n  flex: 1;                    /* prend autant d'espace que possible */\n}\n\n.item-fixe {\n  flex: 0 0 200px;            /* largeur fixe de 200px, ne grandit pas */\n}\n\n/* Centrer parfaitement un élément */\n.centrer-tout {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  height: 100vh;\n}",
+    "explanation": "justify-content contrôle l'axe principal (horizontal si row), align-items contrôle l'axe croisé. Les valeurs clés : flex-start, flex-end, center, space-between, space-around."
+  },
+  "prerequisites": ["css-box-model"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "navbar-flexbox",
+      "label": "Navbar avec flexbox",
+      "difficulty": "beginner",
+      "description": "Crée une barre de navigation (nav) avec : un logo à gauche, des liens au centre, et un bouton 'Connexion' à droite. Utilise uniquement flexbox (display: flex, justify-content, align-items) pour le positionnement. Aucun float, aucun position: absolute.",
+      "hint": "Le nav est le conteneur flex. Pour pousser le bouton à droite, mets margin-left: auto sur ce bouton — il repoussera tout le reste vers la gauche."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "html-structure",
+  "label": "Structure HTML",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "HTML est le langage qui structure le contenu d'une page web. Chaque élément est une balise ouvrante et fermante qui enveloppe du contenu. La page entière forme un arbre imbriqué, comme des boîtes dans des boîtes.",
+  "analogy": "Une page HTML, c'est comme un document Word avec des titres, des paragraphes et des sections. Sauf que les titres et paragraphes sont décrits par du texte entre crochets (<h1>, <p>) que le navigateur sait interpréter et afficher.",
+  "example": {
+    "language": "html",
+    "code": "<!DOCTYPE html>\n<html lang=\"fr\">\n  <head>\n    <meta charset=\"UTF-8\">\n    <title>Ma première page</title>\n  </head>\n  <body>\n    <h1>Bienvenue !</h1>\n    <p>C'est ma première page HTML.</p>\n  </body>\n</html>",
+    "explanation": "<!DOCTYPE html> indique qu'on écrit du HTML5. <head> contient les métadonnées (non visibles). <body> contient tout ce que l'utilisateur voit. Chaque balise a une ouvrante (<p>) et une fermante (</p>)."
+  },
+  "prerequisites": [],
+  "unlocks": ["html-texte"],
+  "projects": [
+    {
+      "id": "page-bonjour",
+      "label": "Page de présentation",
+      "difficulty": "beginner",
+      "description": "Crée un fichier index.html avec la structure minimale complète. Dans le body, ajoute un titre h1 avec ton prénom, un paragraphe qui dit ce que tu fais, et un second paragraphe avec ta ville. Ouvre le fichier dans ton navigateur.",
+      "hint": "Crée un fichier .html sur ton ordinateur, colle la structure de base, remplis le body, puis double-clique sur le fichier pour l'ouvrir dans ton navigateur — pas besoin de serveur pour du HTML statique."
+    }
+  ]
+}

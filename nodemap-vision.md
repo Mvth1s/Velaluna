@@ -32,7 +32,7 @@ Chaque nœud, c'est un concept. En cliquant dessus, tu accèdes à sa fiche :
 
 - une explication simple, avec une analogie du quotidien
 - un exemple concret et court
-- un mini-projet pour mettre le concept en pratique
+- un ou plusieurs mini-projets pour mettre le concept en pratique
 
 Les nœuds que tu n'es pas encore prêt à aborder sont visibles sur le graphe, mais verrouillés. Tu vois où tu vas, même si tu n'y es pas encore.
 
@@ -56,7 +56,7 @@ L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui
 **Ce que le MVP inclut :**
 
 - Le graphe interactif avec les nœuds et leurs liens de prérequis
-- Une fiche par nœud : explication simple, analogie, exemple concret, mini-projet
+- Une fiche par nœud : explication simple, analogie, exemple concret, mini-projet(s)
 - Les nœuds verrouillés tant que les prérequis ne sont pas validés
 - La validation manuelle : l'utilisateur marque lui-même un nœud comme maîtrisé
 - La progression sauvegardée dans le navigateur (localStorage, sans compte)
@@ -73,28 +73,29 @@ L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui
 
 ## 4. Architecture & Stack
 
-Les décisions techniques clés à trancher avant de commencer à coder.
-
 **Framework frontend : Vue.js**
 Tu connais déjà Vue, et quand on vibe-code, ajouter un nouveau framework par-dessus une nouvelle idée c'est risqué. Svelte est une bonne alternative à garder en tête pour un futur projet.
 
-**Lib de graphe : Cytoscape.js ou vis.js**
-Les deux fonctionnent avec Vue sans dépendances React. Cytoscape.js est plus mature et mieux documentée. vis.js est plus simple à prendre en main. À tester rapidement avec un prototype de graphe basique avant de trancher.
+**Lib de graphe : Cytoscape.js** ✓
+Choix retenu après comparaison avec vis.js. Le layout `dagre` gère nativement les graphes orientés avec prérequis. Les classes CSS dynamiques rendent l'état verrouillé/disponible/complété trivial à implémenter. Très bonne couverture dans les LLMs.
 
-**Backend : Express ou Fastify (Node.js)**
-Les deux sont légers, rapides à démarrer, et très bien connus des LLMs — ce qui aide beaucoup en vibe-coding. Adonis.js (le Laravel du Node.js) est une alternative plus structurée à garder en tête si le projet grossit et que tu veux plus de cadre.
+**Gestion d'état frontend : Pinia**
+Store officiel Vue 3. Gère la progression locale et l'état du graphe.
 
-**Base de données : à définir**
-Doit stocker les nœuds, les liens entre eux, et le contenu des fiches. SQLite pour commencer, PostgreSQL pour la suite.
+**Backend : Express (Node.js)**
+Léger, rapide à démarrer, excellent coverage LLM — idéal pour le vibe-coding. À remplacer par Adonis.js si le projet grossit et nécessite plus de cadre.
+
+**Base de données : SQLite (MVP) → PostgreSQL (suite)**
+SQLite pour le MVP : zéro config, embarqué, parfait pour commencer. Migration vers PostgreSQL à l'étape comptes utilisateurs.
 
 **Environnement de dev : Docker-compose**
-Lance le frontend, le backend et la base de données en une seule commande. Evite les conflits d'environnement et facilite le démarrage sur une nouvelle machine.
+Lance le frontend, le backend et la base de données en une seule commande. Évite les conflits d'environnement et facilite le démarrage sur une nouvelle machine.
 
 **Hébergement : à définir**
 Options gratuites pour démarrer : Vercel (frontend), Railway ou Render (backend + base de données).
 
 **Format du contenu : JSON structuré**
-Chaque fiche de nœud est un objet JSON avec des champs fixes : titre, explication, analogie, exemple, mini-projet, prérequis, nœuds débloqués.
+Chaque fiche de nœud est un objet JSON avec des champs fixes. Voir `data-schema.md` pour la structure exacte.
 
 **Génération du contenu : LLM + relecture manuelle**
 Le contenu est généré avec un LLM à partir des documentations officielles, puis relu et corrigé avant d'être mis en base. Aucun contenu n'est généré à la volée pour l'utilisateur. Dans un premier temps, la relecture est assurée par le créateur du projet, avec des avis externes sollicités pour valider la clarté et la pertinence des fiches. À terme, ce processus s'ouvre à la communauté.

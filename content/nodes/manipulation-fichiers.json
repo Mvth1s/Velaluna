@@ -1,0 +1,24 @@
+{
+  "id": "manipulation-fichiers",
+  "label": "Manipulation de fichiers",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Le terminal permet de créer, copier, déplacer, renommer et supprimer des fichiers et dossiers avec des commandes simples. C'est bien plus rapide que de faire ces opérations à la souris, surtout en masse.",
+  "analogy": "Imagine que tu dois renommer 500 photos. Avec un explorateur graphique, tu cliques 500 fois. Avec une commande, tu écris une ligne et c'est fait. Le terminal est le couteau suisse de la manipulation de fichiers.",
+  "example": {
+    "language": "bash",
+    "code": "# Créer un dossier\nmkdir mon-projet\n\n# Créer des dossiers imbriqués (option -p)\nmkdir -p src/components/ui\n\n# Créer un fichier vide\ntouch index.html\n\n# Copier un fichier\ncp index.html index-backup.html\n\n# Copier un dossier entier (option -r)\ncp -r src src-backup\n\n# Déplacer ou renommer\nmv index-backup.html archive/\nmv ancien-nom.txt nouveau-nom.txt  # renommer\n\n# Supprimer un fichier (ATTENTION : sans corbeille !)\nrm fichier.txt\n\n# Supprimer un dossier et son contenu (DANGER : irréversible)\nrm -rf dossier-a-supprimer/",
+    "explanation": "rm supprime définitivement, pas de corbeille. rm -rf est particulièrement dangereux : il supprime tout récursivement sans demander confirmation. Vérifie toujours ton chemin avant de l'utiliser."
+  },
+  "prerequisites": ["navigation-fichiers"],
+  "unlocks": ["pipes-redirections"],
+  "projects": [
+    {
+      "id": "organisation-projet",
+      "label": "Organisation d'un projet",
+      "difficulty": "beginner",
+      "description": "Crée la structure d'un projet web : un dossier mon-site avec les sous-dossiers css/, js/, images/ et un fichier index.html à la racine. Crée aussi un fichier style.css dans css/ et script.js dans js/. Vérifie ta structure avec ls -R mon-site.",
+      "hint": "Utilise mkdir -p pour créer plusieurs niveaux d'un coup : mkdir -p mon-site/css mon-site/js mon-site/images. Ensuite touch mon-site/index.html pour le fichier HTML."
+    }
+  ]
+}

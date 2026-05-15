@@ -1,0 +1,24 @@
+{
+  "id": "python-classes",
+  "label": "Classes Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Une classe Python est un modèle pour créer des objets qui regroupent données (attributs) et comportements (méthodes). __init__ est le constructeur appelé à la création. self représente l'instance courante. C'est la base de la programmation orientée objet en Python.",
+  "analogy": "Une classe, c'est le plan d'architecte d'une maison. Le plan (classe) décrit la structure : combien de pièces, leur disposition. Chaque maison construite (instance) suit ce plan mais a ses propres caractéristiques : couleur de murs, mobilier. Tu peux construire autant de maisons que tu veux depuis le même plan.",
+  "example": {
+    "language": "python",
+    "code": "# Définir une classe\nclass Chien:\n    # Attribut de classe (partagé par toutes les instances)\n    espece = \"Canis familiaris\"\n\n    # Constructeur\n    def __init__(self, nom, age):\n        self.nom = nom    # attribut d'instance\n        self.age = age\n\n    # Méthode\n    def aboyer(self):\n        print(f\"{self.nom} dit : Woof !\")\n\n    def presenter(self):\n        return f\"{self.nom}, {self.age} ans\"\n\n    # Représentation string\n    def __str__(self):\n        return f\"Chien({self.nom})\"\n\n# Créer des instances\nrex = Chien(\"Rex\", 3)\nbella = Chien(\"Bella\", 5)\n\nrex.aboyer()            # Rex dit : Woof !\nprint(bella.presenter()) # Bella, 5 ans\nprint(rex)              # Chien(Rex)\n\n# Modifier un attribut\nrex.age = 4\nprint(rex.age)  # 4\n\n# Héritage\nclass ChienDressé(Chien):\n    def __init__(self, nom, age, tricks):\n        super().__init__(nom, age)  # appelle le __init__ parent\n        self.tricks = tricks\n\n    def faire_tour(self):\n        print(f\"{self.nom} fait : {', '.join(self.tricks)}\")\n\nlassie = ChienDressé(\"Lassie\", 4, [\"assis\", \"couché\"])\nlassie.aboyer()      # hérite de Chien\nlassie.faire_tour()  # Lassie fait : assis, couché",
+    "explanation": "self est toujours le premier paramètre des méthodes (Python le passe automatiquement). __init__ initialise l'objet à la création. __str__ définit la représentation string. super() appelle la méthode de la classe parente."
+  },
+  "prerequisites": ["python-fonctions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "banque-compte",
+      "label": "Compte bancaire",
+      "difficulty": "beginner",
+      "description": "Crée une classe CompteBancaire avec : attributs (titulaire, solde), méthodes deposer(montant), retirer(montant) (refuse si solde insuffisant), et afficher_solde(). Crée 2 comptes, effectue des opérations et vérife que le retrait impossible est bien bloqué.",
+      "hint": "Dans __init__ : self.titulaire = titulaire; self.solde = solde. Pour retirer : if montant > self.solde: print('Solde insuffisant'); return. Sinon self.solde -= montant. Test : compte.retirer(10000) avec solde = 100."
+    }
+  ]
+}

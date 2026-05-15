@@ -1,0 +1,24 @@
+{
+  "id": "python-modules",
+  "label": "Modules Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Un module Python est un fichier .py contenant des fonctions, classes et variables réutilisables. Python inclut une bibliothèque standard riche (math, random, os, datetime...). On peut aussi installer des packages externes avec pip et créer ses propres modules.",
+  "analogy": "Un module, c'est une boîte à outils spécialisée. La bibliothèque standard Python, c'est l'atelier livré avec la maison : tu as déjà des outils pour les maths, les dates, les fichiers. pip permet de commander des outils supplémentaires sur internet.",
+  "example": {
+    "language": "python",
+    "code": "# Importer un module complet\nimport math\n\nprint(math.pi)           # 3.141592653589793\nprint(math.sqrt(16))     # 4.0\nprint(math.floor(3.7))   # 3\n\n# Importer des éléments spécifiques\nfrom random import randint, choice\n\nde = randint(1, 6)           # nombre entier entre 1 et 6\ncouleur = choice([\"rouge\", \"bleu\", \"vert\"])\nprint(f\"Dé : {de}, Couleur : {couleur}\")\n\n# Module datetime\nfrom datetime import datetime, date\n\naujourdhui = date.today()\nmaintenant = datetime.now()\nprint(f\"Aujourd'hui : {aujourdhui}\")       # 2025-01-15\nprint(f\"Heure : {maintenant.strftime('%H:%M')}\")\n\n# Module os\nimport os\n\nchemin_actuel = os.getcwd()  # dossier courant\nexiste = os.path.exists(\"/tmp\")  # vérifier si un chemin existe\nfichiers = os.listdir(\".\")   # lister les fichiers\n\n# Créer son propre module (utilitaires.py)\n# def doubler(n): return n * 2\n# from utilitaires import doubler",
+    "explanation": "import module donne accès à module.fonction(). from module import fonction importe directement dans l'espace de noms. Évite from module import * qui pollue l'espace de noms. pip install package installe des packages externes."
+  },
+  "prerequisites": ["python-fonctions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "generateur-mots-de-passe",
+      "label": "Générateur de mots de passe",
+      "difficulty": "beginner",
+      "description": "Utilise les modules random et string pour créer une fonction generer_mot_de_passe(longueur=12) qui génère un mot de passe aléatoire contenant des lettres majuscules, minuscules et des chiffres. Affiche 3 mots de passe générés.",
+      "hint": "string.ascii_letters contient toutes les lettres, string.digits les chiffres. Concatène-les : caracteres = string.ascii_letters + string.digits. Utilise random.choices(caracteres, k=longueur) pour tirer k caractères aléatoires, puis ''.join() pour former la chaîne."
+    }
+  ]
+}

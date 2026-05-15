@@ -1,0 +1,24 @@
+{
+  "id": "python-variables",
+  "label": "Variables Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "En Python, une variable se crée simplement en lui assignant une valeur. Pas besoin de déclarer le type : Python le déduit automatiquement. Les noms de variables suivent la convention snake_case. Une variable peut changer de valeur (et même de type) à tout moment.",
+  "analogy": "Une variable Python, c'est une boîte avec une étiquette. Tu colle l'étiquette 'age' sur une boîte et tu mets '25' dedans. Plus tard, tu peux vider la boîte et mettre '26'. La boîte s'adapte à ce que tu y mets.",
+  "example": {
+    "language": "python",
+    "code": "# Créer des variables (pas de déclaration de type)\nnom = \"Alice\"\nage = 30\nprix = 9.99\nest_actif = True\n\n# Afficher une variable\nprint(nom)       # Alice\nprint(age)       # 30\n\n# Interpolation de chaîne (f-string)\nprint(f\"Bonjour {nom}, tu as {age} ans.\")\n\n# Réassigner une variable\nage = 31\nprint(age)       # 31\n\n# Assigner plusieurs variables en une ligne\nx, y, z = 1, 2, 3\nprint(x, y, z)   # 1 2 3\n\n# Vérifier le type\nprint(type(nom))   # <class 'str'>\nprint(type(age))   # <class 'int'>",
+    "explanation": "Python est dynamiquement typé : le type est déduit à l'assignation. Les f-strings (f\"...\") permettent d'insérer des variables directement dans une chaîne avec {variable}. snake_case est la convention Python (mon_nom, pas monNom)."
+  },
+  "prerequisites": [],
+  "unlocks": ["python-types"],
+  "projects": [
+    {
+      "id": "carte-identite",
+      "label": "Carte d'identité",
+      "difficulty": "beginner",
+      "description": "Crée des variables pour une personne fictive : prenom, nom, age, ville, taille (en mètres, ex: 1.75). Puis affiche une phrase complète avec une f-string : 'Prénom Nom, X ans, habite à Ville, taille 1.75m'. Vérifie les types avec type().",
+      "hint": "Utilise des f-strings : f\"{prenom} {nom}, {age} ans...\". Pour la taille, utilise un float : taille = 1.75. type(taille) devrait retourner <class 'float'>."
+    }
+  ]
+}

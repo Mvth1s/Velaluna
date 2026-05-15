@@ -1,0 +1,24 @@
+{
+  "id": "python-listes",
+  "label": "Listes Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Une liste Python est une collection ordonnée et modifiable d'éléments de n'importe quel type. Les listes sont indexées à partir de 0 et supportent les indices négatifs. Elles sont l'une des structures de données les plus utilisées en Python.",
+  "analogy": "Une liste, c'est une file d'attente numérotée. La première personne est à la position 0, la deuxième à 1, etc. Tu peux ajouter quelqu'un à la fin (append), insérer au milieu, ou retirer quelqu'un. La file peut mélanger des gens de tous types.",
+  "example": {
+    "language": "python",
+    "code": "# Créer une liste\nfruits = [\"pomme\", \"banane\", \"cerise\"]\nnombres = [1, 2, 3, 4, 5]\nmixte = [\"Alice\", 30, True, None]\n\n# Accéder aux éléments (index commence à 0)\nprint(fruits[0])   # pomme\nprint(fruits[-1])  # cerise (dernier)\n\n# Modifier un élément\nfruits[1] = \"mangue\"\nprint(fruits)  # ['pomme', 'mangue', 'cerise']\n\n# Ajouter des éléments\nfruits.append(\"fraise\")     # ajoute à la fin\nfruits.insert(1, \"kiwi\")    # insère à l'index 1\n\n# Supprimer des éléments\nfruits.remove(\"pomme\")  # supprime par valeur\nderniere = fruits.pop()  # supprime et retourne le dernier\n\n# Informations utiles\nprint(len(fruits))          # nombre d'éléments\nprint(\"kiwi\" in fruits)     # True/False\nprint(fruits.index(\"kiwi\")) # position de kiwi\n\n# Slicing (extraire une partie)\nprint(nombres[1:4])  # [2, 3, 4] (index 1 inclus, 4 exclus)\nprint(nombres[:3])   # [1, 2, 3]\nprint(nombres[2:])   # [3, 4, 5]",
+    "explanation": "Les indices négatifs comptent depuis la fin : -1 est le dernier, -2 l'avant-dernier. Le slicing [debut:fin] retourne une copie. append() est O(1), insert() est O(n). in vérifie la présence en O(n)."
+  },
+  "prerequisites": ["python-types"],
+  "unlocks": ["python-boucles", "python-dictionnaires"],
+  "projects": [
+    {
+      "id": "liste-courses",
+      "label": "Liste de courses",
+      "difficulty": "beginner",
+      "description": "Crée une liste de 5 articles de courses. Ajoute 2 articles avec append(). Supprime un article avec remove(). Affiche le nombre total d'articles. Vérifie si 'pain' est dans la liste. Affiche les 3 premiers articles avec le slicing.",
+      "hint": "Commence avec courses = ['lait', 'oeufs', ...]. Utilise len(courses) pour compter. 'pain' in courses retourne True ou False. courses[:3] donne les 3 premiers."
+    }
+  ]
+}

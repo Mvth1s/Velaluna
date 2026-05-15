@@ -1,0 +1,24 @@
+{
+  "id": "python-types",
+  "label": "Types Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Python possède des types de base : int (entiers), float (décimaux), str (chaînes), bool (booléens) et None (absence de valeur). La conversion entre types s'appelle le casting. Comprendre les types évite des erreurs courantes comme additionner un nombre et une chaîne.",
+  "analogy": "Les types, c'est comme les rayons d'un supermarché. Un entier va au rayon 'nombres entiers', une chaîne au rayon 'texte'. Tu ne peux pas additionner du texte et des chiffres directement — il faut d'abord les convertir, comme transformer un prix affiché (texte) en nombre pour faire la somme.",
+  "example": {
+    "language": "python",
+    "code": "# Les types de base\nentier = 42           # int\ndecimal = 3.14        # float\ntexte = \"bonjour\"     # str\nbooleen = True        # bool\nrien = None           # NoneType\n\n# Vérifier le type\nprint(type(entier))   # <class 'int'>\nprint(type(texte))    # <class 'str'>\n\n# Conversion de types (casting)\nage_texte = \"25\"\nage_nombre = int(age_texte)    # str → int\nprint(age_nombre + 1)          # 26\n\nprix = 9.99\nprix_entier = int(prix)        # float → int (tronque)\nprint(prix_entier)             # 9\n\nnombre = 42\ntexte_nombre = str(nombre)     # int → str\nprint(\"J'ai \" + texte_nombre + \" ans\")  # J'ai 42 ans\n\n# Attention : on ne peut pas additionner str et int directement\n# print(\"Age : \" + 42)  → TypeError !",
+    "explanation": "int(), float(), str(), bool() convertissent entre les types. None représente l'absence de valeur (différent de 0 ou \"\"). Additionner str et int provoque un TypeError — toujours convertir d'abord."
+  },
+  "prerequisites": ["python-variables"],
+  "unlocks": ["python-conditions", "python-listes"],
+  "projects": [
+    {
+      "id": "calculatrice-types",
+      "label": "Calculatrice avec types",
+      "difficulty": "beginner",
+      "description": "Simule une saisie utilisateur : crée une variable saisie_prix = \"12.50\" (string) et saisie_quantite = \"3\" (string). Convertis-les en types numériques appropriés, calcule le total, et affiche 'Total : X.XX €'. Gère aussi le cas où le prix est arrondi à l'entier.",
+      "hint": "Utilise float(saisie_prix) et int(saisie_quantite). Le total = prix * quantite. Pour l'affichage : f\"Total : {total:.2f} €\" formate avec 2 décimales."
+    }
+  ]
+}

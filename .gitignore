@@ -25,6 +25,9 @@ backend/data/*.db-wal
 .DS_Store
 Thumbs.db
 
+# Vite cache
+frontend/.vite/
+
 # Logs
 *.log
 npm-debug.log*

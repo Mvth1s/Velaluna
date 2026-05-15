@@ -1,0 +1,18 @@
+{
+  "id": "python",
+  "label": "Python",
+  "theme_id": "scripting",
+  "description": "Un langage polyvalent et lisible, idéal pour débuter, automatiser ou faire de la data.",
+  "logo": "python.svg",
+  "nodes": [
+    "python-variables",
+    "python-types",
+    "python-conditions",
+    "python-listes",
+    "python-boucles",
+    "python-dictionnaires",
+    "python-fonctions",
+    "python-modules",
+    "python-classes"
+  ]
+}

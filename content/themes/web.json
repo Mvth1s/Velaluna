@@ -3,5 +3,5 @@
   "label": "Web",
   "description": "Tout ce qui touche au développement web : structure, style, comportement.",
   "icon": "globe",
-  "technologies": ["javascript"]
+  "technologies": ["html-css", "javascript"]
 }

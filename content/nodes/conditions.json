@@ -1,0 +1,24 @@
+{
+  "id": "conditions",
+  "label": "Conditions",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Les conditions permettent à ton programme de prendre des décisions : faire une chose si une condition est vraie, autre chose sinon. C'est le mécanisme if/else, base de toute logique applicative.",
+  "analogy": "Imagine un portier de boîte de nuit : si tu as plus de 18 ans, tu rentres ; sinon, tu restes dehors. Ton programme fonctionne exactement pareil — il évalue une condition et choisit un chemin.",
+  "example": {
+    "language": "javascript",
+    "code": "const age = 20;\n\nif (age >= 18) {\n  console.log('Accès autorisé');\n} else {\n  console.log('Accès refusé');\n}\n\n// Condition avec plusieurs branches\nconst note = 75;\nif (note >= 90) {\n  console.log('Excellent');\n} else if (note >= 60) {\n  console.log('Bien');\n} else {\n  console.log('À améliorer');\n}\n\n// Forme courte : l'opérateur ternaire\nconst statut = age >= 18 ? 'majeur' : 'mineur';\nconsole.log(statut); // 'majeur'",
+    "explanation": "if/else évalue une expression booléenne. L'opérateur ternaire (condition ? valeurSiVrai : valeurSiFaux) est utile pour les cas simples à une ligne."
+  },
+  "prerequisites": ["types-de-donnees"],
+  "unlocks": ["boucles", "fonctions"],
+  "projects": [
+    {
+      "id": "calculatrice-impot",
+      "label": "Calculatrice d'impôt",
+      "difficulty": "beginner",
+      "description": "Définis une variable revenu. Affiche dans la console le taux d'imposition selon ces tranches : en dessous de 10 000 → 0%, entre 10 000 et 30 000 → 11%, au-dessus de 30 000 → 30%.",
+      "hint": "Utilise if / else if / else. Commence par tester le cas le plus bas (< 10000) puis les suivants dans l'ordre croissant."
+    }
+  ]
+}

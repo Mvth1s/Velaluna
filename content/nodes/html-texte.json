@@ -1,0 +1,24 @@
+{
+  "id": "html-texte",
+  "label": "Balises de texte",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "HTML fournit des balises dédiées pour structurer le texte : les titres (h1 à h6) créent une hiérarchie, les paragraphes (p) regroupent du texte, et les balises inline comme strong ou em ajoutent du sens au contenu sans créer de nouvelle ligne.",
+  "analogy": "Imagine que tu surlignes un document papier avec des marqueurs de couleurs différentes : jaune pour les titres importants, bleu pour les mots en gras, vert pour les citations. HTML fait la même chose, mais pour donner du sens au contenu, pas juste le mettre en forme.",
+  "example": {
+    "language": "html",
+    "code": "<h1>Mon blog</h1>\n<h2>Article du jour</h2>\n<h3>Sous-section</h3>\n\n<p>Voici un paragraphe avec du texte <strong>important</strong> et du texte <em>en italique</em>.</p>\n\n<p>Les listes sont très utiles :</p>\n<ul>\n  <li>Élément non ordonné 1</li>\n  <li>Élément non ordonné 2</li>\n</ul>\n\n<ol>\n  <li>Première étape</li>\n  <li>Deuxième étape</li>\n</ol>",
+    "explanation": "h1 est le titre principal (un seul par page), h2 à h6 sont des sous-titres. ul crée une liste à puces, ol une liste numérotée. strong signifie 'important' (bold), em signifie 'emphase' (italic)."
+  },
+  "prerequisites": ["html-structure"],
+  "unlocks": ["html-liens-medias", "html-formulaires"],
+  "projects": [
+    {
+      "id": "article-blog",
+      "label": "Article de blog",
+      "difficulty": "beginner",
+      "description": "Crée une page HTML qui ressemble à un article de blog : un titre h1, une date en paragraphe, deux ou trois sections avec des sous-titres h2, des paragraphes de texte, et une liste de points clés à retenir en fin d'article.",
+      "hint": "Utilise h2 pour les sections de l'article. Pour mettre en valeur des mots-clés, entoure-les de <strong>. Structure ton HTML en indentant correctement les balises imbriquées."
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "html-css",
+  "label": "HTML / CSS",
+  "theme_id": "web",
+  "description": "Le duo fondamental du web : HTML structure les pages, CSS les met en forme.",
+  "logo": "html-css.svg",
+  "nodes": [
+    "html-structure",
+    "html-texte",
+    "html-liens-medias",
+    "html-formulaires",
+    "css-selecteurs",
+    "css-box-model",
+    "css-flexbox",
+    "css-couleurs-typo"
+  ]
+}

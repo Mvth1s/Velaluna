@@ -1,0 +1,24 @@
+{
+  "id": "boucles",
+  "label": "Boucles",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Une boucle répète un bloc de code tant qu'une condition est vraie, ou pour chaque élément d'une liste. Elle évite de réécrire la même chose dix fois et est indispensable pour traiter des collections de données.",
+  "analogy": "C'est comme une machine à laver : tu mets le linge, tu lances le cycle, et la machine répète les mêmes opérations (agiter, rincer) jusqu'à ce que le programme soit terminé. Toi tu n'interviens qu'une fois.",
+  "example": {
+    "language": "javascript",
+    "code": "// Boucle for classique\nfor (let i = 0; i < 5; i++) {\n  console.log('Tour numéro ' + i);\n}\n\n// Parcourir un tableau avec for...of\nconst prenoms = ['Alice', 'Bob', 'Carla'];\nfor (const prenom of prenoms) {\n  console.log('Bonjour ' + prenom);\n}\n\n// Boucle while\nlet compteur = 0;\nwhile (compteur < 3) {\n  console.log(compteur);\n  compteur++; // ne pas oublier sinon boucle infinie !\n}",
+    "explanation": "La boucle for est utilisée quand on connaît le nombre d'itérations. for...of est idéal pour parcourir un tableau. while tourne tant que la condition est vraie."
+  },
+  "prerequisites": ["conditions", "tableaux"],
+  "unlocks": ["fonctions"],
+  "projects": [
+    {
+      "id": "table-multiplication",
+      "label": "Table de multiplication",
+      "difficulty": "beginner",
+      "description": "Affiche dans la console la table de multiplication du chiffre 7, de 7×1 jusqu'à 7×10. Chaque ligne doit ressembler à : \"7 × 3 = 21\".",
+      "hint": "Utilise une boucle for avec i allant de 1 à 10 inclus. À l'intérieur, calcule 7 * i et construis la chaîne avec la concaténation ou un template literal : `7 × ${i} = ${7 * i}`."
+    }
+  ]
+}

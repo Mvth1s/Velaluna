@@ -1,0 +1,18 @@
+{
+  "id": "bash",
+  "label": "Bash",
+  "theme_id": "scripting",
+  "description": "Le shell Unix pour naviguer dans les fichiers, automatiser des tâches et écrire des scripts.",
+  "logo": "bash.svg",
+  "nodes": [
+    "terminal-shell",
+    "navigation-fichiers",
+    "manipulation-fichiers",
+    "affichage-texte",
+    "pipes-redirections",
+    "variables-bash",
+    "conditions-bash",
+    "boucles-bash",
+    "scripts-bash"
+  ]
+}

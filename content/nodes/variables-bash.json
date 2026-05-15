@@ -1,0 +1,24 @@
+{
+  "id": "variables-bash",
+  "label": "Variables Bash",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Les variables Bash permettent de stocker des valeurs (chaînes, nombres) pour les réutiliser. Elles sont essentielles pour écrire des scripts dynamiques qui s'adaptent à des données différentes sans dupliquer le code.",
+  "analogy": "Une variable bash, c'est une étiquette collée sur un pot. Tu écris COULEUR='rouge' et maintenant partout où tu utilises $COULEUR, bash remplace par 'rouge'. Changer la valeur une seule fois suffit à tout mettre à jour.",
+  "example": {
+    "language": "bash",
+    "code": "# Créer une variable (pas d'espaces autour du =)\nNOM=\"Alice\"\nAGE=30\n\n# Utiliser une variable (préfixe $)\necho \"Bonjour $NOM, tu as $AGE ans.\"\n\n# Guillemets : double vs simple\necho \"Avec $NOM\"   # Substitue la variable\necho 'Avec $NOM'   # N'interprète PAS la variable\n\n# Variables spéciales\necho $HOME          # Dossier personnel\necho $USER          # Utilisateur courant\necho $PWD           # Dossier courant\necho $PATH          # Chemins de recherche des programmes\n\n# Résultat d'une commande dans une variable\nDATE_ACTUELLE=$(date +%Y-%m-%d)\necho \"Aujourd'hui : $DATE_ACTUELLE\"\n\n# Exporter une variable (disponible dans les sous-processus)\nexport MA_VARIABLE=\"valeur\"",
+    "explanation": "Pas d'espace autour du = lors de l'assignation. Utilise $VARIABLE ou ${VARIABLE} pour lire la valeur. Les doubles guillemets permettent la substitution, les simples l'en empêchent."
+  },
+  "prerequisites": ["pipes-redirections"],
+  "unlocks": ["conditions-bash", "boucles-bash"],
+  "projects": [
+    {
+      "id": "script-config",
+      "label": "Variables de configuration",
+      "difficulty": "beginner",
+      "description": "Dans le terminal, crée des variables : NOM (ton prénom), PROJET (nom d'un projet fictif), VERSION ('1.0.0'). Puis affiche avec echo une phrase de présentation utilisant les 3 variables. Stocke aussi la date du jour avec $(date +%d/%m/%Y) et affiche 'Projet lancé le [date]'.",
+      "hint": "Rappel : pas d'espace autour du =. Pour la date, utilise DATE=$(date +%d/%m/%Y). Teste d'abord date +%d/%m/%Y seul pour vérifier le format."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "boucles-bash",
+  "label": "Boucles Bash",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Les boucles Bash permettent de répéter des opérations sur une liste ou tant qu'une condition est vraie. Elles sont particulièrement utiles pour traiter des lots de fichiers, générer des séquences ou attendre qu'une ressource soit disponible.",
+  "analogy": "Trier une pile de 100 lettres une par une, c'est fastidieux. Avec une boucle, tu décris le tri pour une seule lettre et tu dis 'fais ça pour chaque lettre de la pile'. La boucle s'occupe du reste.",
+  "example": {
+    "language": "bash",
+    "code": "# Boucle for sur une liste\nfor FRUIT in pomme banane cerise; do\n  echo \"Fruit : $FRUIT\"\ndone\n\n# Boucle for avec une séquence de nombres\nfor i in $(seq 1 5); do\n  echo \"Numéro $i\"\ndone\n\n# Boucle for sur les fichiers d'un dossier\nfor FICHIER in *.txt; do\n  echo \"Traitement de $FICHIER\"\ndone\n\n# Boucle while\nCOMPTEUR=1\nwhile [ $COMPTEUR -le 5 ]; do\n  echo \"Tour $COMPTEUR\"\n  COMPTEUR=$((COMPTEUR + 1))  # arithmétique bash\ndone\n\n# Traiter les lignes d'un fichier\nwhile IFS= read -r LIGNE; do\n  echo \"Ligne lue : $LIGNE\"\ndone < fichier.txt",
+    "explanation": "$(( )) est la syntaxe pour l'arithmétique entière en Bash. IFS= read -r est la façon correcte de lire un fichier ligne par ligne, en préservant les espaces et backslashes."
+  },
+  "prerequisites": ["variables-bash"],
+  "unlocks": ["scripts-bash"],
+  "projects": [
+    {
+      "id": "generateur-fichiers",
+      "label": "Générateur de fichiers",
+      "difficulty": "beginner",
+      "description": "Écris des commandes bash qui créent 5 fichiers nommés rapport_1.txt jusqu'à rapport_5.txt, chacun contenant la ligne 'Rapport numéro N' où N est le numéro du fichier. Vérifie le résultat avec ls et cat sur l'un des fichiers.",
+      "hint": "Utilise une boucle for i in $(seq 1 5). Dans la boucle, crée le fichier avec echo \"Rapport numéro $i\" > rapport_$i.txt. La syntaxe $i dans le nom de fichier fonctionne directement."
+    }
+  ]
+}

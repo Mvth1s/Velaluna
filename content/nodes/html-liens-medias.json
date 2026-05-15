@@ -1,0 +1,24 @@
+{
+  "id": "html-liens-medias",
+  "label": "Liens et médias",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "Les liens (<a>) permettent de naviguer entre les pages. Les images (<img>) intègrent des visuels dans la page. Ce sont les deux balises qui connectent ton contenu au reste du web et le rendent riche visuellement.",
+  "analogy": "Un lien hypertexte, c'est comme une porte dans un couloir. La porte a un nom affiché (le texte du lien) et mène vers un endroit précis (l'URL). Une image, c'est comme accrocher une photo sur un mur : la photo existe quelque part, tu indiques juste son emplacement.",
+  "example": {
+    "language": "html",
+    "code": "<!-- Lien vers une page externe -->\n<a href=\"https://www.example.com\">Visiter Example</a>\n\n<!-- Lien vers une autre page du même site -->\n<a href=\"/contact.html\">Contactez-nous</a>\n\n<!-- Lien qui ouvre dans un nouvel onglet -->\n<a href=\"https://www.example.com\" target=\"_blank\" rel=\"noopener\">Ouvrir ailleurs</a>\n\n<!-- Image avec texte alternatif (important pour l'accessibilité) -->\n<img src=\"photo.jpg\" alt=\"Description de la photo\" width=\"400\">\n\n<!-- Image en ligne dans un texte -->\n<p>Voici le logo : <img src=\"logo.png\" alt=\"Logo\"></p>",
+    "explanation": "href est l'URL de destination. alt est la description textuelle de l'image (lue par les lecteurs d'écran et affichée si l'image ne charge pas). target=\"_blank\" ouvre dans un nouvel onglet."
+  },
+  "prerequisites": ["html-texte"],
+  "unlocks": ["css-selecteurs"],
+  "projects": [
+    {
+      "id": "portfolio-simple",
+      "label": "Portfolio minimaliste",
+      "difficulty": "beginner",
+      "description": "Crée une page HTML avec ton nom en h1, une courte bio, 3 liens vers des projets (ou sites) que tu aimes, et une image (libre de droits depuis unsplash.com par exemple) avec un texte alternatif descriptif.",
+      "hint": "Pour les liens, utilise target=\"_blank\" rel=\"noopener\" pour qu'ils s'ouvrent dans un nouvel onglet. Pour l'image, tu peux utiliser une URL directe depuis Internet au lieu d'un fichier local."
+    }
+  ]
+}

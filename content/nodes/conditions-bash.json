@@ -1,0 +1,24 @@
+{
+  "id": "conditions-bash",
+  "label": "Conditions Bash",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Les conditions Bash permettent d'exécuter du code seulement si une condition est vraie. La syntaxe est différente des autres langages mais le principe est identique : tester une valeur et bifurquer selon le résultat.",
+  "analogy": "C'est le garde à l'entrée d'un club : il vérifie si tu es sur la liste (condition). Si oui, tu rentres (bloc if). Sinon, tu vas à l'entrée VIP vérifier autre chose (elif) ou tu repars (else).",
+  "example": {
+    "language": "bash",
+    "code": "AGE=20\n\n# Condition simple\nif [ $AGE -ge 18 ]; then\n  echo \"Majeur\"\nfi\n\n# Avec else\nif [ $AGE -ge 18 ]; then\n  echo \"Majeur\"\nelse\n  echo \"Mineur\"\nfi\n\n# Comparaisons numériques\n# -eq : égal    -ne : différent\n# -lt : <       -le : <=\n# -gt : >       -ge : >=\n\n# Comparaisons de chaînes\nNOM=\"Alice\"\nif [ \"$NOM\" = \"Alice\" ]; then\n  echo \"Bonjour Alice !\"\nfi\n\n# Tester si un fichier existe\nif [ -f \"config.txt\" ]; then\n  echo \"Le fichier existe\"\nfi\n\n# Tester si un dossier existe\nif [ -d \"src\" ]; then\n  echo \"Le dossier src existe\"\nfi",
+    "explanation": "Les espaces à l'intérieur des [ ] sont obligatoires. Toujours mettre les variables entre guillemets dans les conditions : [ \"$VAR\" = \"valeur\" ]. -f teste un fichier, -d un dossier."
+  },
+  "prerequisites": ["variables-bash"],
+  "unlocks": ["scripts-bash"],
+  "projects": [
+    {
+      "id": "verificateur-fichier",
+      "label": "Vérificateur de fichier",
+      "difficulty": "beginner",
+      "description": "Écris les commandes bash pour : vérifier si le fichier /etc/hosts existe (et afficher un message si oui/non), vérifier si le dossier /tmp existe, puis vérifier si la variable USER est égale à ton nom d'utilisateur.",
+      "hint": "Utilise -f pour les fichiers et -d pour les dossiers dans les [ ]. Pour comparer une variable à une valeur : if [ \"$USER\" = \"ton_nom\" ]. Tu peux copier ces commandes dans un fichier .sh ou les taper directement dans le terminal."
+    }
+  ]
+}

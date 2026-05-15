@@ -1,0 +1,24 @@
+{
+  "id": "css-box-model",
+  "label": "CSS — Box Model",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "Chaque élément HTML est une boîte rectangulaire. Le box model décrit les couches qui composent cette boîte : le contenu, le padding (espace intérieur), la bordure et la marge (espace extérieur). Comprendre ce modèle est essentiel pour maîtriser la mise en page.",
+  "analogy": "Imagine un tableau accroché dans un cadre. Le tableau lui-même c'est le contenu. Le passe-partout entre le tableau et le cadre, c'est le padding. Le cadre en bois, c'est la bordure. L'espace entre le cadre et le mur voisin, c'est la marge.",
+  "example": {
+    "language": "css",
+    "code": ".carte {\n  /* Contenu */\n  width: 300px;\n  height: 200px;\n\n  /* Padding : espace intérieur (entre contenu et bordure) */\n  padding: 16px;          /* tous les côtés */\n  padding: 8px 16px;      /* haut/bas  gauche/droite */\n  padding-top: 8px;       /* côté par côté */\n\n  /* Bordure */\n  border: 2px solid #e5e7eb;\n  border-radius: 8px;     /* coins arrondis */\n\n  /* Marge : espace extérieur (entre éléments) */\n  margin: 16px auto;      /* auto centre horizontalement */\n\n  /* box-sizing recommandé : inclut padding dans la width */\n  box-sizing: border-box;\n}",
+    "explanation": "Avec box-sizing: border-box, la width inclut le padding et la bordure — plus intuitif. Sans ça, un élément de width: 300px + padding: 20px ferait 340px au total. La plupart des projets appliquent border-box à tous les éléments avec * { box-sizing: border-box }."
+  },
+  "prerequisites": ["css-selecteurs"],
+  "unlocks": ["css-flexbox", "css-couleurs-typo"],
+  "projects": [
+    {
+      "id": "cartes-produits",
+      "label": "Cartes produits",
+      "difficulty": "beginner",
+      "description": "Crée 3 cartes produit en HTML/CSS. Chaque carte a : un titre, un prix, une courte description. Utilise padding pour l'espace intérieur, border pour le contour, border-radius pour arrondir les coins, et margin pour espacer les cartes entre elles.",
+      "hint": "Commence par * { box-sizing: border-box; margin: 0; padding: 0; } pour repartir sur une base propre. Utilise display: inline-block ou display: flex sur le conteneur pour mettre les cartes côte à côte."
+    }
+  ]
+}

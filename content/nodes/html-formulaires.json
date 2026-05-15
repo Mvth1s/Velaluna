@@ -1,0 +1,24 @@
+{
+  "id": "html-formulaires",
+  "label": "Formulaires",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "Les formulaires permettent à l'utilisateur d'envoyer des données : identifiants, recherches, commandes. Un formulaire contient des champs (input), des labels pour les décrire, et un bouton d'envoi. C'est la principale façon d'interagir avec une page web.",
+  "analogy": "Un formulaire HTML, c'est comme une fiche papier à remplir : chaque champ a un intitulé (le label) et un espace à remplir (l'input). Quand tu coclics sur 'Envoyer', tu remets la fiche remplie au guichet (le serveur).",
+  "example": {
+    "language": "html",
+    "code": "<form action=\"/contact\" method=\"POST\">\n  <!-- Champ texte -->\n  <label for=\"nom\">Nom :</label>\n  <input type=\"text\" id=\"nom\" name=\"nom\" placeholder=\"Alice\" required>\n\n  <!-- Email -->\n  <label for=\"email\">Email :</label>\n  <input type=\"email\" id=\"email\" name=\"email\" required>\n\n  <!-- Zone de texte -->\n  <label for=\"message\">Message :</label>\n  <textarea id=\"message\" name=\"message\" rows=\"4\"></textarea>\n\n  <!-- Case à cocher -->\n  <input type=\"checkbox\" id=\"newsletter\" name=\"newsletter\">\n  <label for=\"newsletter\">Recevoir la newsletter</label>\n\n  <!-- Bouton d'envoi -->\n  <button type=\"submit\">Envoyer</button>\n</form>",
+    "explanation": "L'attribut for du label doit correspondre au id de l'input associé (pour l'accessibilité). required rend le champ obligatoire. type=\"email\" valide le format automatiquement."
+  },
+  "prerequisites": ["html-texte"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "formulaire-inscription",
+      "label": "Formulaire d'inscription",
+      "difficulty": "beginner",
+      "description": "Crée un formulaire d'inscription complet avec : prénom, nom, email, mot de passe (type password), date de naissance (type date), un menu déroulant <select> pour choisir un pays, et un bouton 'S'inscrire'. Chaque champ doit avoir un label associé.",
+      "hint": "Pour le menu déroulant, utilise <select name=\"pays\"> avec des <option value=\"fr\">France</option> à l'intérieur. Pour le mot de passe, utilise type=\"password\" — le texte sera masqué automatiquement."
+    }
+  ]
+}

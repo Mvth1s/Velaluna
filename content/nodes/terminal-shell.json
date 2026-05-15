@@ -1,0 +1,24 @@
+{
+  "id": "terminal-shell",
+  "label": "Terminal et shell",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Le terminal est une interface texte pour communiquer avec ton ordinateur. Au lieu de cliquer sur des icônes, tu tapes des commandes. Le shell (Bash, zsh...) est le programme qui interprète ces commandes et les exécute.",
+  "analogy": "Utiliser un GUI (interface graphique), c'est comme commander en pointant du doigt sur un menu illustré. Utiliser le terminal, c'est connaître le nom exact des plats et les dire à voix haute. Plus direct, plus rapide quand tu sais ce que tu veux.",
+  "example": {
+    "language": "bash",
+    "code": "# Afficher la date et l'heure\ndate\n\n# Qui suis-je (nom de l'utilisateur actuel) ?\nwhoami\n\n# Quelle machine suis-je ?\nhostname\n\n# Afficher un message\necho \"Bonjour depuis le terminal !\"\n\n# Voir la version de bash\nbash --version\n\n# Obtenir de l'aide sur une commande\nman echo        # Manuel complet\necho --help     # Aide rapide",
+    "explanation": "Les commandes suivent toujours la même structure : nom_commande [options] [arguments]. Les options commencent par - (court) ou -- (long). man affiche le manuel d'une commande."
+  },
+  "prerequisites": [],
+  "unlocks": ["navigation-fichiers"],
+  "projects": [
+    {
+      "id": "exploration-terminal",
+      "label": "Exploration du terminal",
+      "difficulty": "beginner",
+      "description": "Ouvre un terminal. Exécute les commandes suivantes et note ce qu'elles affichent : whoami, hostname, date, echo \"Mon premier message\", et bash --version. Essaie ensuite man ls pour lire le manuel de la commande ls (appuie sur q pour quitter).",
+      "hint": "Sur macOS, ouvre Terminal depuis les Applications. Sur Linux, cherche 'Terminal' dans tes applications. Sur Windows, utilise Git Bash ou WSL. Appuie sur Entrée après chaque commande."
+    }
+  ]
+}

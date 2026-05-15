@@ -1,0 +1,24 @@
+{
+  "id": "navigation-fichiers",
+  "label": "Navigation dans les fichiers",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Le système de fichiers est organisé en arborescence de dossiers. Naviguer dans le terminal, c'est se déplacer dans cet arbre : savoir où on est, lister ce qu'il y a, et se déplacer d'un dossier à l'autre.",
+  "analogy": "Le système de fichiers est comme un immeuble. / est le rez-de-chaussée (la racine). Chaque couloir est un dossier. pwd te dit dans quel couloir tu es. ls te montre ce qu'il y a dans ce couloir. cd te permet de passer d'un couloir à l'autre.",
+  "example": {
+    "language": "bash",
+    "code": "# Où suis-je ? (Print Working Directory)\npwd\n# Résultat : /home/alice\n\n# Lister les fichiers du dossier courant\nls\n\n# Lister avec détails (permissions, taille, date)\nls -l\n\n# Lister tout y compris les fichiers cachés (commencent par .)\nls -la\n\n# Se déplacer dans un dossier\ncd Documents\n\n# Remonter d'un niveau\ncd ..\n\n# Aller directement dans le dossier personnel\ncd ~\n# ou simplement\ncd\n\n# Chemin absolu (commence à la racine /)\ncd /etc/nginx\n\n# Chemin relatif (depuis là où on est)\ncd ../Downloads",
+    "explanation": ". représente le dossier courant, .. le dossier parent, ~ le dossier personnel. Un chemin absolu commence par /, un chemin relatif part de l'endroit où on se trouve."
+  },
+  "prerequisites": ["terminal-shell"],
+  "unlocks": ["manipulation-fichiers", "affichage-texte"],
+  "projects": [
+    {
+      "id": "cartographie-dossiers",
+      "label": "Cartographie de tes dossiers",
+      "difficulty": "beginner",
+      "description": "Navigue dans le terminal pour explorer ton système. Depuis ton dossier personnel (cd ~), liste son contenu. Entre dans 3 dossiers différents avec cd et liste leur contenu. Utilise cd .. pour remonter. Enfin, retourne directement chez toi avec cd ~.",
+      "hint": "Utilise pwd après chaque cd pour vérifier où tu es. ls -la montre aussi les fichiers cachés (qui commencent par .) comme .bashrc ou .gitconfig. La touche Tab auto-complète les noms de fichiers et dossiers."
+    }
+  ]
+}

@@ -1,7 +1,8 @@
-# NodeMap — Schéma des données
+# Velaluna — Schéma des données
 
-> Ce document définit la structure exacte des données utilisées par NodeMap.
+> Ce document définit la structure exacte des données utilisées par Velaluna.
 > Il sert de référence pour le backend, le frontend, et la génération de contenu LLM.
+> **Lire ce document avant de toucher aux données ou de générer du contenu.**
 
 ---
 
@@ -33,10 +34,10 @@ Un **nœud** peut appartenir à plusieurs technologies (ex: le concept "variable
 
 | Champ | Type | Description |
 |---|---|---|
-| `id` | string | Identifiant unique, kebab-case |
+| `id` | string | Identifiant unique, kebab-case français |
 | `label` | string | Nom affiché dans l'UI |
 | `description` | string | Une phrase de présentation |
-| `icon` | string | Nom d'icône (ex: Lucide icon name) |
+| `icon` | string | Nom d'icône Lucide |
 | `technologies` | string[] | IDs des technos appartenant à ce thème |
 
 ---
@@ -56,7 +57,7 @@ Un **nœud** peut appartenir à plusieurs technologies (ex: le concept "variable
 
 | Champ | Type | Description |
 |---|---|---|
-| `id` | string | Identifiant unique, kebab-case |
+| `id` | string | Identifiant unique, kebab-case français |
 | `label` | string | Nom affiché dans l'UI |
 | `theme_id` | string | ID du thème parent |
 | `description` | string | Une phrase de présentation |
@@ -112,7 +113,7 @@ C'est l'entité centrale. Voici la structure complète :
 
 | Champ | Type | Description |
 |---|---|---|
-| `id` | string | Identifiant unique, kebab-case |
+| `id` | string | Identifiant unique, kebab-case français |
 | `label` | string | Nom affiché dans le graphe |
 | `difficulty` | enum | `"beginner"` / `"intermediate"` / `"advanced"` |
 | `technologies` | string[] | IDs des technos auxquelles ce nœud appartient |
@@ -123,13 +124,13 @@ C'est l'entité centrale. Voici la structure complète :
 | `example.explanation` | string | Ce que fait le code, en 1-2 phrases |
 | `prerequisites` | string[] | IDs des nœuds à maîtriser avant |
 | `unlocks` | string[] | IDs des nœuds débloqués après validation |
-| `projects` | Project[] | 1 à 3 mini-projets (voir ci-dessous) |
+| `projects` | Project[] | 1 à 3 mini-projets |
 
 ### Détail : Project
 
 | Champ | Type | Description |
 |---|---|---|
-| `id` | string | Identifiant unique, kebab-case |
+| `id` | string | Identifiant unique, kebab-case français |
 | `label` | string | Titre court du projet |
 | `difficulty` | enum | `"beginner"` / `"intermediate"` / `"advanced"` |
 | `description` | string | Ce que l'apprenant doit faire, de façon concrète |
@@ -185,7 +186,7 @@ Ceci n'est pas stocké en base — c'est géré côté client dans le navigateur
 ## 6. Prompt type pour générer un nœud avec un LLM
 
 ```
-Tu dois générer le contenu d'un nœud NodeMap pour le concept "[NOM DU CONCEPT]" en [TECHNOLOGIE].
+Tu dois générer le contenu d'un nœud Velaluna pour le concept "[NOM DU CONCEPT]" en [TECHNOLOGIE].
 
 Respecte exactement cette structure JSON :
 - id : kebab-case, en français
@@ -195,7 +196,7 @@ Respecte exactement cette structure JSON :
 - analogy : une analogie du quotidien, 1 à 2 phrases
 - example.code : un snippet court (max 10 lignes), en [LANGAGE]
 - example.explanation : ce que fait le code en 1 à 2 phrases
-- projects : 1 à 2 mini-projets avec un niveau beginner et éventuellement un intermediate
+- projects : 1 à 3 mini-projets avec au moins un niveau beginner
 - prerequisites : [IDS DES PRÉREQUIS]
 - unlocks : [IDS DES NŒUDS DÉBLOQUÉS]
 

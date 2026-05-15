@@ -1,4 +1,4 @@
-# NodeMap — Document de Vision
+# Velaluna — Document de Vision
 
 ---
 
@@ -10,23 +10,23 @@ Les plateformes comme freeCodeCamp, Udemy ou OpenClassrooms ne règlent pas vrai
 
 Le problème, c'est pas le manque de contenu. C'est que ce contenu est mal fichu pour apprendre.
 
-NodeMap part d'une idée simple : les concepts techniques ne s'apprennent pas dans l'ordre, ils s'apprennent en réseau. Chaque notion est liée à d'autres, et comprendre ces liens, c'est ce qui fait vraiment progresser. NodeMap rend ces liens visibles.
+Velaluna part d'une idée simple : les concepts techniques ne s'apprennent pas dans l'ordre, ils s'apprennent en réseau. Chaque notion est liée à d'autres, et comprendre ces liens, c'est ce qui fait vraiment progresser. Velaluna rend ces liens visibles.
 
 ---
 
 ## 2. Public cible
 
-NodeMap s'adresse en priorité aux **débutants complets** — des gens qui veulent apprendre la tech mais ne savent pas par où commencer, qui se sont déjà perdus dans une doc ou abandonné un cours en ligne.
+Velaluna s'adresse en priorité aux **débutants complets** — des gens qui veulent apprendre la tech mais ne savent pas par où commencer, qui se sont déjà perdus dans une doc ou abandonné un cours en ligne.
 
 En secondaire, les **développeurs juniors** qui ont des bases mais veulent structurer et consolider ce qu'ils savent.
 
-Aucun prérequis technique n'est nécessaire pour utiliser NodeMap.
+Aucun prérequis technique n'est nécessaire pour utiliser Velaluna.
 
 ---
 
 ## 3. Concept produit
 
-Quand tu arrives sur NodeMap, tu choisis un thème (Web, Sécurité, Data...) puis une technologie. Tu te retrouves face à un graphe : des nœuds reliés entre eux par des flèches qui montrent quoi apprendre avant quoi.
+Quand tu arrives sur Velaluna, tu choisis un thème (Web, Sécurité, Data...) puis une technologie. Tu te retrouves face à un graphe : des nœuds reliés entre eux par des flèches qui montrent quoi apprendre avant quoi.
 
 Chaque nœud, c'est un concept. En cliquant dessus, tu accèdes à sa fiche :
 
@@ -38,13 +38,13 @@ Les nœuds que tu n'es pas encore prêt à aborder sont visibles sur le graphe, 
 
 Un concept est considéré comme maîtrisé quand tu as réalisé le mini-projet associé et que tu le marques comme fait. C'est toi qui valides, pas un quiz automatique.
 
-Au fur et à mesure, le graphe s'illumine. Tu vois ta progression d'un coup d'oeil. Quand tu as maîtrisé suffisamment de concepts autour d'un même sujet, NodeMap te suggère un projet plus ambitieux pour tout consolider.
+Au fur et à mesure, le graphe s'illumine. Tu vois ta progression d'un coup d'oeil. Quand tu as maîtrisé suffisamment de concepts autour d'un même sujet, Velaluna te suggère un projet plus ambitieux pour tout consolider.
 
 Ta progression est sauvegardée dans ton navigateur, sans compte à créer. Tout le contenu est préparé à l'avance et stocké en base de données.
 
 ---
 
-## 3. MVP
+## 4. MVP
 
 L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui permet de valider que le concept fonctionne.
 
@@ -71,40 +71,38 @@ L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui
 
 ---
 
-## 4. Architecture & Stack
+## 5. Architecture & Stack
 
 **Framework frontend : Vue.js**
-Tu connais déjà Vue, et quand on vibe-code, ajouter un nouveau framework par-dessus une nouvelle idée c'est risqué. Svelte est une bonne alternative à garder en tête pour un futur projet.
+Composition API, Vue 3 + Vite. Svelte est une bonne alternative à garder en tête pour un futur projet.
 
 **Lib de graphe : Cytoscape.js** ✓
-Choix retenu après comparaison avec vis.js. Le layout `dagre` gère nativement les graphes orientés avec prérequis. Les classes CSS dynamiques rendent l'état verrouillé/disponible/complété trivial à implémenter. Très bonne couverture dans les LLMs.
+Choix retenu après comparaison avec vis.js. Le layout `dagre` gère nativement les graphes orientés avec prérequis. Les classes CSS dynamiques rendent l'état verrouillé/disponible/complété trivial à implémenter.
 
 **Gestion d'état frontend : Pinia**
 Store officiel Vue 3. Gère la progression locale et l'état du graphe.
 
 **Backend : Express (Node.js)**
-Léger, rapide à démarrer, excellent coverage LLM — idéal pour le vibe-coding. À remplacer par Adonis.js si le projet grossit et nécessite plus de cadre.
+Léger, rapide à démarrer, excellent coverage LLM — idéal pour le vibe-coding.
 
 **Base de données : SQLite (MVP) → PostgreSQL (suite)**
-SQLite pour le MVP : zéro config, embarqué, parfait pour commencer. Migration vers PostgreSQL à l'étape comptes utilisateurs.
+SQLite pour le MVP : zéro config, embarqué. Migration vers PostgreSQL à l'étape comptes utilisateurs.
 
-**Environnement de dev : Docker-compose**
-Lance le frontend, le backend et la base de données en une seule commande. Évite les conflits d'environnement et facilite le démarrage sur une nouvelle machine.
+**Environnement de dev : Docker Compose**
+Lance le frontend, le backend et la base de données en une seule commande.
 
 **Hébergement : à définir**
 Options gratuites pour démarrer : Vercel (frontend), Railway ou Render (backend + base de données).
 
 **Format du contenu : JSON structuré**
-Chaque fiche de nœud est un objet JSON avec des champs fixes. Voir `data-schema.md` pour la structure exacte.
+Voir `velaluna-data-schema.md` pour la structure exacte.
 
 **Génération du contenu : LLM + relecture manuelle**
-Le contenu est généré avec un LLM à partir des documentations officielles, puis relu et corrigé avant d'être mis en base. Aucun contenu n'est généré à la volée pour l'utilisateur. Dans un premier temps, la relecture est assurée par le créateur du projet, avec des avis externes sollicités pour valider la clarté et la pertinence des fiches. À terme, ce processus s'ouvre à la communauté.
+Le contenu est généré avec un LLM à partir des documentations officielles, puis relu et corrigé avant d'être mis en base. Aucun contenu n'est généré à la volée pour l'utilisateur.
 
 ---
 
-## 5. Roadmap
-
-Ce qui vient après le MVP, dans l'ordre.
+## 6. Roadmap
 
 **Étape 1 : Comptes utilisateurs**
 Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progression depuis n'importe quel appareil.
@@ -113,15 +111,15 @@ Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progre
 Agrandir le catalogue au-delà du MVP. Pistes : Data, Sécurité, Réseaux, DevOps...
 
 **Étape 3 : Projets consolidants**
-Quand un groupe de nœuds est maîtrisé, NodeMap suggère un projet plus ambitieux pour tout mettre en pratique.
+Quand un groupe de nœuds est maîtrisé, Velaluna suggère un projet plus ambitieux pour tout mettre en pratique.
 
 **Étape 4 : Contributions communautaires**
 Permettre à la communauté de proposer des améliorations sur le contenu existant, ou de contribuer de nouveaux nœuds.
 
 **Étape 5 : Monétisation (SaaS)**
-NodeMap est open source. Le code est public et la communauté peut y contribuer. Le contenu de base reste gratuit et complet pour tout le monde. Le premium ajoute de la valeur sans rien bloquer :
+Velaluna est open source. Le contenu de base reste gratuit et complet pour tout le monde. Le premium ajoute de la valeur sans rien bloquer :
 
 - Stats avancées : suivi détaillé de la progression, temps passé, points forts et faibles
 - Nœuds approfondis : contenu premium pour aller plus loin (cas avancés, edge cases, bonnes pratiques pro)
-- Projets sur la plateforme : créer, publier et partager ses projets directement depuis NodeMap
+- Projets sur la plateforme : créer, publier et partager ses projets directement depuis Velaluna
 - Version école : tableau de bord professeur, suivi des élèves, gestion de classes et parcours imposés

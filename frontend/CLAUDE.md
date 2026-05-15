@@ -1,4 +1,12 @@
-# CLAUDE.md — Frontend
+# CLAUDE.md — Frontend (agent Frontend)
+
+## Contexte agent
+
+Tu es l'agent Frontend de Velaluna. Tu travailles uniquement dans le dossier `frontend/`.
+Tu ne touches pas au backend, à la base de données, ni à la config Docker.
+Avant chaque session : crée une branche `feature/` depuis `develop`.
+
+---
 
 ## Stack
 
@@ -6,7 +14,7 @@
 - **Cytoscape.js** pour le graphe interactif
 - **Pinia** pour la gestion d'état
 - **Vue Router** pour la navigation
-- **TypeScript** (optionnel mais encouragé pour les types de données)
+- **TypeScript** (obligatoire pour les types de données)
 
 ---
 
@@ -33,7 +41,7 @@ frontend/
 │   ├── composables/
 │   │   └── useCytoscape.ts          ← logique Cytoscape réutilisable
 │   ├── types/
-│   │   └── nodemap.ts               ← types TypeScript (Node, Tech, Theme…)
+│   │   └── velaluna.ts              ← types TypeScript (Node, Tech, Theme…)
 │   └── assets/
 │       └── logos/                   ← logos des technos (SVG)
 ```
@@ -46,7 +54,7 @@ frontend/
 - Props typées avec `defineProps<{...}>()`
 - Pas de `this`, pas d'Options API
 - Un composant = une responsabilité claire
-- Les noms de composants sont en PascalCase
+- Noms de composants en PascalCase
 
 ---
 
@@ -57,7 +65,6 @@ Le graphe est initialisé dans `NodeGraph.vue` via le composable `useCytoscape.t
 **Les trois états visuels d'un nœud :**
 
 ```js
-// Classes Cytoscape appliquées selon la progression
 'locked'      // gris, non cliquable — prérequis manquants
 'available'   // bleu, cliquable — prérequis complétés
 'completed'   // vert, cliquable — validé par l'apprenant
@@ -68,32 +75,32 @@ Le graphe est initialisé dans `NodeGraph.vue` via le composable `useCytoscape.t
 ```js
 cy.layout({
   name: 'dagre',
-  rankDir: 'TB',      // top → bottom
+  rankDir: 'TB',   // top → bottom
   nodeSep: 60,
   rankSep: 80,
   padding: 30
 }).run()
 ```
 
-**Interaction :** un clic sur un nœud `available` ou `completed` ouvre la fiche (panneau latéral ou navigation vers NodeView).
-Un clic sur un nœud `locked` affiche un toast "Complète d'abord les prérequis".
+**Interactions :**
+- Clic sur `available` ou `completed` → ouvre la fiche du nœud
+- Clic sur `locked` → toast "Complète d'abord les prérequis"
 
 ---
 
 ## Pinia — stores
 
 ### progressStore
-Responsable de la progression localStorage.
+Gère la progression en localStorage.
 
 ```ts
-// Clés importantes
 status(techId, nodeId): 'locked' | 'available' | 'in_progress' | 'completed'
 completeNode(techId, nodeId, projectId): void
 isAvailable(techId, nodeId): boolean  // tous les prérequis complétés ?
 ```
 
 ### contentStore
-Responsable du fetch des données depuis l'API backend.
+Gère le fetch des données depuis le backend.
 
 ```ts
 fetchTechnologies(): Promise<Technology[]>
@@ -103,22 +110,31 @@ getNode(nodeId: string): Node | undefined
 
 ---
 
-## Types de données
+## Types TypeScript
 
-Les types TypeScript reflètent exactement le schéma JSON défini dans `data-schema.md`.
-Ne pas inventer de champs supplémentaires sans mettre à jour le schéma.
+Les types reflètent exactement le schéma dans `velaluna-data-schema.md`. Ne pas inventer de champs sans mettre à jour le schéma.
 
 ```ts
-// Voir src/types/nodemap.ts pour les types complets
 type NodeStatus = 'locked' | 'available' | 'in_progress' | 'completed'
 type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 ```
 
 ---
 
-## Ce qu'il ne faut pas faire
+## Règles
 
 - Ne pas appeler l'API directement depuis un composant — passer par les stores
-- Ne pas stocker la progression ailleurs que dans `progressStore` (et donc localStorage)
-- Ne pas modifier le graphe Cytoscape directement dans un composant — passer par `useCytoscape.ts`
-- Ne pas utiliser `v-html` pour afficher le code des exemples — utiliser une lib de coloration syntaxique (ex: Shiki ou highlight.js)
+- Ne pas stocker la progression ailleurs que dans `progressStore`
+- Ne pas modifier le graphe Cytoscape dans un composant — passer par `useCytoscape.ts`
+- Ne pas utiliser `v-html` pour le code des exemples — utiliser Shiki ou highlight.js
+- Ne pas utiliser `any` en TypeScript
+
+## Git
+
+```bash
+git checkout develop && git pull
+git checkout -b feature/nom-de-la-feature
+# ... coder ...
+git commit -m "feat(frontend): description"
+git push origin feature/nom-de-la-feature
+```

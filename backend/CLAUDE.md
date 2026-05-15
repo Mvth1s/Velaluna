@@ -1,10 +1,18 @@
-# CLAUDE.md — Backend
+# CLAUDE.md — Backend (agent Backend / Base de données)
+
+## Contexte agent
+
+Tu es l'agent Backend (ou Base de données) de Velaluna. Tu travailles uniquement dans le dossier `backend/`.
+Tu ne touches pas au frontend ni à la config Docker.
+Avant chaque session : crée une branche `feature/` ou `fix/` depuis `develop`.
+
+---
 
 ## Stack
 
-- **Express** (Node.js) — API REST
+- **Express** (Node.js) — API REST en lecture seule
 - **better-sqlite3** — SQLite synchrone, zéro config
-- **TypeScript** — fortement encouragé
+- **TypeScript** — obligatoire
 
 ---
 
@@ -14,19 +22,19 @@
 backend/
 ├── src/
 │   ├── routes/
-│   │   ├── themes.ts            ← GET /themes
-│   │   ├── technologies.ts      ← GET /technologies, GET /technologies/:id
-│   │   └── nodes.ts             ← GET /nodes/:id, GET /technologies/:id/nodes
+│   │   ├── themes.ts              ← GET /themes
+│   │   ├── technologies.ts        ← GET /technologies, GET /technologies/:id
+│   │   └── nodes.ts               ← GET /nodes/:id, GET /technologies/:id/nodes
 │   ├── controllers/
 │   │   ├── themesController.ts
 │   │   ├── technologiesController.ts
 │   │   └── nodesController.ts
 │   ├── db/
-│   │   ├── database.ts          ← connexion SQLite (singleton)
-│   │   └── seed.ts              ← peuple la DB depuis /content (JSON)
-│   └── app.ts                   ← setup Express, middlewares, routes
+│   │   ├── database.ts            ← connexion SQLite (singleton)
+│   │   └── seed.ts                ← peuple la DB depuis /content (JSON)
+│   └── app.ts                     ← setup Express, middlewares, routes
 ├── data/
-│   └── nodemap.db               ← fichier SQLite (gitignore)
+│   └── velaluna.db                ← fichier SQLite (gitignore)
 └── package.json
 ```
 
@@ -34,7 +42,8 @@ backend/
 
 ## API — Routes disponibles
 
-Toutes les routes sont en lecture seule (GET). Pas d'écriture via l'API — la progression est gérée côté client en localStorage.
+Toutes les routes sont **en lecture seule** (GET uniquement).
+La progression utilisateur est gérée côté client en localStorage — pas d'écriture via l'API au MVP.
 
 ```
 GET /themes                        → liste tous les thèmes
@@ -46,25 +55,17 @@ GET /nodes/:id                     → détail complet d'un nœud
 
 **Format de réponse standard :**
 ```json
-{
-  "data": { ... },
-  "error": null
-}
+{ "data": { ... }, "error": null }
 ```
 
 **En cas d'erreur :**
 ```json
-{
-  "data": null,
-  "error": "Node not found"
-}
+{ "data": null, "error": "Node not found" }
 ```
 
 ---
 
-## Base de données SQLite
-
-### Schéma des tables
+## Schéma SQLite
 
 ```sql
 CREATE TABLE themes (
@@ -87,45 +88,54 @@ CREATE TABLE nodes (
   id TEXT PRIMARY KEY,
   label TEXT NOT NULL,
   difficulty TEXT NOT NULL CHECK (difficulty IN ('beginner', 'intermediate', 'advanced')),
-  data JSON NOT NULL   -- tout le contenu du nœud stocké en JSON
+  data JSON NOT NULL   -- contenu complet du nœud (explanation, analogy, example, projects…)
 );
 
 CREATE TABLE technology_nodes (
   technology_id TEXT NOT NULL,
   node_id TEXT NOT NULL,
-  position INTEGER,    -- ordre dans le graphe
+  position INTEGER,
   PRIMARY KEY (technology_id, node_id),
   FOREIGN KEY (technology_id) REFERENCES technologies(id),
   FOREIGN KEY (node_id) REFERENCES nodes(id)
 );
 ```
 
-Le contenu complet du nœud (explanation, analogy, example, projects, prerequisites, unlocks) est stocké dans la colonne `data` en JSON. Ça évite une prolifération de tables pour le MVP.
+Le contenu complet du nœud est stocké en JSON dans `data`. Évite une prolifération de tables pour le MVP.
 
 ### Seeding
 
-Le script `db/seed.ts` lit les fichiers JSON dans `/content` et les insère en base.
-À relancer à chaque ajout de contenu :
+Le script `db/seed.ts` lit les fichiers JSON dans `/content` et insère en base.
 
 ```bash
-npm run seed
+npm run seed   # à relancer à chaque ajout de contenu
 ```
 
 ---
 
 ## Conventions Express
 
-- Un fichier de routes par entité (themes, technologies, nodes)
-- Les controllers contiennent la logique, les routes font juste le câblage
+- Un fichier de routes par entité
+- Les controllers contiennent la logique, les routes font le câblage
 - Les erreurs sont catchées et retournées avec le format standard
-- CORS activé pour `http://localhost:5173` (frontend dev)
-- Pas d'authentification au stade MVP
+- CORS activé pour `http://localhost:5173` uniquement
+- Pas d'authentification au MVP
 
 ---
 
-## Ce qu'il ne faut pas faire
+## Règles
 
-- Ne pas écrire de logique SQL dans les routes — tout passe par les controllers
-- Ne pas exposer d'endpoints d'écriture (POST/PUT/DELETE) au MVP — la DB est en lecture seule depuis l'API
-- Ne pas stocker la progression utilisateur côté backend — c'est le localStorage qui gère ça
-- Ne pas utiliser un ORM (Prisma, Sequelize) pour le MVP — better-sqlite3 suffit et est plus simple à déboguer
+- Pas de logique SQL dans les routes — tout passe par les controllers
+- Pas d'endpoints d'écriture (POST/PUT/DELETE) au MVP
+- Pas d'ORM (Prisma, Sequelize) — better-sqlite3 suffit et est plus simple à déboguer
+- Pas de `any` en TypeScript
+
+## Git
+
+```bash
+git checkout develop && git pull
+git checkout -b feature/nom-de-la-feature   # ou fix/ ou devops/
+# ... coder ...
+git commit -m "feat(backend): description"
+git push origin feature/nom-de-la-feature
+```

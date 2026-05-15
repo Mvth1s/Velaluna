@@ -1,0 +1,24 @@
+{
+  "id": "types-de-donnees",
+  "label": "Types de données",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "En JavaScript, chaque valeur a un type : du texte (string), un nombre (number), ou un booléen vrai/faux (boolean). Comprendre les types permet d'éviter des erreurs surprenantes, comme additionner un nombre et du texte.",
+  "analogy": "Comme dans la vraie vie, les choses ont des catégories. Une pomme est un fruit, 42 est un nombre, \"oui\" est une réponse. En programmation, le type d'une valeur détermine ce qu'on peut en faire.",
+  "example": {
+    "language": "javascript",
+    "code": "const nom = 'Alice';          // string\nconst age = 25;               // number\nconst estDeveloppeur = true;  // boolean\n\nconsole.log(typeof nom);          // 'string'\nconsole.log(typeof age);          // 'number'\nconsole.log(typeof estDeveloppeur); // 'boolean'\n\n// Attention aux mélanges de types !\nconsole.log('J\\'ai ' + age + ' ans'); // 'J\\'ai 25 ans'",
+    "explanation": "typeof permet de vérifier le type d'une valeur. JavaScript convertit automatiquement les types dans certains cas (coercition), ce qui peut surprendre."
+  },
+  "prerequisites": ["variables"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "detective-types",
+      "label": "Détective des types",
+      "difficulty": "beginner",
+      "description": "Crée 6 variables de types différents (au moins une string, un number et un boolean). Pour chacune, affiche sa valeur et son type avec typeof dans la console. Essaie ensuite d'additionner une string et un number — qu'est-ce qui se passe ?",
+      "hint": "typeof renvoie lui-même une string. Pour afficher le type, tu peux écrire : console.log(typeof maVariable)."
+    }
+  ]
+}

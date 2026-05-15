@@ -1,0 +1,24 @@
+{
+  "id": "variables",
+  "label": "Variables",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Une variable, c'est une boîte dans laquelle tu ranges une valeur pour pouvoir la réutiliser plus tard. Tu lui donnes un nom, et tu peux y accéder à tout moment dans ton code.",
+  "analogy": "Imagine un tiroir avec une étiquette collée dessus. L'étiquette, c'est le nom de ta variable. Ce qu'il y a dans le tiroir, c'est sa valeur. Tu peux ouvrir le tiroir, regarder ce qu'il contient, ou le vider pour y mettre autre chose.",
+  "example": {
+    "language": "javascript",
+    "code": "let age = 25;\nconst prenom = 'Alice';\n\nconsole.log(prenom + ' a ' + age + ' ans');\n// Affiche : Alice a 25 ans\n\nage = 26; // on peut modifier une variable let\n// prenom = 'Bob'; // erreur : const ne peut pas être modifié",
+    "explanation": "let crée une variable modifiable, const une constante. Les deux permettent de stocker une valeur et de la réutiliser dans le code."
+  },
+  "prerequisites": [],
+  "unlocks": ["types-de-donnees"],
+  "projects": [
+    {
+      "id": "carte-identite",
+      "label": "Carte d'identité",
+      "difficulty": "beginner",
+      "description": "Crée des variables pour stocker ton prénom, ton âge et ta ville. Affiche une phrase de présentation complète dans la console, par exemple : \"Bonjour, je m'appelle Alice, j'ai 25 ans et j'habite à Paris.\"",
+      "hint": "Utilise const pour les valeurs qui ne changent pas (prénom, ville) et let pour celles qui peuvent évoluer (âge). Concatène les variables avec des +."
+    }
+  ]
+}

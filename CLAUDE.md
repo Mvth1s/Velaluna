@@ -1,9 +1,14 @@
-# CLAUDE.md — Velaluna (racine)
+# CLAUDE.md
 
-## C'est quoi ce projet ?
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-Velaluna est un graphe de connaissances interactif pour apprendre la tech, concept par concept.
-L'apprenant navigue dans un graphe de nœuds : chaque nœud est un concept, relié à ses prérequis et à ce qu'il débloque.
+---
+
+## Qu'est-ce que Velaluna ?
+
+Graphe de connaissances interactif pour apprendre la tech, concept par concept.
+L'apprenant choisit un thème → une technologie → navigue dans un graphe de nœuds.
+Chaque nœud est un concept relié à ses prérequis et à ce qu'il débloque.
 
 **Docs de référence :**
 - `velaluna-vision.md` — vision produit, MVP, roadmap
@@ -11,123 +16,67 @@ L'apprenant navigue dans un graphe de nœuds : chaque nœud est un concept, reli
 
 ---
 
-## Structure du projet
+## Stack (ne pas remettre en question)
 
-```
-velaluna/
-├── CLAUDE.md                      ← tu es ici
-├── velaluna-vision.md
-├── velaluna-data-schema.md
-├── README.md
-├── docker-compose.yml
-├── .env.example
-├── velaluna_logo_dark.png
-├── velaluna_logo_light.png
-├── velaluna_charter.png
-├── frontend/                      ← Vue.js (voir frontend/CLAUDE.md)
-│   └── CLAUDE.md
-├── backend/                       ← Express + SQLite (voir backend/CLAUDE.md)
-│   └── CLAUDE.md
-└── content/                       ← JSON des nœuds, technos, thèmes
-    ├── themes/
-    ├── technologies/
-    └── nodes/
-```
+| Couche | Choix |
+|---|---|
+| Frontend | Vue 3 + Vite, Composition API (`<script setup>`) |
+| Graphe | Cytoscape.js + layout dagre |
+| État | Pinia |
+| Backend | Express (Node.js), REST GET-only |
+| Base de données | SQLite via better-sqlite3 |
+| Dev | Docker Compose |
 
 ---
 
-## Stack décidée (ne pas remettre en question)
-
-| Couche | Choix | Remarque |
-|---|---|---|
-| Frontend | Vue 3 + Vite | Composition API, pas Options API |
-| Graphe | Cytoscape.js + layout dagre | Layout hiérarchique orienté |
-| État | Pinia | Store officiel Vue 3 |
-| Backend | Express (Node.js) | REST API simple |
-| Base de données | SQLite (MVP) | Via better-sqlite3 |
-| Dev | Docker Compose | 1 commande pour tout lancer |
-
----
-
-## Architecture multi-agents
-
-Le projet est développé avec une équipe d'agents spécialisés. Chaque agent a un périmètre strict et ne sort pas de son domaine.
-
-### Les agents disponibles
-
-| Agent | Rôle | CLAUDE.md à fournir en contexte |
-|---|---|---|
-| **Frontend** | Vue.js, Cytoscape.js, UI/UX | `CLAUDE.md` + `frontend/CLAUDE.md` |
-| **Backend** | Express, routes API, logique métier | `CLAUDE.md` + `backend/CLAUDE.md` |
-| **Base de données** | Schéma SQLite, migrations, seed | `CLAUDE.md` + `backend/CLAUDE.md` + `velaluna-data-schema.md` |
-| **DevOps** | Docker, docker-compose, CI/CD, déploiement | `CLAUDE.md` |
-| **Contenu** | Génération des nœuds JSON via LLM | `CLAUDE.md` + `velaluna-data-schema.md` |
-
-### Protocole avant chaque session
-
-1. **Définir la tâche** — être précis sur ce qui doit être produit
-2. **Choisir l'agent** — selon le domaine de la tâche
-3. **Fournir le bon contexte** — donner les CLAUDE.md listés ci-dessus pour cet agent
-4. **Créer la branche** — avant de commencer à coder (voir Git ci-dessous)
-5. **Valider et merger** — relire, tester, ouvrir une PR vers `develop`
-
----
-
-## Workflow Git
-
-### Branches
-
-```
-main        ← production stable, jamais de commit direct
-develop     ← intégration, base de toutes les features
-feature/*   ← une branche par fonctionnalité
-fix/*       ← corrections de bugs
-content/*   ← ajout ou modification de nœuds JSON
-devops/*    ← docker, CI/CD, config
-```
-
-### Nommage des branches
+## Lancer le projet
 
 ```bash
-feature/graph-interactif
-feature/fiche-noeud
-feature/progression-localstorage
-fix/noeud-verrouille-non-cliquable
-content/noeuds-javascript
-devops/docker-compose-setup
+# Tout lancer (recommandé)
+docker-compose up --build   # premier lancement
+docker-compose up           # suivants
+
+# Frontend seul (dans frontend/)
+npm install && npm run dev
+
+# Backend seul (dans backend/)
+npm install && npm run dev
+npm run seed                # peupler la DB depuis /content (JSON → SQLite)
 ```
 
-### Commits — format conventionnel
+- Frontend : http://localhost:5173
+- Backend API : http://localhost:3000
+- Base de données : `backend/data/velaluna.db` (gitignored)
 
+---
+
+## Architecture des données
+
+Hiérarchie des entités : `Theme → Technology → Node`
+- Un nœud peut appartenir à plusieurs technos (relation many-to-many via `technology_nodes`)
+- Le contenu statique est stocké en SQLite (chargé depuis `/content/*.json` via `npm run seed`)
+- La progression utilisateur est stockée **uniquement en localStorage** (pas d'écriture via l'API au MVP)
+
+**API — routes disponibles (GET uniquement) :**
 ```
-type(scope): description courte en français
-
-feat(frontend): ajoute le composant NodeGraph avec Cytoscape
-fix(backend): corrige le format de réponse sur GET /nodes/:id
-chore(devops): configure docker-compose avec les trois services
-content(javascript): ajoute les 8 premiers nœuds JavaScript
-docs: met à jour le schéma de données
+GET /themes
+GET /technologies
+GET /technologies/:id
+GET /technologies/:id/nodes
+GET /nodes/:id
 ```
 
-**Types autorisés :** `feat` · `fix` · `chore` · `content` · `docs` · `refactor` · `test`
+Format de réponse : `{ "data": {...}, "error": null }` ou `{ "data": null, "error": "message" }`
 
-### Quand commiter ?
-
-- Après chaque fonctionnalité cohérente et fonctionnelle — pas après chaque fichier
-- Jamais avec du code cassé
-- Avant de changer de contexte (fin de session, changement d'agent)
-- Un commit = un message qui a du sens relu 6 mois plus tard
-
-### Règle absolue
-
-```bash
-git checkout develop && git pull
-git checkout -b feature/ma-feature
-# ... coder ...
-git add . && git commit -m "feat(scope): description"
-git push origin feature/ma-feature
-# → ouvrir une PR vers develop
+**États visuels d'un nœud (Cytoscape) :**
 ```
+locked      → gris, non cliquable (prérequis manquants)
+available   → bleu, cliquable (tous les prérequis complétés)
+completed   → vert, cliquable (validé par l'apprenant)
+```
+
+Un nœud est `available` uniquement si **tous** ses prérequis sont `completed`.
+Un nœud sans prérequis est `available` dès le départ.
 
 ---
 
@@ -135,19 +84,42 @@ git push origin feature/ma-feature
 
 - Tout le code est en **anglais** (variables, fonctions, commentaires)
 - Les textes affichés à l'utilisateur sont en **français**
-- Pas de `any` en TypeScript — typer ou ne pas typer, mais pas de `any`
+- Les IDs des nœuds, technos et thèmes sont en **kebab-case français** (ex: `fonctions-fleches`)
+- Pas de `any` en TypeScript
 - Pas de dépendances inutiles — justifier chaque nouveau package
-- Les IDs des nœuds, technos et thèmes sont toujours en **kebab-case français** (ex: `fonctions-fleches`)
 
 ---
 
-## Lancer le projet
+## Agents spécialisés — contexte requis
 
-```bash
-docker-compose up --build   # premier lancement
-docker-compose up           # lancements suivants
+| Tâche | CLAUDE.md à charger |
+|---|---|
+| Frontend (Vue, Cytoscape, UI) | `CLAUDE.md` + `frontend/CLAUDE.md` |
+| Backend (Express, routes) | `CLAUDE.md` + `backend/CLAUDE.md` |
+| Base de données (schéma, seed) | `CLAUDE.md` + `backend/CLAUDE.md` + `velaluna-data-schema.md` |
+| Contenu (génération JSON nœuds) | `CLAUDE.md` + `velaluna-data-schema.md` |
+| DevOps (Docker, CI/CD) | `CLAUDE.md` |
+
+---
+
+## Workflow Git
+
+```
+main        ← production stable, jamais de commit direct
+dev         ← base de toutes les features (branch depuis ici)
+feature/*   ← fonctionnalités
+fix/*       ← corrections
+content/*   ← ajout/modification de nœuds JSON
+devops/*    ← docker, CI/CD, config
 ```
 
-- Frontend : http://localhost:5173
-- Backend API : http://localhost:3000
-- Base de données : `backend/data/velaluna.db`
+**Format des commits :**
+```
+feat(frontend): ajoute le composant NodeGraph avec Cytoscape
+fix(backend): corrige le format de réponse sur GET /nodes/:id
+content(javascript): ajoute les 8 premiers nœuds JavaScript
+```
+
+Types : `feat` · `fix` · `chore` · `content` · `docs` · `refactor` · `test`
+
+Toujours brancher depuis `dev` et ouvrir une PR vers `dev`.

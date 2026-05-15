@@ -132,7 +132,7 @@ type Difficulty = 'beginner' | 'intermediate' | 'advanced'
 ## Git
 
 ```bash
-git checkout develop && git pull
+git checkout dev && git pull
 git checkout -b feature/nom-de-la-feature
 # ... coder ...
 git commit -m "feat(frontend): description"

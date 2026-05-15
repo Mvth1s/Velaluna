@@ -2,10 +2,12 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
+import { useProgressStore } from '../stores/progressStore'
 import type { Theme, Technology } from '../types/velaluna'
 
 const router = useRouter()
 const contentStore = useContentStore()
+const progressStore = useProgressStore()
 
 const themes = ref<Theme[]>([])
 const technologies = ref<Technology[]>([])
@@ -51,7 +53,15 @@ function getTechsByTheme(themeId: string): Technology[] {
             class="tech-card"
             @click="router.push({ name: 'technology', params: { id: tech.id } })"
           >
-            <strong>{{ tech.label }}</strong>
+            <div class="tech-card__top">
+              <strong>{{ tech.label }}</strong>
+              <span
+                v-if="progressStore.getCompletedCountForTech(tech.id) > 0"
+                class="tech-card__progress"
+              >
+                {{ progressStore.getCompletedCountForTech(tech.id) }}/{{ tech.nodes.length }}
+              </span>
+            </div>
             <span>{{ tech.description }}</span>
           </button>
         </div>
@@ -135,9 +145,26 @@ function getTechsByTheme(themeId: string): Technology[] {
   box-shadow: 0 2px 8px rgba(59, 130, 246, 0.15);
 }
 
+.tech-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .tech-card strong {
   font-size: 1.0625rem;
   color: #111827;
+}
+
+.tech-card__progress {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #22c55e;
+  background: #f0fdf4;
+  border-radius: 4px;
+  padding: 0.125rem 0.375rem;
+  white-space: nowrap;
 }
 
 .tech-card span {

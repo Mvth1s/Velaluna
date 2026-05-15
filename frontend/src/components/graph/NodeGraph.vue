@@ -10,7 +10,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   nodeClick: [node: Node]
-  lockedNodeClick: []
+  lockedNodeClick: [node: Node]
 }>()
 
 const containerRef = ref<HTMLElement | null>(null)
@@ -19,12 +19,13 @@ const statusesRef = computed(() => props.statuses)
 
 useCytoscape(containerRef, nodesRef, statusesRef, {
   onNodeTap(nodeId, status) {
+    const node = props.nodes.find(n => n.id === nodeId)
+    if (!node) return
     if (status === 'locked') {
-      emit('lockedNodeClick')
+      emit('lockedNodeClick', node)
       return
     }
-    const node = props.nodes.find(n => n.id === nodeId)
-    if (node) emit('nodeClick', node)
+    emit('nodeClick', node)
   }
 })
 </script>

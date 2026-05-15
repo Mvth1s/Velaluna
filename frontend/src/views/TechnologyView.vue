@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import { useProgressStore } from '../stores/progressStore'
@@ -33,12 +33,21 @@ const completedCount = computed(() =>
   Object.values(statuses.value).filter(s => s === 'completed').length
 )
 
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape') selectedNode.value = null
+}
+
 onMounted(async () => {
+  window.addEventListener('keydown', onKeydown)
   ;[technology.value, nodes.value] = await Promise.all([
     contentStore.fetchTechnology(techId.value),
     contentStore.fetchNodes(techId.value)
   ])
   loading.value = false
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', onKeydown)
 })
 
 function showToast(message: string) {
@@ -54,8 +63,16 @@ function onNodeClick(node: Node) {
   progressStore.startNode(techId.value, node.id)
 }
 
-function onLockedNodeClick() {
-  showToast('Complète d\'abord les prérequis !')
+function onLockedNodeClick(node: Node) {
+  const missingLabels = node.prerequisites
+    .filter(id => statuses.value[id] !== 'completed')
+    .map(id => nodes.value.find(n => n.id === id)?.label ?? id)
+
+  if (missingLabels.length > 0) {
+    showToast(`À compléter d'abord : ${missingLabels.join(', ')}`)
+  } else {
+    showToast('Complète d\'abord les prérequis !')
+  }
 }
 
 function onComplete(projectId: string) {
@@ -89,7 +106,7 @@ function onComplete(projectId: string) {
         :nodes="nodes"
         :statuses="statuses"
         @node-click="onNodeClick"
-        @locked-node-click="onLockedNodeClick"
+        @locked-node-click="onLockedNodeClick($event)"
       />
 
       <NodeCard

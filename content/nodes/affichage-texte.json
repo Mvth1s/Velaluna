@@ -1,0 +1,24 @@
+{
+  "id": "affichage-texte",
+  "label": "Affichage et recherche de texte",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Le terminal offre des commandes puissantes pour lire et fouiller des fichiers texte. cat affiche le contenu, grep cherche des lignes correspondant à un motif. Ces outils sont essentiels pour lire des logs, analyser des données ou chercher du code.",
+  "analogy": "cat, c'est lire un livre d'une traite. less, c'est le feuilleter page par page. grep, c'est l'index en fin de livre : tu cherches un mot et on te dit sur quelle page il apparaît.",
+  "example": {
+    "language": "bash",
+    "code": "# Afficher le contenu d'un fichier\ncat fichier.txt\n\n# Afficher avec numéros de ligne\ncat -n fichier.txt\n\n# Lire un gros fichier page par page\nless gros-fichier.log\n# (navigation : espace/b pour avancer/reculer, q pour quitter)\n\n# Afficher les 10 premières lignes\nhead fichier.txt\n\n# Afficher les 20 dernières lignes\ntail -n 20 fichier.txt\n\n# Suivre un fichier en temps réel (logs !)\ntail -f /var/log/syslog\n\n# Chercher les lignes contenant 'erreur'\ngrep 'erreur' fichier.log\n\n# Cherche sans tenir compte des majuscules\ngrep -i 'ERROR' fichier.log\n\n# Compter le nombre de lignes correspondantes\ngrep -c 'erreur' fichier.log",
+    "explanation": "grep est l'un des outils les plus utiles du terminal. Il peut chercher dans plusieurs fichiers à la fois (grep 'motif' *.txt) ou dans l'arborescence entière (grep -r 'motif' .)."
+  },
+  "prerequisites": ["navigation-fichiers"],
+  "unlocks": ["pipes-redirections"],
+  "projects": [
+    {
+      "id": "analyse-logs",
+      "label": "Analyse d'un fichier texte",
+      "difficulty": "beginner",
+      "description": "Crée un fichier journal.txt avec 10 lignes de texte inventées, dont 3 contenant le mot 'erreur'. Utilise cat pour afficher le tout, head pour les 3 premières lignes, tail pour les 3 dernières, et grep pour ne voir que les lignes avec 'erreur'.",
+      "hint": "Crée le fichier avec un éditeur (nano journal.txt) ou en redirigeant : echo 'ligne 1' >> journal.txt. Répète pour chaque ligne. Ensuite, essaie grep -c 'erreur' journal.txt pour compter les occurrences."
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "id": "scripting",
+  "label": "Scripting",
+  "description": "Automatisation, ligne de commande et scripts pour contrôler ton ordinateur et tes serveurs.",
+  "icon": "terminal",
+  "technologies": ["bash", "python"]
+}

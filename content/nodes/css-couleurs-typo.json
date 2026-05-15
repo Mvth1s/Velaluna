@@ -1,0 +1,24 @@
+{
+  "id": "css-couleurs-typo",
+  "label": "CSS — Couleurs et typographie",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "La couleur et la typographie sont les outils visuels les plus impactants du design. CSS permet de contrôler finement les couleurs (texte, fond, bordure) et la typographie (police, taille, graisse, interligne) pour créer une identité visuelle cohérente.",
+  "analogy": "Un graphiste qui choisit des polices et des couleurs pour une affiche, c'est exactement ce que tu fais en CSS. Deux pages avec le même contenu HTML mais des typographies et couleurs différentes peuvent donner des impressions complètement opposées — sérieuse, ludique, moderne.",
+  "example": {
+    "language": "css",
+    "code": "/* Couleurs : hex, rgb, ou noms */\n.texte-principal {\n  color: #111827;             /* gris très foncé */\n  background-color: #f9fafb;  /* gris très clair */\n}\n\n/* Couleurs avec transparence (rgba) */\n.overlay {\n  background-color: rgba(0, 0, 0, 0.5); /* noir à 50% d'opacité */\n}\n\n/* Typographie */\nbody {\n  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;\n  font-size: 16px;       /* taille de base */\n  line-height: 1.6;      /* interligne (1.5-1.7 est confortable à lire) */\n  color: #374151;\n}\n\nh1 {\n  font-size: 2.25rem;    /* rem = relatif à la taille de base */\n  font-weight: 700;      /* graisse : 400 normal, 700 bold */\n  letter-spacing: -0.02em; /* espacement des lettres */\n}",
+    "explanation": "rem est préférable à px pour les tailles de texte — il respecte les préférences d'accessibilité de l'utilisateur. line-height sans unité (1.6) est relatif à la font-size, ce qui évite les problèmes avec les polices imbriquées."
+  },
+  "prerequisites": ["css-box-model"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "charte-typographique",
+      "label": "Charte typographique",
+      "difficulty": "beginner",
+      "description": "Crée une page HTML qui présente une charte typographique : un h1, un h2, un h3, des paragraphes, un texte en gras et un en italique. Applique une police via Google Fonts (fonts.google.com), choisis une palette de 3 couleurs cohérentes, et soigne l'interligne.",
+      "hint": "Sur Google Fonts, choisis une police, copie le lien <link> dans ton <head>, puis utilise font-family: 'Nom de la police', sans-serif. Pour une palette, cherche '3 color palette' en ligne ou utilise coolors.co."
+    }
+  ]
+}

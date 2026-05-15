@@ -1,0 +1,24 @@
+{
+  "id": "scripts-bash",
+  "label": "Scripts Bash",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Un script Bash est un fichier texte contenant une suite de commandes. Il commence par un shebang (#!/bin/bash), doit être rendu exécutable, et peut recevoir des arguments. Les scripts permettent d'automatiser n'importe quelle tâche répétitive.",
+  "analogy": "Un script Bash, c'est une recette que tu confies à un robot. Tu écris les étapes une seule fois dans un fichier. Ensuite, le robot exécute la recette en entier chaque fois que tu lui dis. Tu peux même lui passer des paramètres : 'fais-le avec ces ingrédients-là'.",
+  "example": {
+    "language": "bash",
+    "code": "#!/bin/bash\n# sauvegarder.sh : script de sauvegarde simple\n\n# Paramètres passés au script ($1, $2...)\nSOURCE=$1\nDESTINATION=$2\n\n# Vérifier que les paramètres sont fournis\nif [ -z \"$SOURCE\" ] || [ -z \"$DESTINATION\" ]; then\n  echo \"Usage : $0 source destination\"\n  exit 1  # Quitter avec un code d'erreur\nfi\n\n# Vérifier que la source existe\nif [ ! -d \"$SOURCE\" ]; then\n  echo \"Erreur : $SOURCE n'existe pas\"\n  exit 1\nfi\n\n# Créer la destination si nécessaire\nmkdir -p \"$DESTINATION\"\n\n# Copier les fichiers\ncp -r \"$SOURCE\"/* \"$DESTINATION\"/\n\necho \"Sauvegarde de $SOURCE vers $DESTINATION terminée.\"",
+    "explanation": "$0 est le nom du script lui-même, $1 le premier argument, $2 le deuxième. -z teste si une chaîne est vide. exit 0 = succès, exit 1 = erreur. chmod +x script.sh rend le script exécutable."
+  },
+  "prerequisites": ["conditions-bash", "boucles-bash"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "script-nettoyage",
+      "label": "Script de nettoyage",
+      "difficulty": "beginner",
+      "description": "Écris un script nettoyer.sh qui : prend en paramètre un dossier ($1), vérifie qu'il existe, liste tous les fichiers .tmp dans ce dossier, les affiche et les supprime, puis affiche le nombre de fichiers supprimés. Rends-le exécutable avec chmod +x.",
+      "hint": "Utilise DOSSIER=$1 au début. Pour compter les fichiers .tmp avant de les supprimer : NB=$(ls $DOSSIER/*.tmp 2>/dev/null | wc -l). Supprime avec rm $DOSSIER/*.tmp. Exécute le script avec ./nettoyer.sh /tmp/test."
+    }
+  ]
+}

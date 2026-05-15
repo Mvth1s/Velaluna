@@ -1,0 +1,24 @@
+{
+  "id": "python-conditions",
+  "label": "Conditions Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Les conditions Python utilisent if, elif, else pour exécuter du code selon une condition. L'indentation (4 espaces) définit les blocs — pas d'accolades. Python offre aussi des opérateurs logiques (and, or, not) et une syntaxe ternaire compacte.",
+  "analogy": "Un aiguillage de train : selon la condition (vitesse, destination), le train est dirigé sur une voie ou une autre. Le if est la première bifurcation, elif une bifurcation supplémentaire, else la voie par défaut si aucune condition n'est remplie.",
+  "example": {
+    "language": "python",
+    "code": "age = 20\n\n# Condition simple\nif age >= 18:\n    print(\"Majeur\")\n\n# Avec else\nif age >= 18:\n    print(\"Majeur\")\nelse:\n    print(\"Mineur\")\n\n# Avec elif\nif age < 13:\n    print(\"Enfant\")\nelif age < 18:\n    print(\"Adolescent\")\nelse:\n    print(\"Adulte\")\n\n# Opérateurs logiques\ntemperature = 22\nsoleil = True\n\nif temperature > 20 and soleil:\n    print(\"Parfait pour sortir !\")\n\nif temperature < 0 or temperature > 40:\n    print(\"Température extrême\")\n\n# Syntaxe ternaire (one-liner)\nstatut = \"majeur\" if age >= 18 else \"mineur\"\nprint(statut)  # majeur",
+    "explanation": "L'indentation (4 espaces) est obligatoire et définit les blocs de code. and/or/not remplacent &&/||/!. La syntaxe ternaire valeur_si_vrai if condition else valeur_si_faux permet des conditions compactes."
+  },
+  "prerequisites": ["python-types"],
+  "unlocks": ["python-boucles"],
+  "projects": [
+    {
+      "id": "classificateur-notes",
+      "label": "Classificateur de notes",
+      "difficulty": "beginner",
+      "description": "Crée une variable note (entre 0 et 20). Écris des conditions pour afficher : 'Excellent' (>=16), 'Bien' (>=12), 'Passable' (>=10), 'Insuffisant' (<10). Ajoute aussi une vérification : si la note est hors de [0,20], affiche 'Note invalide'.",
+      "hint": "Commence par vérifier si la note est valide (if note < 0 or note > 20). Ensuite enchaîne les elif du plus grand au plus petit. L'ordre des elif est important : Python s'arrête au premier True."
+    }
+  ]
+}

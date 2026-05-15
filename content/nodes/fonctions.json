@@ -1,0 +1,24 @@
+{
+  "id": "fonctions",
+  "label": "Fonctions",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Une fonction est un bloc de code réutilisable auquel tu donnes un nom. Tu la définis une fois et tu peux l'appeler autant de fois que tu veux avec des données différentes. C'est le mécanisme fondamental pour éviter la répétition.",
+  "analogy": "Une recette de cuisine, c'est une fonction. Elle décrit les étapes une seule fois, mais tu peux la suivre autant de fois que tu veux avec des ingrédients différents. Les ingrédients sont les paramètres, le plat final est la valeur de retour.",
+  "example": {
+    "language": "javascript",
+    "code": "// Déclaration d'une fonction\nfunction saluer(prenom) {\n  return 'Bonjour ' + prenom + ' !';\n}\n\nconsole.log(saluer('Alice')); // 'Bonjour Alice !'\nconsole.log(saluer('Bob'));   // 'Bonjour Bob !'\n\n// Fonction avec plusieurs paramètres\nfunction additionner(a, b) {\n  return a + b;\n}\nconsole.log(additionner(3, 5)); // 8\n\n// Fonction fléchée (arrow function)\nconst multiplier = (a, b) => a * b;\nconsole.log(multiplier(4, 6)); // 24",
+    "explanation": "return renvoie une valeur depuis la fonction. Sans return, la fonction renvoie undefined. Les arrow functions (=>) sont une syntaxe plus courte, très utilisée en JavaScript moderne."
+  },
+  "prerequisites": ["boucles"],
+  "unlocks": ["portee-variables", "promesses"],
+  "projects": [
+    {
+      "id": "calculatrice",
+      "label": "Calculatrice",
+      "difficulty": "beginner",
+      "description": "Écris 4 fonctions : additionner(a, b), soustraire(a, b), multiplier(a, b), diviser(a, b). Chacune doit retourner le résultat. Pour diviser, gère le cas où b vaut 0 en retournant null et en affichant un message d'erreur.",
+      "hint": "Utilise un if à l'intérieur de diviser() pour vérifier si b === 0 avant de faire la division. Tu peux tester chaque fonction avec console.log(additionner(10, 5))."
+    }
+  ]
+}

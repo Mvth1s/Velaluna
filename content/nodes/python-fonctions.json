@@ -1,0 +1,24 @@
+{
+  "id": "python-fonctions",
+  "label": "Fonctions Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Une fonction Python est un bloc de code réutilisable défini avec def. Elle peut recevoir des paramètres, avoir des valeurs par défaut, et retourner une valeur avec return. Python supporte aussi les fonctions lambda pour des expressions courtes.",
+  "analogy": "Une fonction, c'est une machine dans une usine. Tu l'achètes une fois, tu la positionnes dans l'atelier (définition), et ensuite tu l'utilises autant de fois que tu veux en lui passant des matières premières (paramètres) pour obtenir un produit fini (valeur de retour).",
+  "example": {
+    "language": "python",
+    "code": "# Définir une fonction simple\ndef saluer(nom):\n    print(f\"Bonjour {nom} !\")\n\nsaluer(\"Alice\")  # Bonjour Alice !\n\n# Avec retour de valeur\ndef additionner(a, b):\n    return a + b\n\nresultat = additionner(3, 4)\nprint(resultat)  # 7\n\n# Paramètre avec valeur par défaut\ndef saluer_formel(nom, titre=\"M.\"):\n    return f\"Bonjour {titre} {nom}\"\n\nprint(saluer_formel(\"Dupont\"))           # Bonjour M. Dupont\nprint(saluer_formel(\"Curie\", \"Mme\"))    # Bonjour Mme Curie\n\n# Arguments nommés (kwargs)\ndef creer_profil(nom, age, ville=\"Paris\"):\n    return {\"nom\": nom, \"age\": age, \"ville\": ville}\n\nprofil = creer_profil(age=25, nom=\"Bob\")  # ordre libre avec kwargs\n\n# Lambda : fonction anonyme courte\ndoubler = lambda x: x * 2\nprint(doubler(5))  # 10\n\n# Utile avec sorted()\nmots = [\"banane\", \"kiwi\", \"ananas\"]\ntrie = sorted(mots, key=lambda m: len(m))  # trier par longueur\nprint(trie)  # ['kiwi', 'banane', 'ananas']",
+    "explanation": "Les paramètres avec valeur par défaut doivent venir après les paramètres obligatoires. return sans valeur retourne None. Les lambdas ne peuvent contenir qu'une expression (pas de bloc if/else multiligne)."
+  },
+  "prerequisites": ["python-boucles"],
+  "unlocks": ["python-modules", "python-classes"],
+  "projects": [
+    {
+      "id": "calculatrice-fonctions",
+      "label": "Calculatrice fonctionnelle",
+      "difficulty": "beginner",
+      "description": "Crée 4 fonctions : addition(a, b), soustraction(a, b), multiplication(a, b), division(a, b). La division doit retourner None (et afficher un message) si b == 0. Crée aussi une fonction calculer(a, operation, b) qui prend une chaîne ('+', '-', '*', '/') et appelle la bonne fonction.",
+      "hint": "Pour division : if b == 0: print('Erreur : division par zéro'); return None. Pour calculer() : utilise if/elif sur la chaîne operation. Test : calculer(10, '/', 0) doit afficher l'erreur."
+    }
+  ]
+}

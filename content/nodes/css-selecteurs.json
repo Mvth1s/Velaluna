@@ -1,0 +1,24 @@
+{
+  "id": "css-selecteurs",
+  "label": "CSS — Sélecteurs",
+  "difficulty": "beginner",
+  "technologies": ["html-css"],
+  "explanation": "CSS permet de styliser le HTML. Un sélecteur indique à quels éléments s'appliquent les styles. Les classes (.) et les IDs (#) permettent de cibler des éléments précis plutôt que tous les éléments du même type.",
+  "analogy": "Le CSS, c'est la décoratrice d'intérieur. Le HTML lui dit 'voilà la maison'. La décoratrice choisit : 'je peins tous les murs en blanc, la porte d'entrée en rouge, et le salon (classe .salon) en beige'. Les sélecteurs sont la façon de pointer les pièces à décorer.",
+  "example": {
+    "language": "css",
+    "code": "/* Sélecteur d'élément : cible tous les <p> */\np {\n  color: #374151;\n  line-height: 1.6;\n}\n\n/* Sélecteur de classe : cible tous les éléments class=\"titre\" */\n.titre {\n  font-size: 2rem;\n  font-weight: bold;\n}\n\n/* Sélecteur d'ID : cible l'élément id=\"hero\" (unique) */\n#hero {\n  background-color: #3b82f6;\n  color: white;\n}\n\n/* Combinaison : <p> à l'intérieur d'un .article */\n.article p {\n  margin-bottom: 1rem;\n}\n\n/* Pseudo-classe : survol d'un lien */\na:hover {\n  text-decoration: underline;\n  color: #1d4ed8;\n}",
+    "explanation": "Classes (.nom) pour des éléments réutilisables, IDs (#nom) pour un élément unique par page. Préfère les classes — elles sont plus flexibles. Les pseudo-classes (:hover, :focus) ciblent des états particuliers."
+  },
+  "prerequisites": ["html-liens-medias"],
+  "unlocks": ["css-box-model"],
+  "projects": [
+    {
+      "id": "mise-en-forme-article",
+      "label": "Mise en forme d'article",
+      "difficulty": "beginner",
+      "description": "Reprends ton article de blog HTML. Ajoute une balise <style> dans le <head> (ou un fichier style.css). Donne une classe à tes sections, stylise les titres (couleur, taille), mets une couleur de fond différente pour le header, et change la couleur des liens au survol.",
+      "hint": "Pour lier un fichier CSS externe : <link rel=\"stylesheet\" href=\"style.css\">. Pour tester une couleur, utilise color: #valeur_hexadecimale. Les couleurs hex comme #3b82f6 (bleu) ou #22c55e (vert) sont très courantes."
+    }
+  ]
+}

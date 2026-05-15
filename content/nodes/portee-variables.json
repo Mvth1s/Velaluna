@@ -1,0 +1,24 @@
+{
+  "id": "portee-variables",
+  "label": "Portée des variables",
+  "difficulty": "intermediate",
+  "technologies": ["javascript"],
+  "explanation": "La portée (scope) d'une variable définit où dans le code elle est accessible. Une variable déclarée dans une fonction n'existe qu'à l'intérieur de celle-ci. Comprendre la portée évite des bugs mystérieux liés à des variables qui n'existent pas là où on s'y attend.",
+  "analogy": "Imagine que chaque fonction est une pièce fermée à clé. Ce qui est déclaré dans la pièce reste dans la pièce. Une variable dans le couloir (portée globale) est accessible partout, mais une variable dans la cuisine n'existe pas dans la chambre.",
+  "example": {
+    "language": "javascript",
+    "code": "let messageGlobal = 'Je suis partout';\n\nfunction maFonction() {\n  let messageLocal = 'Je suis privé';\n  console.log(messageGlobal);  // OK : variable globale\n  console.log(messageLocal);   // OK : déclarée ici\n}\n\nmaFonction();\n// console.log(messageLocal); // ERREUR : hors portée\n\n// Les blocs {} créent une portée avec let/const\nif (true) {\n  let bloqueIci = 'visible seulement dans ce bloc';\n  const aussiBloques = true;\n}\n// console.log(bloqueIci); // ERREUR\n\n// var (ancien) : pas de portée de bloc — à éviter\nif (true) {\n  var fuiteVar = 'je fuis hors du bloc !';\n}\nconsole.log(fuiteVar); // 'je fuis hors du bloc !' (comportement surprenant)",
+    "explanation": "let et const respectent la portée de bloc. var (ancien) ignore la portée de bloc et peut créer des bugs. Préfère toujours let et const dans le code moderne."
+  },
+  "prerequisites": ["fonctions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "debug-portee",
+      "label": "Chasse aux bugs de portée",
+      "difficulty": "intermediate",
+      "description": "Écris une fonction compteur() qui déclare une variable count = 0, l'incrémente de 1, et retourne sa valeur. Appelle-la 3 fois et observe le résultat. Puis crée une version avec une closure : retourne une fonction interne qui accède à count et l'incrémente à chaque appel.",
+      "hint": "Pour la closure, la fonction externe déclare count et retourne une fonction interne qui y accède. Assigne le résultat à une variable : const incrementer = compteurClosure(). Appelle ensuite incrementer() plusieurs fois."
+    }
+  ]
+}

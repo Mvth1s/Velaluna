@@ -1,0 +1,24 @@
+{
+  "id": "python-boucles",
+  "label": "Boucles Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Python propose deux types de boucles : for pour itérer sur une séquence (liste, chaîne, range), et while pour répéter tant qu'une condition est vraie. La fonction range() génère des séquences de nombres. break et continue permettent de contrôler le flux.",
+  "analogy": "Une boucle for, c'est distribuer des cartes une par une à chaque joueur de la table. Tu répètes la même action (donner une carte) pour chaque joueur. La boucle while, c'est continuer à distribuer tant que la pioche n'est pas vide.",
+  "example": {
+    "language": "python",
+    "code": "# Boucle for sur une liste\nfruits = [\"pomme\", \"banane\", \"cerise\"]\nfor fruit in fruits:\n    print(f\"Fruit : {fruit}\")\n\n# Boucle for avec range\nfor i in range(5):          # 0, 1, 2, 3, 4\n    print(i)\n\nfor i in range(1, 6):       # 1, 2, 3, 4, 5\n    print(i)\n\nfor i in range(0, 10, 2):   # 0, 2, 4, 6, 8\n    print(i)\n\n# enumerate : index + valeur\nfor index, fruit in enumerate(fruits):\n    print(f\"{index}: {fruit}\")\n\n# Boucle while\ncompteur = 0\nwhile compteur < 5:\n    print(f\"Tour {compteur}\")\n    compteur += 1\n\n# break et continue\nfor n in range(10):\n    if n == 3:\n        continue  # saute ce tour\n    if n == 7:\n        break     # sort de la boucle\n    print(n)  # affiche 0, 1, 2, 4, 5, 6",
+    "explanation": "range(stop), range(start, stop), range(start, stop, step) génèrent des séquences. enumerate() retourne des tuples (index, valeur). break sort immédiatement de la boucle, continue passe à l'itération suivante."
+  },
+  "prerequisites": ["python-conditions"],
+  "unlocks": ["python-fonctions"],
+  "projects": [
+    {
+      "id": "table-multiplication",
+      "label": "Table de multiplication",
+      "difficulty": "beginner",
+      "description": "Affiche la table de multiplication de 1 à 10 pour le nombre 7 (ex: '7 x 1 = 7'). Ensuite, crée une liste de nombres de 1 à 20 et affiche uniquement les nombres pairs en utilisant continue dans une boucle. Utilise range() dans les deux cas.",
+      "hint": "Pour la table : for i in range(1, 11): print(f\"7 x {i} = {7*i}\"). Pour les pairs : if n % 2 != 0: continue — le modulo % donne le reste de la division."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "python-dictionnaires",
+  "label": "Dictionnaires Python",
+  "difficulty": "beginner",
+  "technologies": ["python"],
+  "explanation": "Un dictionnaire Python stocke des paires clé-valeur. Contrairement aux listes (indexées par position), les dictionnaires sont indexés par des clés nommées. Depuis Python 3.7, l'ordre d'insertion est préservé. C'est la structure idéale pour représenter des objets avec des attributs.",
+  "analogy": "Un dictionnaire, c'est un annuaire téléphonique : tu cherches par nom (clé) pour trouver le numéro (valeur). Bien plus pratique que parcourir une liste de numéros dans l'ordre pour trouver celui d'Alice.",
+  "example": {
+    "language": "python",
+    "code": "# Créer un dictionnaire\npersonne = {\n    \"nom\": \"Alice\",\n    \"age\": 30,\n    \"ville\": \"Paris\"\n}\n\n# Accéder à une valeur\nprint(personne[\"nom\"])          # Alice\nprint(personne.get(\"age\"))      # 30\nprint(personne.get(\"email\", \"N/A\"))  # N/A (valeur par défaut)\n\n# Modifier / ajouter\npersonne[\"age\"] = 31\npersonne[\"email\"] = \"alice@mail.com\"\n\n# Supprimer\ndel personne[\"ville\"]\nvaleur = personne.pop(\"email\")  # supprime et retourne la valeur\n\n# Vérifier l'existence d'une clé\nif \"nom\" in personne:\n    print(\"La clé nom existe\")\n\n# Itérer sur un dictionnaire\nfor cle, valeur in personne.items():\n    print(f\"{cle} : {valeur}\")\n\n# Listes de clés et de valeurs\nprint(personne.keys())    # dict_keys(['nom', 'age'])\nprint(personne.values())  # dict_values(['Alice', 31])",
+    "explanation": "get(clé, défaut) est plus sûr que [clé] : il ne lève pas d'erreur si la clé manque. items() retourne des tuples (clé, valeur) pour itérer. del et pop() suppriment une clé (pop() retourne la valeur)."
+  },
+  "prerequisites": ["python-listes"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "catalogue-produits",
+      "label": "Catalogue de produits",
+      "difficulty": "beginner",
+      "description": "Crée un dictionnaire pour 3 produits, où la clé est le nom du produit et la valeur est son prix. Ajoute un 4ème produit. Affiche tous les produits avec leur prix formaté (ex: 'Café : 3.50 €'). Calcule et affiche le prix total de tous les produits.",
+      "hint": "catalogue = {'cafe': 3.50, 'the': 2.80, 'lait': 1.20}. Pour le total : total = sum(catalogue.values()). Pour l'affichage : for nom, prix in catalogue.items()."
+    }
+  ]
+}

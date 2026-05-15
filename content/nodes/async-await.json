@@ -1,0 +1,24 @@
+{
+  "id": "async-await",
+  "label": "Async / Await",
+  "difficulty": "intermediate",
+  "technologies": ["javascript"],
+  "explanation": "async/await est une syntaxe qui rend le code asynchrone aussi lisible que du code synchrone. Le mot-clé async transforme une fonction en promesse, et await met en pause l'exécution jusqu'à ce qu'une promesse soit résolue — sans bloquer le reste du programme.",
+  "analogy": "Avec les promesses brutes, tu enchaînes des then() comme des post-its collés les uns aux autres. async/await, c'est réécrire la même liste en langage naturel : 'Attends que le plat soit prêt, puis mange-le.' Plus simple à lire, même résultat.",
+  "example": {
+    "language": "javascript",
+    "code": "// Avec .then() — difficile à lire quand ça s'enchaîne\nfetch('/api/user')\n  .then(r => r.json())\n  .then(user => fetch('/api/posts/' + user.id))\n  .then(r => r.json())\n  .then(posts => console.log(posts));\n\n// Avec async/await — beaucoup plus lisible\nasync function chargerPosts() {\n  try {\n    const responseUser = await fetch('/api/user');\n    const user = await responseUser.json();\n\n    const responsePosts = await fetch('/api/posts/' + user.id);\n    const posts = await responsePosts.json();\n\n    console.log(posts);\n  } catch (erreur) {\n    console.log('Erreur :', erreur);\n  }\n}\n\nchargerPosts();",
+    "explanation": "await ne peut être utilisé que dans une fonction async. try/catch remplace .catch() pour gérer les erreurs. async/await ne change pas le comportement — c'est juste du sucre syntaxique sur les promesses."
+  },
+  "prerequisites": ["promesses"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "meteo-async",
+      "label": "Météo asynchrone",
+      "difficulty": "intermediate",
+      "description": "Crée une fonction asynchrone obtenirMeteo(ville) qui simule une requête réseau avec une Promise qui se résout après 500ms avec un objet { ville, temperature, description }. Dans une fonction principale async, appelle obtenirMeteo() pour deux villes différentes et affiche les résultats.",
+      "hint": "Utilise async/await dans ta fonction principale. Entoure de try/catch pour gérer les erreurs. Pour simuler le réseau : return new Promise(resolve => setTimeout(() => resolve({...}), 500))."
+    }
+  ]
+}

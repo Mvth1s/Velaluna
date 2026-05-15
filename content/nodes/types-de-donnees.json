@@ -11,7 +11,7 @@
     "explanation": "typeof permet de vérifier le type d'une valeur. JavaScript convertit automatiquement les types dans certains cas (coercition), ce qui peut surprendre."
   },
   "prerequisites": ["variables"],
-  "unlocks": [],
+  "unlocks": ["conditions", "tableaux"],
   "projects": [
     {
       "id": "detective-types",

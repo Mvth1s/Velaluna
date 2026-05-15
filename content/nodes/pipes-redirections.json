@@ -1,0 +1,24 @@
+{
+  "id": "pipes-redirections",
+  "label": "Pipes et redirections",
+  "difficulty": "beginner",
+  "technologies": ["bash"],
+  "explanation": "Le pipe (|) connecte la sortie d'une commande à l'entrée d'une autre, permettant de chaîner des opérations. Les redirections (> et >>) enregistrent la sortie dans un fichier. C'est ce qui rend le terminal si puissant : combiner des petits outils simples.",
+  "analogy": "C'est comme une chaîne de montage. Chaque machine (commande) fait une chose précise : la première trie, la deuxième filtre, la troisième compte. Le tapis roulant entre elles, c'est le pipe. À la fin, tu mets le résultat dans une boîte (fichier) avec >.",
+  "example": {
+    "language": "bash",
+    "code": "# Pipe : envoyer la sortie de ls dans grep\nls /etc | grep 'nginx'\n\n# Chaîner plusieurs commandes\ncat /var/log/syslog | grep 'error' | tail -n 20\n\n# Compter les lignes avec wc -l\nls /etc | wc -l  # combien de fichiers dans /etc ?\n\n# Redirection vers un fichier (écrase)\nls > liste-fichiers.txt\n\n# Redirection en ajout (ne supprime pas le contenu existant)\necho 'Nouveau log' >> mon-journal.log\n\n# Redirection des erreurs vers un fichier\ncommande-qui-peut-echouer 2> erreurs.log\n\n# Tout envoyer dans un fichier (sortie normale + erreurs)\ncommande > sortie.log 2>&1",
+    "explanation": "| passe la sortie standard d'une commande à l'entrée de la suivante. > redirige vers un fichier (écrase). >> redirige en ajout. 2> capture les erreurs (stderr). 2>&1 redirige stderr vers stdout."
+  },
+  "prerequisites": ["manipulation-fichiers", "affichage-texte"],
+  "unlocks": ["variables-bash"],
+  "projects": [
+    {
+      "id": "pipeline-logs",
+      "label": "Pipeline d'analyse",
+      "difficulty": "beginner",
+      "description": "Crée un fichier access.log avec 20 lignes mélangées contenant les mots 'GET', 'POST', '404' et '200'. En une seule ligne de commande avec des pipes, trouve toutes les lignes '404' et sauvegarde-les dans errors.log. Compte ensuite combien d'erreurs il y a.",
+      "hint": "Utilise cat access.log | grep '404' > errors.log. Puis cat errors.log | wc -l pour compter. Ou en une ligne : grep -c '404' access.log."
+    }
+  ]
+}

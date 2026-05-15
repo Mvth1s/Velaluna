@@ -1,0 +1,24 @@
+{
+  "id": "objets",
+  "label": "Objets",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Un objet regroupe des propriétés (données) et des méthodes (fonctions) liées à une même entité. Là où un tableau liste des valeurs par index, un objet les organise par nom. C'est la structure de données la plus courante en JavaScript.",
+  "analogy": "Une fiche de contact, c'est un objet : elle a un nom, un prénom, un numéro de téléphone, une adresse. Chaque information a un nom (la propriété) et une valeur. Tu accèdes à l'adresse en disant 'fiche.adresse', pas 'fiche[2]'.",
+  "example": {
+    "language": "javascript",
+    "code": "const personne = {\n  prenom: 'Alice',\n  age: 30,\n  estDeveloppeur: true\n};\n\n// Accès aux propriétés\nconsole.log(personne.prenom); // 'Alice'\nconsole.log(personne['age']); // 30 (notation crochet)\n\n// Modifier une propriété\npersonne.age = 31;\n\n// Ajouter une propriété\npersonne.ville = 'Paris';\n\n// Destructuring : extraire plusieurs propriétés en une ligne\nconst { prenom, age } = personne;\nconsole.log(prenom, age); // 'Alice' 31",
+    "explanation": "On accède aux propriétés avec le point (objet.propriete) ou les crochets (objet['propriete']). Le destructuring permet d'extraire rapidement plusieurs propriétés dans des variables séparées."
+  },
+  "prerequisites": ["tableaux"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "fiche-produit",
+      "label": "Fiche produit",
+      "difficulty": "beginner",
+      "description": "Crée un objet représentant un produit de ton choix avec les propriétés : nom, prix, disponible (boolean), categorie. Affiche une description complète dans la console. Modifie ensuite le prix et affiche la fiche mise à jour.",
+      "hint": "Pour afficher une description complète, utilise un template literal : `${produit.nom} coûte ${produit.prix}€`. Tu peux accéder aux propriétés avec la notation pointée."
+    }
+  ]
+}

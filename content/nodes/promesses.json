@@ -1,0 +1,24 @@
+{
+  "id": "promesses",
+  "label": "Promesses",
+  "difficulty": "intermediate",
+  "technologies": ["javascript"],
+  "explanation": "Une promesse (Promise) représente une valeur qui n'est pas encore disponible, mais le sera dans le futur. C'est le mécanisme JavaScript pour gérer les opérations asynchrones (requêtes réseau, lecture de fichier) sans bloquer l'exécution du reste du code.",
+  "analogy": "C'est comme commander un plat au restaurant. Tu reçois un ticket (la promesse) dès que tu commandes. Tu continues à faire autre chose pendant que le plat est préparé. Quand il est prêt, le serveur t'apporte le résultat (ou t'informe qu'il n'y a plus cet ingrédient : l'erreur).",
+  "example": {
+    "language": "javascript",
+    "code": "// Créer une promesse\nconst maPromesse = new Promise((resolve, reject) => {\n  const succes = true;\n  if (succes) {\n    resolve('Données reçues !');\n  } else {\n    reject('Erreur : données indisponibles');\n  }\n});\n\n// Consommer une promesse\nmaPromesse\n  .then(resultat => console.log(resultat))   // 'Données reçues !'\n  .catch(erreur => console.log(erreur));\n\n// Exemple réaliste : fetch (requête HTTP)\nfetch('https://api.example.com/data')\n  .then(response => response.json())\n  .then(data => console.log(data))\n  .catch(err => console.log('Erreur :', err));",
+    "explanation": "resolve() déclenche .then(), reject() déclenche .catch(). Les promesses peuvent se chaîner : chaque .then() reçoit le résultat du précédent."
+  },
+  "prerequisites": ["fonctions"],
+  "unlocks": ["async-await"],
+  "projects": [
+    {
+      "id": "simulateur-chargement",
+      "label": "Simulateur de chargement",
+      "difficulty": "intermediate",
+      "description": "Crée une fonction chargerDonnees(succes) qui retourne une Promise. Si succes est true, la promesse se résout après 1 seconde avec le message 'Données chargées'. Sinon, elle rejette avec 'Erreur de connexion'. Teste les deux cas avec .then() et .catch().",
+      "hint": "Utilise setTimeout(resolve, 1000, 'Données chargées') à l'intérieur du constructeur Promise pour simuler un délai d'une seconde."
+    }
+  ]
+}

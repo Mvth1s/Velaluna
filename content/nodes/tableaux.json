@@ -1,0 +1,24 @@
+{
+  "id": "tableaux",
+  "label": "Tableaux",
+  "difficulty": "beginner",
+  "technologies": ["javascript"],
+  "explanation": "Un tableau (array) est une liste ordonnée de valeurs. Plutôt que de créer dix variables pour dix prénoms, tu les mets dans un seul tableau. Chaque élément est accessible via son index (position), qui commence à 0.",
+  "analogy": "Un tableau, c'est comme une rangée de casiers numérotés. Le casier 0 est le premier, le casier 1 le deuxième, etc. Tu peux y mettre n'importe quel objet et les récupérer à la demande.",
+  "example": {
+    "language": "javascript",
+    "code": "const fruits = ['pomme', 'banane', 'cerise'];\n\nconsole.log(fruits[0]); // 'pomme'\nconsole.log(fruits[2]); // 'cerise'\nconsole.log(fruits.length); // 3\n\n// Ajouter un élément à la fin\nfruits.push('mangue');\nconsole.log(fruits); // ['pomme', 'banane', 'cerise', 'mangue']\n\n// Supprimer le dernier élément\nconst dernier = fruits.pop();\nconsole.log(dernier); // 'mangue'\nconsole.log(fruits.length); // 3",
+    "explanation": "Les indices commencent à 0. push() ajoute en fin de tableau, pop() retire et retourne le dernier élément. length donne le nombre d'éléments."
+  },
+  "prerequisites": ["types-de-donnees"],
+  "unlocks": ["objets", "boucles"],
+  "projects": [
+    {
+      "id": "liste-courses",
+      "label": "Liste de courses",
+      "difficulty": "beginner",
+      "description": "Crée un tableau avec 5 articles de courses. Affiche le premier et le dernier article, le nombre total d'articles, puis ajoute un 6ème article avec push() et affiche la liste complète.",
+      "hint": "Pour accéder au dernier élément, utilise l'index fruits[fruits.length - 1] ou la méthode fruits.at(-1)."
+    }
+  ]
+}

@@ -133,7 +133,7 @@ npm run seed   # à relancer à chaque ajout de contenu
 ## Git
 
 ```bash
-git checkout develop && git pull
+git checkout dev && git pull
 git checkout -b feature/nom-de-la-feature   # ou fix/ ou devops/
 # ... coder ...
 git commit -m "feat(backend): description"

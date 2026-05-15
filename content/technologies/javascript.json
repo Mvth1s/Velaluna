@@ -1,0 +1,8 @@
+{
+  "id": "javascript",
+  "label": "JavaScript",
+  "theme_id": "web",
+  "description": "Le langage de programmation du web, pour rendre les pages interactives.",
+  "logo": "javascript.svg",
+  "nodes": ["variables", "types-de-donnees"]
+}

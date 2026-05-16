@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import type { Node, NodeStatus, Difficulty } from '../../types/velaluna'
 import NodeExample from './NodeExample.vue'
 import NodeProject from './NodeProject.vue'
@@ -17,6 +18,19 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   beginner: 'Débutant',
   intermediate: 'Intermédiaire',
   advanced: 'Avancé'
+}
+
+const celebrating = ref(false)
+let pendingProjectId = ''
+
+function handleComplete(projectId: string) {
+  pendingProjectId = projectId
+  celebrating.value = true
+  setTimeout(() => {
+    emit('complete', pendingProjectId)
+    celebrating.value = false
+    setTimeout(() => emit('close'), 100)
+  }, 1600)
 }
 </script>
 
@@ -60,7 +74,7 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
                 :key="project.id"
                 :project="project"
                 :completed="status === 'completed'"
-                @complete="emit('complete', project.id)"
+                @complete="() => handleComplete(project.id)"
               />
             </div>
           </section>
@@ -68,6 +82,20 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
       </div>
     </div>
   </div>
+
+  <Transition name="celebration">
+    <div v-if="celebrating" class="node-card__celebration">
+      <div class="celebration__icon">✦</div>
+      <p class="celebration__text">Concept maîtrisé !</p>
+      <div class="celebration__particles">
+        <div class="burst-particle" style="--tx: 0px; --ty: -70px" />
+        <div class="burst-particle" style="--tx: 67px; --ty: -22px" />
+        <div class="burst-particle" style="--tx: 41px; --ty: 58px" />
+        <div class="burst-particle" style="--tx: -41px; --ty: 58px" />
+        <div class="burst-particle" style="--tx: -67px; --ty: -22px" />
+      </div>
+    </div>
+  </Transition>
 </template>
 
 <style scoped>
@@ -196,5 +224,75 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   gap: 0.75rem;
 }
 
-/* transition d'entrée gérée par TechnologyView via <Transition> */
+/* ── Célébration ── */
+
+.node-card__celebration {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  background: rgba(0, 0, 26, 0.85);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+}
+
+.celebration__icon {
+  font-size: 4rem;
+  color: var(--color-stellar);
+  text-shadow: 0 0 24px rgba(88, 130, 136, 0.9);
+  animation: celebIcon 400ms ease-out forwards;
+}
+
+.celebration__text {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--color-ivory);
+  animation: celebFade 400ms 200ms ease-out both;
+}
+
+.celebration__particles {
+  position: relative;
+  width: 0;
+  height: 0;
+}
+
+.burst-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-stellar);
+  transform: translate(-50%, -50%);
+  animation: burst 800ms 200ms ease-out both;
+}
+
+/* Transition Vue */
+.celebration-enter-active,
+.celebration-leave-active {
+  transition: opacity 0.15s;
+}
+
+.celebration-enter-from,
+.celebration-leave-to {
+  opacity: 0;
+}
+
+@keyframes celebIcon {
+  0%   { transform: scale(0);   opacity: 0; }
+  70%  { transform: scale(1.3); opacity: 1; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+@keyframes celebFade {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes burst {
+  0%   { transform: translate(calc(-50%), calc(-50%)) scale(1); opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
+}
 </style>

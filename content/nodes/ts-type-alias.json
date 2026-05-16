@@ -1,0 +1,24 @@
+{
+  "id": "ts-type-alias",
+  "label": "Type alias",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "Un type alias crée un nouveau nom pour un type existant ou pour un type complexe que tu définis. Contrairement aux interfaces, les alias peuvent nommer n'importe quel type : primitifs, unions, tuples, fonctions. Ils ne peuvent pas être étendus avec extends, mais peuvent être composés.",
+  "analogy": "C'est comme créer un raccourci sur ton bureau. Au lieu de taper le chemin complet à chaque fois, tu donnes un petit nom pratique à un type complexe. Besoin de changer ce type ? Tu le modifies à un seul endroit.",
+  "example": {
+    "language": "typescript",
+    "code": "// Alias pour un type simple\ntype Identifiant = string;\ntype Score = number;\n\n// Alias pour un objet\ntype Point = {\n  x: number;\n  y: number;\n};\n\n// Alias pour une fonction\ntype Transformateur = (valeur: string) => string;\n\n// Alias pour un tuple\ntype Coordonnees = [number, number];\n\nconst position: Point = { x: 10, y: 20 };\nconst mettreMajuscules: Transformateur = (v) => v.toUpperCase();\nconst coords: Coordonnees = [48.85, 2.35];",
+    "explanation": "Les tuples ([number, number]) sont des tableaux à longueur et types fixes. Le type alias leur donne un nom parlant. Interfaces et type alias sont souvent interchangeables pour les objets — la convention préfère les interfaces pour les formes d'objets extensibles."
+  },
+  "prerequisites": ["ts-annotations"],
+  "unlocks": ["ts-union-intersection"],
+  "projects": [
+    {
+      "id": "ts-systeme-coordonnees",
+      "label": "Système de coordonnées",
+      "difficulty": "beginner",
+      "description": "Crée des alias de type pour : un Point 2D {x, y}, un Point 3D {x, y, z}, une Couleur RGB sous forme de tuple [number, number, number], et une fonction Calculatrice qui prend deux numbers et retourne un number. Utilise ces types dans de vraies variables.",
+      "hint": "Pour le tuple RGB, assure-toi que les valeurs sont entre 0 et 255 — TypeScript ne peut pas le vérifier directement, mais tu peux ajouter un commentaire pour documenter cette contrainte."
+    }
+  ]
+}

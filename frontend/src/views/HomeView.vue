@@ -1,9 +1,22 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import StarField from '../components/StarField.vue'
 import { LOGO_SQUARE } from '../assets/logos'
+import { useContentStore } from '../stores/contentStore'
 
 const router = useRouter()
+const contentStore = useContentStore()
+
+const techCount = ref<number | null>(null)
+const nodeCount = ref<number | null>(null)
+
+onMounted(async () => {
+  const techs = await contentStore.fetchTechnologies()
+  techCount.value = techs.length
+  const counts = await Promise.all(techs.map(t => contentStore.fetchNodes(t.id)))
+  nodeCount.value = counts.reduce((sum, nodes) => sum + nodes.length, 0)
+})
 </script>
 
 <template>
@@ -29,11 +42,11 @@ const router = useRouter()
         </div>
         <div class="home-stats">
           <div class="home-stat">
-            <span class="home-stat__value">4</span>
+            <span class="home-stat__value">{{ techCount ?? '—' }}</span>
             <span class="home-stat__label">Technos</span>
           </div>
           <div class="home-stat">
-            <span class="home-stat__value">36</span>
+            <span class="home-stat__value">{{ nodeCount ?? '—' }}</span>
             <span class="home-stat__label">Concepts</span>
           </div>
           <div class="home-stat">

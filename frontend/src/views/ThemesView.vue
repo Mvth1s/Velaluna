@@ -80,9 +80,9 @@ onMounted(async () => {
 }
 
 .themes-view__logo {
-  height: 28px;
+  height: 40px;
   width: auto;
-  max-width: 180px;
+  max-width: 220px;
   object-fit: contain;
   opacity: 0.85;
   transition: opacity 0.2s;

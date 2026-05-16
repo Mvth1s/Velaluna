@@ -37,12 +37,12 @@ const STYLES: StylesheetStyle[] = [
       'font-family': 'Jura, sans-serif',
       'font-weight': 300,
       'font-size': '11px',
-      width: '68px',
-      height: '68px',
+      width: '64px',
+      height: '64px',
       shape: 'ellipse',
       color: '#E8E3D8',
       'text-wrap': 'wrap',
-      'text-max-width': '58px',
+      'text-max-width': '54px',
       'border-width': 0,
     }
   },
@@ -50,10 +50,10 @@ const STYLES: StylesheetStyle[] = [
     selector: 'node[status="locked"]',
     style: {
       'background-color': '#1A2744',
-      color: '#8A9DB8',
+      color: '#8A9DBB',
       'font-size': '10px',
-      width: '52px',
-      height: '52px',
+      width: '48px',
+      height: '48px',
     }
   },
   {
@@ -61,9 +61,9 @@ const STYLES: StylesheetStyle[] = [
     style: {
       'background-color': '#588288',
       color: '#E8E3D8',
-      'shadow-blur': 8,
+      'shadow-blur': 10,
       'shadow-color': '#588288',
-      'shadow-opacity': 0.4,
+      'shadow-opacity': 0.5,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
     }
@@ -71,10 +71,10 @@ const STYLES: StylesheetStyle[] = [
   {
     selector: 'node[status="in_progress"]',
     style: {
-      'background-color': '#8A9DB8',
+      'background-color': '#C8B898',
       color: '#00001A',
       'shadow-blur': 8,
-      'shadow-color': '#8A9DB8',
+      'shadow-color': '#C8B898',
       'shadow-opacity': 0.4,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
@@ -83,12 +83,12 @@ const STYLES: StylesheetStyle[] = [
   {
     selector: 'node[status="completed"]',
     style: {
-      'background-color': '#22c55e',
+      'background-color': '#E8E3D8',
       color: '#00001A',
-      width: '72px',
-      height: '72px',
-      'shadow-blur': 12,
-      'shadow-color': '#22c55e',
+      width: '70px',
+      height: '70px',
+      'shadow-blur': 14,
+      'shadow-color': '#E8E3D8',
       'shadow-opacity': 0.5,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
@@ -97,21 +97,21 @@ const STYLES: StylesheetStyle[] = [
   {
     selector: 'edge',
     style: {
-      width: 1.5,
+      width: 1,
       'line-color': '#1A2744',
       'line-opacity': 0.8,
       'target-arrow-color': '#588288',
       'target-arrow-shape': 'triangle',
-      'arrow-scale': 0.6,
+      'arrow-scale': 0.5,
       'curve-style': 'bezier',
     }
   },
   {
     selector: 'edge[?completed]',
     style: {
-      'line-color': '#588288',
-      'line-opacity': 1,
-      'target-arrow-color': '#22c55e',
+      'line-color': '#E8E3D8',
+      'line-opacity': 0.35,
+      'target-arrow-color': '#E8E3D8',
     }
   },
 ]
@@ -119,8 +119,8 @@ const STYLES: StylesheetStyle[] = [
 function getMobileStyles(): StylesheetStyle[] {
   return STYLES.map(s => {
     if (s.selector === 'node') return { ...s, style: { ...s.style, width: '44px', height: '44px', 'font-size': '9px', 'text-max-width': '38px' } }
-    if (s.selector === 'node[status="locked"]') return { ...s, style: { ...s.style, width: '36px', height: '36px' } }
-    if (s.selector === 'node[status="completed"]') return { ...s, style: { ...s.style, width: '48px', height: '48px' } }
+    if (s.selector === 'node[status="locked"]') return { ...s, style: { ...s.style, width: '34px', height: '34px' } }
+    if (s.selector === 'node[status="completed"]') return { ...s, style: { ...s.style, width: '50px', height: '50px' } }
     return s
   })
 }

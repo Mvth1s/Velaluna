@@ -1,17 +1,32 @@
 :root {
-  /* Couleurs */
+  /* ── Palette ── */
   --color-space:   #00001A;
   --color-night:   #101828;
   --color-deep:    #1A2744;
   --color-stellar: #588288;
-  --color-slate:   #8A9DB8;
-  --color-done:    #22c55e;
+  --color-slate:   #8A9DBB;
   --color-ivory:   #E8E3D8;
   --color-sand:    #C8B898;
 
-  /* Typographie */
-  --font-display: 'Cormorant Garamond', serif;
-  --font-ui:      'Instrument Sans', sans-serif;
-  --font-label:   'Jura', sans-serif;
-  --font-mono:    'DM Mono', monospace;
+  /* ── Surfaces ── */
+  --surface-1:     rgba(16, 24, 40, 0.72);
+  --surface-2:     rgba(26, 39, 68, 0.42);
+  --surface-3:     rgba(26, 39, 68, 0.18);
+
+  /* ── Bordures ── */
+  --border:        rgba(88, 130, 136, 0.22);
+  --border-strong: rgba(88, 130, 136, 0.40);
+
+  /* ── Texte ── */
+  --text-mute:     rgba(232, 227, 216, 0.55);
+
+  /* ── Accent (alias de --color-stellar) ── */
+  --accent:        var(--color-stellar);
+  --accent-soft:   rgba(88, 130, 136, 0.18);
+
+  /* ── Typographie ── */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-ui:      'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-label:   'Jura', 'Gill Sans', sans-serif;
+  --font-mono:    'DM Mono', ui-monospace, Menlo, monospace;
 }

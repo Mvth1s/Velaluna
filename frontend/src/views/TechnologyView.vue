@@ -4,7 +4,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import { useProgressStore } from '../stores/progressStore'
 import NodeGraph from '../components/graph/NodeGraph.vue'
-import GraphLegend from '../components/graph/GraphLegend.vue'
 import NodeCard from '../components/node/NodeCard.vue'
 import StarField from '../components/StarField.vue'
 import type { Node, NodeStatus, Technology } from '../types/velaluna'
@@ -34,6 +33,16 @@ const statuses = computed<Record<string, NodeStatus>>(() => {
 const completedCount = computed(() =>
   Object.values(statuses.value).filter(s => s === 'completed').length
 )
+const inProgressCount = computed(() =>
+  Object.values(statuses.value).filter(s => s === 'in_progress').length
+)
+const availableCount = computed(() =>
+  Object.values(statuses.value).filter(s => s === 'available').length
+)
+
+const progressPercent = computed(() =>
+  nodes.value.length === 0 ? 0 : Math.round((completedCount.value / nodes.value.length) * 100)
+)
 
 const isCompleted = computed(() =>
   nodes.value.length > 0 && completedCount.value === nodes.value.length
@@ -59,14 +68,11 @@ onUnmounted(() => {
 function showToast(message: string) {
   toastMessage.value = message
   if (toastTimer) clearTimeout(toastTimer)
-  toastTimer = setTimeout(() => {
-    toastMessage.value = null
-  }, 3000)
+  toastTimer = setTimeout(() => { toastMessage.value = null }, 3000)
 }
 
 function onNodeClick(node: Node) {
   selectedNode.value = node
-  progressStore.startNode(techId.value, node.id)
 }
 
 function onLockedNodeClick(node: Node) {
@@ -81,8 +87,14 @@ function onLockedNodeClick(node: Node) {
   }
 }
 
-function onComplete(projectId: string) {
+function onStart() {
   if (!selectedNode.value) return
+  progressStore.startNode(techId.value, selectedNode.value.id)
+}
+
+function onComplete() {
+  if (!selectedNode.value) return
+  const projectId = selectedNode.value.projects[0]?.id ?? ''
   progressStore.completeNode(techId.value, selectedNode.value.id, projectId)
   showToast('Concept maîtrisé ✦')
 }
@@ -96,37 +108,55 @@ function confirmReset() {
 </script>
 
 <template>
-  <div class="technology-view">
+  <div class="tech-view">
     <StarField />
 
-    <header class="technology-view__header">
-      <button class="technology-view__back" aria-label="Retour aux technologies" @click="router.push(`/themes/${themeId}`)">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M19 12H5M12 5l-7 7 7 7"/>
-        </svg>
-      </button>
-      <div class="technology-view__title">
-        <h1>{{ technology?.label ?? techId }}</h1>
-        <p v-if="technology?.description" class="technology-view__description">
-          {{ technology.description }}
-        </p>
-      </div>
-      <div v-if="!loading" class="technology-view__header-right">
-        <div class="technology-view__progress" :class="{ 'technology-view__progress--done': isCompleted }">
-          {{ completedCount }}<span>/{{ nodes.length }}</span>
-        </div>
+    <!-- Header -->
+    <header class="tech-header">
+      <div class="tech-header__top">
         <button
-          v-if="completedCount > 0"
-          class="technology-view__reset"
+          class="back-btn"
+          aria-label="Retour aux technologies"
+          @click="router.push(`/themes/${themeId}`)"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+        </button>
+        <span class="tech-header__eyebrow">Constellation</span>
+        <button
+          v-if="completedCount > 0 && !loading"
+          class="reset-btn"
           title="Réinitialiser la progression"
           @click="confirmReset"
         >↺</button>
       </div>
+
+      <h1 class="tech-header__title">{{ technology?.label ?? techId }}</h1>
+      <p v-if="technology?.description" class="tech-header__desc">{{ technology.description }}</p>
+
+      <div v-if="!loading" class="tech-header__bottom">
+        <div class="progress-track">
+          <div class="progress-fill" :style="{ width: `${progressPercent}%` }" />
+        </div>
+        <div class="count-chips">
+          <span v-if="inProgressCount > 0" class="count-chip count-chip--progress">
+            {{ inProgressCount }} en cours
+          </span>
+          <span v-if="availableCount > 0" class="count-chip count-chip--avail">
+            {{ availableCount }} disponibles
+          </span>
+          <span class="count-chip count-chip--score">
+            {{ completedCount }}<span class="count-chip__total">/{{ nodes.length }}</span>
+          </span>
+        </div>
+      </div>
     </header>
 
+    <!-- Completion banner -->
     <Transition name="completion">
-      <div v-if="isCompleted" class="technology-view__completion">
-        <span class="technology-view__completion-icon">✦</span>
+      <div v-if="isCompleted" class="completion-banner">
+        <span class="completion-banner__icon">✦</span>
         <div>
           <strong>{{ technology?.label }} maîtrisé</strong>
           <span>Tu as traversé toute la constellation.</span>
@@ -134,11 +164,10 @@ function confirmReset() {
       </div>
     </Transition>
 
-    <GraphLegend />
+    <!-- Graph -->
+    <div v-if="loading" class="loading-state">Chargement de la constellation...</div>
 
-    <div v-if="loading" class="technology-view__loading">Chargement de la constellation...</div>
-
-    <div v-else class="technology-view__content">
+    <div v-else class="graph-area">
       <NodeGraph
         :nodes="nodes"
         :statuses="statuses"
@@ -147,24 +176,29 @@ function confirmReset() {
       />
     </div>
 
+    <!-- Node modal -->
     <Transition name="node-card">
       <NodeCard
         v-if="selectedNode"
         :node="selectedNode"
         :status="statuses[selectedNode.id]"
+        :nodes="nodes"
+        :statuses="statuses"
         @close="selectedNode = null"
+        @start="onStart"
         @complete="onComplete"
       />
     </Transition>
 
+    <!-- Toast -->
     <Transition name="toast">
-      <div v-if="toastMessage" class="technology-view__toast">{{ toastMessage }}</div>
+      <div v-if="toastMessage" class="toast">{{ toastMessage }}</div>
     </Transition>
   </div>
 </template>
 
 <style scoped>
-.technology-view {
+.tech-view {
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -172,150 +206,190 @@ function confirmReset() {
   position: relative;
 }
 
-.technology-view__header {
+/* ── Header ── */
+.tech-header {
   position: relative;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid var(--color-deep);
-  background: rgba(0, 0, 26, 0.85);
-  backdrop-filter: blur(8px);
-  min-height: 60px;
+  z-index: 2;
+  padding: 20px 28px 0;
+  background: linear-gradient(180deg, rgba(0,0,26,0.92) 0%, rgba(0,0,26,0.6) 80%, transparent 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.technology-view__back {
+.tech-header__top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.back-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--color-deep);
+  border: 1px solid var(--border);
+  background: rgba(26, 39, 68, 0.3);
   color: var(--color-slate);
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
   flex-shrink: 0;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
-
-.technology-view__back:hover {
-  background: rgba(88, 130, 136, 0.15);
+.back-btn:hover {
+  border-color: var(--accent);
   color: var(--color-ivory);
+  background: rgba(88, 130, 136, 0.12);
 }
 
-.technology-view__title {
+.tech-header__eyebrow {
   flex: 1;
-}
-
-.technology-view__title h1 {
-  font-family: var(--font-display);
-  font-size: 1.375rem;
-  font-weight: 400;
-  color: var(--color-ivory);
-  line-height: 1.2;
-}
-
-.technology-view__description {
-  font-family: var(--font-ui);
-  font-size: 0.8125rem;
-  color: var(--color-sand);
-  margin: 0;
-  line-height: 1.3;
-}
-
-.technology-view__header-right {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  flex-shrink: 0;
-}
-
-.technology-view__progress {
   font-family: var(--font-label);
-  font-size: 1rem;
-  font-weight: 400;
-  color: var(--color-ivory);
-  white-space: nowrap;
-}
-
-.technology-view__progress--done {
-  color: var(--color-done);
-  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
-}
-
-.technology-view__progress span {
-  color: var(--color-sand);
-  opacity: 0.6;
-  font-size: 0.875rem;
-}
-
-.technology-view__reset {
-  background: none;
-  border: none;
-  cursor: pointer;
-  color: var(--color-sand);
-  opacity: 0.5;
-  font-size: 1rem;
-  padding: 0.25rem;
-  line-height: 1;
-  border-radius: 4px;
-  transition: opacity 0.2s, color 0.2s;
-}
-
-.technology-view__reset:hover {
-  opacity: 1;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
   color: var(--color-stellar);
 }
 
+.reset-btn {
+  color: var(--color-slate);
+  opacity: 0.5;
+  font-size: 1rem;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s, color 0.2s;
+}
+.reset-btn:hover { opacity: 1; color: var(--color-stellar); }
 
-.technology-view__completion {
-  position: relative;
-  z-index: 1;
+.tech-header__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 4vw, 2.625rem);
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0.02em;
+  color: var(--color-ivory);
+  margin-bottom: 8px;
+}
+
+.tech-header__desc {
+  font-size: 0.9rem;
+  color: var(--text-mute);
+  line-height: 1.4;
+  margin-bottom: 16px;
+  max-width: 600px;
+}
+
+.tech-header__bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-bottom: 18px;
+}
+
+.progress-track {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-stellar), var(--color-ivory));
+  border-radius: 2px;
+  transition: width 0.6s cubic-bezier(.4,0,.2,1);
+}
+
+.count-chips {
   display: flex;
   align-items: center;
-  gap: 0.875rem;
-  padding: 0.75rem 1.5rem;
-  background: rgba(34, 197, 94, 0.08);
-  border-bottom: 1px solid rgba(34, 197, 94, 0.25);
-  color: var(--color-done);
+  gap: 8px;
 }
 
-.technology-view__completion-icon {
+.count-chip {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.count-chip--progress {
+  color: var(--color-sand);
+  border-color: rgba(200, 184, 152, 0.3);
+  background: rgba(200, 184, 152, 0.06);
+}
+
+.count-chip--avail {
+  color: var(--color-stellar);
+  border-color: rgba(88, 130, 136, 0.35);
+  background: rgba(88, 130, 136, 0.07);
+}
+
+.count-chip--score {
+  color: var(--color-ivory);
+  border-color: rgba(232, 227, 216, 0.2);
+  background: rgba(232, 227, 216, 0.04);
+}
+
+.count-chip__total {
+  color: var(--text-mute);
+}
+
+/* ── Completion banner ── */
+.completion-banner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  background: rgba(232, 227, 216, 0.05);
+  border-bottom: 1px solid rgba(232, 227, 216, 0.18);
+  color: var(--color-ivory);
+}
+
+.completion-banner__icon {
   font-size: 1.25rem;
-  line-height: 1;
-  text-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+  text-shadow: 0 0 10px rgba(232, 227, 216, 0.7);
+  flex-shrink: 0;
 }
 
-.technology-view__completion strong {
+.completion-banner strong {
   display: block;
   font-family: var(--font-display);
   font-size: 1.125rem;
   font-weight: 400;
-  color: var(--color-ivory);
 }
 
-.technology-view__completion span {
-  font-family: var(--font-ui);
+.completion-banner span {
   font-size: 0.8125rem;
-  color: var(--color-sand);
+  color: var(--text-mute);
 }
 
-.technology-view__loading {
+/* ── Loading ── */
+.loading-state {
   position: relative;
   z-index: 1;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-sand);
+  color: var(--text-mute);
   font-family: var(--font-label);
   font-weight: 300;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
-.technology-view__content {
+/* ── Graph ── */
+.graph-area {
   position: relative;
   z-index: 1;
   flex: 1;
@@ -323,11 +397,30 @@ function confirmReset() {
   overflow: hidden;
 }
 
+/* ── Toast ── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(26, 39, 68, 0.95);
+  border: 1px solid var(--accent);
+  color: var(--color-ivory);
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  z-index: 400;
+  box-shadow: 0 0 20px rgba(88, 130, 136, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+/* ── Transitions ── */
 .completion-enter-active,
 .completion-leave-active {
   transition: all 0.35s ease;
 }
-
 .completion-enter-from,
 .completion-leave-to {
   opacity: 0;
@@ -338,61 +431,32 @@ function confirmReset() {
 .node-card-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }
-
 .node-card-enter-from,
 .node-card-leave-to {
   opacity: 0;
-  transform: scale(0.96);
-}
-
-.technology-view__toast {
-  position: fixed;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(26, 39, 68, 0.95);
-  border: 1px solid var(--color-stellar);
-  color: var(--color-ivory);
-  padding: 0.625rem 1.25rem;
-  border-radius: 20px;
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  white-space: nowrap;
-  z-index: 100;
-  box-shadow: 0 0 20px rgba(88, 130, 136, 0.3);
-  backdrop-filter: blur(8px);
+  transform: scale(0.97);
 }
 
 .toast-enter-active,
 .toast-leave-active {
   transition: opacity 0.2s, transform 0.2s;
 }
-
 .toast-enter-from,
 .toast-leave-to {
   opacity: 0;
   transform: translateX(-50%) translateY(0.5rem);
 }
 
+/* ── Mobile ── */
 @media (max-width: 640px) {
-  .technology-view__header {
-    padding: 0.625rem 1rem;
-    gap: 0.75rem;
-  }
+  .tech-header { padding: 14px 16px 0; }
+  .tech-header__desc { display: none; }
+  .tech-header__title { font-size: 1.5rem; }
+  .tech-header__bottom { padding-bottom: 14px; }
 
-  .technology-view__description {
-    display: none;
-  }
+  .completion-banner { padding: 12px 16px; }
 
-  .technology-view__title h1 {
-    font-size: 1.125rem;
-  }
-
-  .technology-view__reset {
-    display: none;
-  }
-
-  .technology-view__toast {
+  .toast {
     width: calc(100% - 2rem);
     text-align: center;
     white-space: normal;

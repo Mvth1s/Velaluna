@@ -66,7 +66,7 @@ const STYLES: StylesheetStyle[] = [
       'shadow-opacity': 0.5,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
-    }
+    } as any
   },
   {
     selector: 'node[status="in_progress"]',
@@ -78,7 +78,7 @@ const STYLES: StylesheetStyle[] = [
       'shadow-opacity': 0.45,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
-    }
+    } as any
   },
   {
     selector: 'node[status="completed"]',
@@ -92,7 +92,7 @@ const STYLES: StylesheetStyle[] = [
       'shadow-opacity': 0.5,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
-    }
+    } as any
   },
   {
     selector: 'edge',
@@ -180,7 +180,7 @@ export function useCytoscape(
       style: mobile ? getMobileStyles() : STYLES,
       layout: mobile ? LAYOUT_OPTIONS_MOBILE : LAYOUT_OPTIONS,
       backgroundColor: 'transparent',
-    })
+    } as any)
 
     cy.on('tap', 'node', event => {
       const node = event.target

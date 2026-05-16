@@ -241,8 +241,8 @@ function handleComplete(projectId: string) {
 
 .celebration__icon {
   font-size: 4rem;
-  color: var(--color-stellar);
-  text-shadow: 0 0 24px rgba(88, 130, 136, 0.9);
+  color: var(--color-done);
+  text-shadow: 0 0 24px rgba(34, 197, 94, 0.8);
   animation: celebIcon 400ms ease-out forwards;
 }
 
@@ -264,7 +264,7 @@ function handleComplete(projectId: string) {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-stellar);
+  background: var(--color-done);
   transform: translate(-50%, -50%);
   animation: burst 800ms 200ms ease-out both;
 }

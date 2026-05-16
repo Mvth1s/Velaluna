@@ -40,25 +40,21 @@
 }
 
 .graph-legend__item--locked::before {
-  background: #0A0F1A;
-  border: 1px solid #2A3A4A;
+  background: #1A2744;
 }
 
 .graph-legend__item--available::before {
-  background: #1A2744;
-  border: 2px solid #588288;
-  box-shadow: 0 0 4px rgba(88, 130, 136, 0.4);
+  background: #588288;
+  box-shadow: 0 0 5px rgba(88, 130, 136, 0.5);
 }
 
 .graph-legend__item--in-progress::before {
-  background: #2A3A5A;
-  border: 2px dashed #8A9DBB;
+  background: #8A9DB8;
 }
 
 .graph-legend__item--completed::before {
-  background: radial-gradient(circle, #588288 30%, #1A2744 100%);
-  border: 1px solid rgba(232, 227, 216, 0.7);
-  box-shadow: 0 0 6px rgba(88, 130, 136, 0.7);
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
 }
 
 @media (max-width: 640px) {

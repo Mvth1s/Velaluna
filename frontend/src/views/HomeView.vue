@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import StarField from '../components/StarField.vue'
-import { LOGO_BANNER, LOGO_SQUARE } from '../assets/logos'
+import { LOGO_SQUARE } from '../assets/logos'
 
 const router = useRouter()
 </script>
@@ -13,7 +13,6 @@ const router = useRouter()
     <div class="home-layout">
       <!-- Left: logo + text -->
       <div class="home-text">
-        <img :src="LOGO_BANNER" alt="Velaluna" class="home-logo" />
         <p class="home-text__eyebrow">Cartographie du savoir</p>
         <h1 class="home-text__title">
           Apprends la tech,<br>
@@ -78,15 +77,6 @@ const router = useRouter()
 .home-text {
   display: flex;
   flex-direction: column;
-}
-
-.home-logo {
-  height: 36px;
-  width: auto;
-  max-width: 200px;
-  object-fit: contain;
-  margin-bottom: 32px;
-  opacity: 0.9;
 }
 
 .home-text__eyebrow {

@@ -1,0 +1,24 @@
+{
+  "id": "ts-union-intersection",
+  "label": "Union & intersection",
+  "difficulty": "intermediate",
+  "technologies": ["typescript"],
+  "explanation": "Un type union (A | B) signifie qu'une valeur peut être de type A ou de type B. Un type intersection (A & B) signifie qu'une valeur doit être à la fois de type A et de type B — elle cumule toutes leurs propriétés. Les unions sont très utilisées pour les valeurs optionnelles, les états et les résultats d'API.",
+  "analogy": "L'union, c'est un couteau suisse : ça peut être un tournevis OU une lame OU une paire de ciseaux. L'intersection, c'est un profil professionnel complet : tu dois être à la fois développeur ET manager ET bilingue — toutes les conditions en même temps.",
+  "example": {
+    "language": "typescript",
+    "code": "// Union : l'une ou l'autre valeur\ntype Resultat = string | null;\ntype StatutCommande = 'en_attente' | 'expediee' | 'livree' | 'annulee';\n\nfunction trouverUtilisateur(id: number): Resultat {\n  // peut retourner un nom ou null si non trouvé\n  return id === 1 ? 'Alice' : null;\n}\n\n// Intersection : cumule les deux types\ntype Nom = { prenom: string; nom: string };\ntype Contact = { email: string; telephone?: string };\ntype Personne = Nom & Contact;\n\nconst alice: Personne = {\n  prenom: 'Alice',\n  nom: 'Dupont',\n  email: 'alice@exemple.fr'\n};",
+    "explanation": "Les littéraux de chaîne dans une union ('en_attente' | 'expediee' | ...) créent un type énuméré léger. TypeScript vérifie que seules ces valeurs précises sont utilisées — pratique pour les statuts, les rôles, les états d'une machine."
+  },
+  "prerequisites": ["ts-interfaces", "ts-type-alias"],
+  "unlocks": ["ts-generiques", "ts-utility-types"],
+  "projects": [
+    {
+      "id": "ts-gestion-erreurs",
+      "label": "Gestion d'erreurs typée",
+      "difficulty": "intermediate",
+      "description": "Crée un type Reponse<T> simulant une réponse API : soit { succes: true; donnees: T } soit { succes: false; erreur: string }. Écris une fonction chargerUtilisateur(id: number) qui retourne Reponse<Utilisateur> (avec une interface Utilisateur de ton choix). Teste les deux cas (succès et erreur).",
+      "hint": "Tu peux utiliser une union discriminée : TypeScript reconnaît le bon côté grâce au champ 'succes'. C'est le pattern Result/Either popularisé en programmation fonctionnelle."
+    }
+  ]
+}

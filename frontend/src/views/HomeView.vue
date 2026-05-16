@@ -32,42 +32,44 @@ const router = useRouter()
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 2rem;
   text-align: center;
-  padding: 2rem;
+  padding: 3rem 2rem;
 }
 
 .home__logo {
-  max-width: 280px;
+  max-width: 360px;
   width: 100%;
+  min-height: 96px;
+  object-fit: contain;
 }
 
 .home__tagline {
   font-family: var(--font-label);
   font-weight: 300;
-  font-size: 0.875rem;
+  font-size: 1.375rem;
   color: var(--color-sand);
-  letter-spacing: 0.1em;
+  letter-spacing: 0.06em;
 }
 
 .home__cta {
   margin-top: 0.5rem;
-  padding: 0.75rem 2.5rem;
+  padding: 0.875rem 3rem;
   background: transparent;
   border: 1px solid var(--color-stellar);
   border-radius: 24px;
   color: var(--color-ivory);
   font-family: var(--font-ui);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.04em;
   transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
 }
 
 .home__cta:hover {
   background: rgba(88, 130, 136, 0.12);
   border-color: var(--color-ivory);
-  box-shadow: 0 0 20px rgba(88, 130, 136, 0.3);
+  box-shadow: 0 0 24px rgba(88, 130, 136, 0.35);
 }
 </style>

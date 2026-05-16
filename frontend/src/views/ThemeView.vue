@@ -201,14 +201,18 @@ function progressPercent(tech: Technology): number {
 .theme-view__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.25rem;
+  gap: 1.5rem;
+  justify-items: center;
 }
 
 .tech-card {
   display: flex;
   flex-direction: column;
-  gap: 0.625rem;
-  padding: 1.5rem;
+  gap: 0.75rem;
+  padding: 2rem;
+  min-width: 260px;
+  min-height: 140px;
+  width: 100%;
   border: 1px solid var(--color-deep);
   border-radius: 12px;
   background: rgba(26, 39, 68, 0.55);
@@ -220,7 +224,7 @@ function progressPercent(tech: Technology): number {
 
 .tech-card:hover {
   border-color: var(--color-stellar);
-  box-shadow: 0 0 20px rgba(88, 130, 136, 0.2);
+  box-shadow: 0 4px 20px rgba(88, 130, 136, 0.25);
   background: rgba(26, 39, 68, 0.85);
 }
 
@@ -233,14 +237,14 @@ function progressPercent(tech: Technology): number {
 
 .tech-card__label {
   font-family: var(--font-ui);
-  font-size: 1rem;
+  font-size: 1.375rem;
   font-weight: 600;
   color: var(--color-ivory);
 }
 
 .tech-card__count {
   font-family: var(--font-label);
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   font-weight: 400;
   color: var(--color-stellar);
   white-space: nowrap;
@@ -249,9 +253,9 @@ function progressPercent(tech: Technology): number {
 
 .tech-card__description {
   font-family: var(--font-ui);
-  font-size: 0.8125rem;
+  font-size: 1rem;
   color: var(--color-sand);
-  line-height: 1.45;
+  line-height: 1.5;
   margin: 0;
 }
 

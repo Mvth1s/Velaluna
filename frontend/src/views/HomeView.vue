@@ -10,20 +10,17 @@ const router = useRouter()
   <div class="home">
     <StarField />
 
-    <header class="home-bar">
-      <img :src="LOGO_BANNER" alt="Velaluna" class="home-bar__logo" />
-    </header>
-
     <div class="home-layout">
-      <!-- Left: text -->
+      <!-- Left: logo + text -->
       <div class="home-text">
+        <img :src="LOGO_BANNER" alt="Velaluna" class="home-logo" />
         <p class="home-text__eyebrow">Cartographie du savoir</p>
         <h1 class="home-text__title">
           Apprends la tech,<br>
           <em class="home-text__accent">concept par concept</em>
         </h1>
         <p class="home-text__desc">
-          Navigue dans un graphe de connaissances interactif.<br>
+          Navigue dans un graphe de connaissances interactif.
           Chaque nœud est un concept relié à ses prérequis et à ce qu'il débloque.
         </p>
         <div class="home-actions">
@@ -47,10 +44,9 @@ const router = useRouter()
         </div>
       </div>
 
-      <!-- Right: constellation visual -->
+      <!-- Right: constellation -->
       <div class="home-visual" aria-hidden="true">
         <svg class="constellation" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Edges -->
           <line x1="160" y1="60"  x2="80"  y2="140" stroke="rgba(88,130,136,0.4)" stroke-width="1" />
           <line x1="160" y1="60"  x2="240" y2="140" stroke="rgba(88,130,136,0.4)" stroke-width="1" />
           <line x1="80"  y1="140" x2="120" y2="230" stroke="rgba(88,130,136,0.3)" stroke-width="1" />
@@ -58,19 +54,19 @@ const router = useRouter()
           <line x1="80"  y1="140" x2="200" y2="230" stroke="rgba(88,130,136,0.15)" stroke-width="1" />
           <line x1="240" y1="140" x2="120" y2="230" stroke="rgba(88,130,136,0.15)" stroke-width="1" />
           <line x1="120" y1="230" x2="200" y2="230" stroke="rgba(232,227,216,0.2)"  stroke-width="1" />
-          <!-- Node: completed (top) -->
+          <!-- completed -->
+          <circle cx="160" cy="60" r="30" fill="rgba(232,227,216,0.07)" />
           <circle cx="160" cy="60" r="24" fill="#E8E3D8" opacity="0.95" />
-          <circle cx="160" cy="60" r="30" fill="rgba(232,227,216,0.08)" />
-          <!-- Nodes: available -->
+          <!-- available -->
           <circle cx="80"  cy="140" r="20" fill="#588288" opacity="0.9" />
           <circle cx="240" cy="140" r="20" fill="#588288" opacity="0.9" />
-          <!-- Nodes: in_progress -->
-          <circle cx="120" cy="230" r="18" fill="#C8B898" opacity="0.85" />
-          <!-- Nodes: locked -->
+          <!-- in_progress -->
+          <circle cx="120" cy="230" r="18" fill="#C8832A" opacity="0.88" />
+          <!-- locked -->
           <circle cx="200" cy="230" r="16" fill="#1A2744" stroke="rgba(138,157,187,0.5)" stroke-width="1" />
-          <!-- Glow on completed node -->
+          <!-- Pulse on completed -->
           <circle cx="160" cy="60" r="24" fill="none" stroke="rgba(232,227,216,0.3)" stroke-width="2">
-            <animate attributeName="r" values="24;30;24" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="r" values="24;32;24" dur="3s" repeatCount="indefinite" />
             <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite" />
           </circle>
         </svg>
@@ -83,50 +79,37 @@ const router = useRouter()
 .home {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-/* ── Top bar ── */
-.home-bar {
-  position: relative;
-  z-index: 1;
-  display: flex;
   align-items: center;
-  padding: 14px 28px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(0, 0, 26, 0.65);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.home-bar__logo {
-  height: 40px;
-  width: auto;
-  max-width: 220px;
-  object-fit: contain;
+  justify-content: center;
+  position: relative;
 }
 
 /* ── Layout ── */
 .home-layout {
   position: relative;
   z-index: 1;
-  flex: 1;
   display: grid;
   grid-template-columns: 1.1fr 1fr;
   align-items: center;
-  gap: 40px;
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 60px 40px;
+  gap: 48px;
+  max-width: 1080px;
   width: 100%;
+  padding: 60px 48px;
 }
 
-/* ── Text ── */
+/* ── Text column ── */
 .home-text {
   display: flex;
   flex-direction: column;
-  gap: 0;
+}
+
+.home-logo {
+  height: 36px;
+  width: auto;
+  max-width: 200px;
+  object-fit: contain;
+  margin-bottom: 32px;
+  opacity: 0.9;
 }
 
 .home-text__eyebrow {
@@ -136,16 +119,16 @@ const router = useRouter()
   letter-spacing: 0.34em;
   text-transform: uppercase;
   color: var(--color-stellar);
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .home-text__title {
   font-family: var(--font-display);
-  font-size: clamp(2.5rem, 5.5vw, 4.25rem);
+  font-size: clamp(2.25rem, 5vw, 4rem);
   font-weight: 400;
-  line-height: 1.08;
+  line-height: 1.1;
   color: var(--color-ivory);
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
 .home-text__accent {
@@ -156,9 +139,9 @@ const router = useRouter()
 .home-text__desc {
   font-size: 1rem;
   line-height: 1.65;
-  color: rgba(232, 227, 216, 0.65);
+  color: rgba(232, 227, 216, 0.62);
   margin-bottom: 36px;
-  max-width: 440px;
+  max-width: 430px;
 }
 
 /* ── Buttons ── */
@@ -166,7 +149,7 @@ const router = useRouter()
   display: flex;
   gap: 14px;
   align-items: center;
-  margin-bottom: 48px;
+  margin-bottom: 52px;
   flex-wrap: wrap;
 }
 
@@ -212,7 +195,7 @@ const router = useRouter()
 /* ── Stats ── */
 .home-stats {
   display: flex;
-  gap: 32px;
+  gap: 36px;
 }
 
 .home-stat {
@@ -247,27 +230,27 @@ const router = useRouter()
 
 .constellation {
   width: 100%;
-  max-width: 320px;
+  max-width: 300px;
   height: auto;
-  opacity: 0.85;
-  filter: drop-shadow(0 0 40px rgba(88, 130, 136, 0.2));
+  opacity: 0.8;
+  filter: drop-shadow(0 0 40px rgba(88, 130, 136, 0.18));
 }
 
 /* ── Mobile ── */
 @media (max-width: 768px) {
   .home-layout {
     grid-template-columns: 1fr;
-    padding: 48px 20px;
+    padding: 56px 24px;
     gap: 48px;
   }
-
-  .home-text__title { font-size: 2.5rem; }
+  .home-text__title { font-size: 2.25rem; }
   .home-visual { order: -1; }
-  .constellation { max-width: 240px; }
+  .constellation { max-width: 220px; }
 }
 
 @media (max-width: 480px) {
-  .home-text__title { font-size: 2rem; }
+  .home-layout { padding: 48px 20px; }
+  .home-text__title { font-size: 1.875rem; }
   .home-stats { gap: 24px; }
   .home-visual { display: none; }
 }

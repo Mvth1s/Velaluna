@@ -101,7 +101,8 @@ useCytoscape(containerRef, nodesRef, statusesRef, {
 }
 
 .legend-dot--in-progress {
-  background: var(--color-sand);
+  background: #C8832A;
+  box-shadow: 0 0 5px rgba(200, 131, 42, 0.5);
 }
 
 .legend-dot--available {

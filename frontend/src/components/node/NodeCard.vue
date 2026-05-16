@@ -285,7 +285,7 @@ function handleComplete() {
 .chip.completed .chip__dot { box-shadow: 0 0 8px var(--color-ivory); }
 .chip.available { color: var(--color-stellar); border-color: rgba(88,130,136,0.5); background: rgba(88,130,136,0.08); }
 .chip.available .chip__dot { box-shadow: 0 0 8px var(--color-stellar); }
-.chip.in_progress { color: var(--color-sand); border-color: rgba(200,184,152,0.5); background: rgba(200,184,152,0.06); }
+.chip.in_progress { color: #C8832A; border-color: rgba(200,131,42,0.45); background: rgba(200,131,42,0.07); }
 .chip.locked { color: var(--color-slate); opacity: 0.7; }
 
 .diff {

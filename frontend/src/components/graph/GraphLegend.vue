@@ -49,7 +49,7 @@
 }
 
 .graph-legend__item--in-progress::before {
-  background: #C8B898;
+  background: #C8832A;
 }
 
 .graph-legend__item--completed::before {

@@ -71,11 +71,11 @@ const STYLES: StylesheetStyle[] = [
   {
     selector: 'node[status="in_progress"]',
     style: {
-      'background-color': '#C8B898',
+      'background-color': '#C8832A',
       color: '#00001A',
-      'shadow-blur': 8,
-      'shadow-color': '#C8B898',
-      'shadow-opacity': 0.4,
+      'shadow-blur': 10,
+      'shadow-color': '#C8832A',
+      'shadow-opacity': 0.45,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
     }

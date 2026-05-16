@@ -91,7 +91,7 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 
 .node-card__title h2 {
   font-family: var(--font-display);
-  font-size: 1.375rem;
+  font-size: 1.5rem;
   font-weight: 400;
   color: var(--color-ivory);
   margin-bottom: 0.25rem;

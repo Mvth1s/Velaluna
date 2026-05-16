@@ -1,2 +1,2 @@
-export const LOGO_DARK  = new URL('./velaluna_logo_dark.png',  import.meta.url).href
-export const LOGO_LIGHT = new URL('./velaluna_logo_light.png', import.meta.url).href
+export const LOGO_BANNER = '/velaluna-logo-banner.svg'
+export const LOGO_SQUARE = '/velaluna-logo-square.svg'

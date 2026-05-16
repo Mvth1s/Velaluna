@@ -7,7 +7,7 @@ import NodeGraph from '../components/graph/NodeGraph.vue'
 import GraphLegend from '../components/graph/GraphLegend.vue'
 import NodeCard from '../components/node/NodeCard.vue'
 import StarField from '../components/StarField.vue'
-import { LOGO_DARK } from '../assets/logos'
+import { LOGO_SQUARE } from '../assets/logos'
 import type { Node, NodeStatus, Technology } from '../types/velaluna'
 
 const route = useRoute()
@@ -15,7 +15,8 @@ const router = useRouter()
 const contentStore = useContentStore()
 const progressStore = useProgressStore()
 
-const techId = computed(() => route.params.id as string)
+const techId = computed(() => route.params.techId as string)
+const themeId = computed(() => route.params.themeId as string)
 const technology = ref<Technology | null>(null)
 const nodes = ref<Node[]>([])
 const selectedNode = ref<Node | null>(null)
@@ -100,8 +101,8 @@ function confirmReset() {
     <StarField />
 
     <header class="technology-view__header">
-      <button class="technology-view__back" @click="router.push('/')">
-        <img :src="LOGO_DARK" alt="Velaluna" class="technology-view__logo" />
+      <button class="technology-view__back" @click="router.push(`/themes/${themeId}`)">
+        <img :src="LOGO_SQUARE" alt="Velaluna" class="technology-view__logo" />
       </button>
       <div class="technology-view__title">
         <h1>{{ technology?.label ?? techId }}</h1>
@@ -206,7 +207,7 @@ function confirmReset() {
 
 .technology-view__title h1 {
   font-family: var(--font-display);
-  font-size: 1.25rem;
+  font-size: 1.375rem;
   font-weight: 400;
   color: var(--color-ivory);
   line-height: 1.2;
@@ -285,7 +286,7 @@ function confirmReset() {
 .technology-view__completion strong {
   display: block;
   font-family: var(--font-display);
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 400;
   color: var(--color-ivory);
 }

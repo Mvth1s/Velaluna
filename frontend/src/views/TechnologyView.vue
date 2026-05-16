@@ -66,6 +66,18 @@ onMounted(async () => {
     contentStore.fetchNodes(techId.value)
   ])
   loading.value = false
+
+  const preselect = route.query.node as string | undefined
+  if (preselect) {
+    const node = nodes.value.find(n => n.id === preselect) ?? null
+    if (node) {
+      if (statuses.value[node.id] === 'locked') {
+        onLockedNodeClick(node)
+      } else {
+        selectedNode.value = node
+      }
+    }
+  }
 })
 
 onUnmounted(() => {

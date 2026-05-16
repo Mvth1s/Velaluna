@@ -11,6 +11,7 @@ const contentStore = useContentStore()
 
 const query = ref('')
 const inputRef = ref<HTMLInputElement | null>(null)
+const resultRefs = ref<HTMLElement[]>([])
 const activeIndex = ref(0)
 const loading = ref(false)
 
@@ -40,6 +41,11 @@ const results = computed<SearchEntry[]>(() => {
 })
 
 watch(results, () => { activeIndex.value = 0 })
+
+watch(activeIndex, async (idx) => {
+  await nextTick()
+  resultRefs.value[idx]?.scrollIntoView({ block: 'nearest', behavior: 'smooth' })
+})
 
 function navigate(entry: SearchEntry) {
   router.push(`/themes/${entry.tech.theme_id}/${entry.tech.id}?node=${entry.node.id}`)
@@ -95,6 +101,7 @@ const DIFFICULTY_LABEL: Record<string, string> = {
         <li
           v-for="(entry, i) in results"
           :key="`${entry.tech.id}--${entry.node.id}`"
+          :ref="el => { if (el) resultRefs[i] = el as HTMLElement }"
           class="search-result"
           :class="{ 'search-result--active': i === activeIndex }"
           @mouseenter="activeIndex = i"

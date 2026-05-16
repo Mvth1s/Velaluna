@@ -69,7 +69,14 @@ onMounted(async () => {
 
   const preselect = route.query.node as string | undefined
   if (preselect) {
-    selectedNode.value = nodes.value.find(n => n.id === preselect) ?? null
+    const node = nodes.value.find(n => n.id === preselect) ?? null
+    if (node) {
+      if (statuses.value[node.id] === 'locked') {
+        onLockedNodeClick(node)
+      } else {
+        selectedNode.value = node
+      }
+    }
   }
 })
 

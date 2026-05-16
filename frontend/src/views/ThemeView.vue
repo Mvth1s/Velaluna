@@ -49,11 +49,6 @@ function progressPercent(tech: Technology): number {
         <img :src="LOGO_BANNER" alt="Velaluna" class="top-bar__logo" />
       </button>
       <nav class="breadcrumb" aria-label="Fil d'Ariane">
-        <button class="breadcrumb__back" aria-label="Retour aux thèmes" @click="router.push('/themes')">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M19 12H5M12 5l-7 7 7 7"/>
-          </svg>
-        </button>
         <button class="breadcrumb__link" @click="router.push('/')">Accueil</button>
         <span class="breadcrumb__sep">›</span>
         <button class="breadcrumb__link" @click="router.push('/themes')">Thèmes</button>
@@ -90,6 +85,10 @@ function progressPercent(tech: Technology): number {
             </div>
           </button>
         </div>
+
+        <button class="other-theme-btn" @click="router.push('/themes')">
+          ← Choisir un autre thème
+        </button>
       </template>
     </main>
   </div>
@@ -143,26 +142,6 @@ function progressPercent(tech: Technology): number {
   font-size: 0.8125rem;
 }
 
-.breadcrumb__back {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: rgba(26, 39, 68, 0.3);
-  color: var(--color-slate);
-  cursor: pointer;
-  flex-shrink: 0;
-  margin-right: 4px;
-  transition: border-color 0.2s, color 0.2s, background 0.2s;
-}
-.breadcrumb__back:hover {
-  border-color: var(--accent);
-  color: var(--color-ivory);
-  background: rgba(88, 130, 136, 0.12);
-}
 
 .breadcrumb__link {
   background: none;
@@ -302,6 +281,20 @@ function progressPercent(tech: Technology): number {
   border-radius: 2px;
   transition: width 0.5s ease;
 }
+
+.other-theme-btn {
+  margin-top: 36px;
+  display: block;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.other-theme-btn:hover { color: var(--color-ivory); }
 
 @media (max-width: 640px) {
   .top-bar { padding: 12px 16px; }

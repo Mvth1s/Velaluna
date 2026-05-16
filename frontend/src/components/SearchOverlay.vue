@@ -57,10 +57,12 @@ function onKeydown(e: KeyboardEvent) {
     emit('close')
   } else if (e.key === 'ArrowDown') {
     e.preventDefault()
-    activeIndex.value = Math.min(activeIndex.value + 1, results.value.length - 1)
+    if (results.value.length > 0)
+      activeIndex.value = (activeIndex.value + 1) % results.value.length
   } else if (e.key === 'ArrowUp') {
     e.preventDefault()
-    activeIndex.value = Math.max(activeIndex.value - 1, 0)
+    if (results.value.length > 0)
+      activeIndex.value = (activeIndex.value - 1 + results.value.length) % results.value.length
   } else if (e.key === 'Enter' && results.value.length > 0) {
     navigate(results.value[activeIndex.value])
   }

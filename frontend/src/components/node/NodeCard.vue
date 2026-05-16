@@ -298,20 +298,17 @@ function handleComplete(projectId: string) {
 
 @media (max-width: 640px) {
   .node-card-overlay {
-    padding: 0;
-    align-items: flex-end;
-    background: rgba(0, 0, 0, 0.6);
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
   }
 
   .node-card {
-    width: 100%;
-    max-width: 100%;
-    height: 95vh;
-    max-height: 95vh;
-    border-radius: 16px 16px 0 0;
-    border-left: none;
-    border-right: none;
-    border-bottom: none;
+    width: 90vw;
+    max-width: 90vw;
+    height: auto;
+    max-height: 90vh;
+    border-radius: 16px;
   }
 
   .node-card__header {

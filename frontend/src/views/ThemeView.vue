@@ -302,4 +302,22 @@ function progressPercent(tech: Technology): number {
   border-color: var(--color-stellar);
   color: var(--color-ivory);
 }
+
+@media (max-width: 640px) {
+  .theme-view__content {
+    padding: 2rem 1rem;
+  }
+
+  .theme-view__title {
+    font-size: 1.5rem;
+  }
+
+  .theme-view__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .theme-view__breadcrumb {
+    display: none;
+  }
+}
 </style>

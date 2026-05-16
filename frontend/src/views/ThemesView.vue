@@ -163,4 +163,19 @@ onMounted(async () => {
   line-height: 1.5;
   margin: 0;
 }
+
+@media (max-width: 640px) {
+  .themes-view__content {
+    padding: 2rem 1rem;
+  }
+
+  .themes-view__title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .themes-view__grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

@@ -295,4 +295,27 @@ function handleComplete(projectId: string) {
   0%   { transform: translate(calc(-50%), calc(-50%)) scale(1); opacity: 1; }
   100% { transform: translate(calc(-50% + var(--tx)), calc(-50% + var(--ty))) scale(0); opacity: 0; }
 }
+
+@media (max-width: 640px) {
+  .node-card-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .node-card {
+    width: 100%;
+    max-width: 100%;
+    max-height: 92vh;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .node-card__body {
+    grid-template-columns: 1fr;
+  }
+
+  .node-card__col:first-child {
+    border-right: none;
+    border-bottom: 1px solid var(--color-deep);
+  }
+}
 </style>

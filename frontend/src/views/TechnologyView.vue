@@ -144,7 +144,9 @@ function confirmReset() {
         @node-click="onNodeClick"
         @locked-node-click="onLockedNodeClick($event)"
       />
+    </div>
 
+    <Transition name="node-card">
       <NodeCard
         v-if="selectedNode"
         :node="selectedNode"
@@ -152,7 +154,7 @@ function confirmReset() {
         @close="selectedNode = null"
         @complete="onComplete"
       />
-    </div>
+    </Transition>
 
     <Transition name="toast">
       <div v-if="toastMessage" class="technology-view__toast">{{ toastMessage }}</div>
@@ -327,6 +329,17 @@ function confirmReset() {
 .completion-leave-to {
   opacity: 0;
   transform: translateY(-0.5rem);
+}
+
+.node-card-enter-active,
+.node-card-leave-active {
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.node-card-enter-from,
+.node-card-leave-to {
+  opacity: 0;
+  transform: scale(0.96);
 }
 
 .technology-view__toast {

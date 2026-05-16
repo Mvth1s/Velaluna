@@ -21,57 +21,76 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 </script>
 
 <template>
-  <aside class="node-card">
-    <header class="node-card__header">
-      <div class="node-card__title">
-        <h2>{{ node.label }}</h2>
-        <span class="node-card__difficulty">{{ DIFFICULTY_LABELS[node.difficulty] }}</span>
+  <div class="node-card-overlay" @click.self="emit('close')">
+    <div class="node-card">
+      <header class="node-card__header">
+        <div class="node-card__title">
+          <h2>{{ node.label }}</h2>
+          <span class="node-card__difficulty">{{ DIFFICULTY_LABELS[node.difficulty] }}</span>
+        </div>
+        <button class="node-card__close" aria-label="Fermer" @click="emit('close')">✕</button>
+      </header>
+
+      <div class="node-card__body">
+        <div class="node-card__col">
+          <section class="node-card__section">
+            <h3>Explication</h3>
+            <p>{{ node.explanation }}</p>
+          </section>
+
+          <section class="node-card__section">
+            <h3>Analogie</h3>
+            <div class="node-card__analogy">
+              <p>{{ node.analogy }}</p>
+            </div>
+          </section>
+
+          <section class="node-card__section">
+            <h3>Exemple</h3>
+            <NodeExample :example="node.example" />
+          </section>
+        </div>
+
+        <div class="node-card__col">
+          <section class="node-card__section">
+            <h3>Mini-projets</h3>
+            <div class="node-card__projects">
+              <NodeProject
+                v-for="project in node.projects"
+                :key="project.id"
+                :project="project"
+                :completed="status === 'completed'"
+                @complete="emit('complete', project.id)"
+              />
+            </div>
+          </section>
+        </div>
       </div>
-      <button class="node-card__close" aria-label="Fermer" @click="emit('close')">✕</button>
-    </header>
-
-    <div class="node-card__body">
-      <section class="node-card__section">
-        <h3>Explication</h3>
-        <p>{{ node.explanation }}</p>
-      </section>
-
-      <section class="node-card__section">
-        <h3>Analogie</h3>
-        <div class="node-card__analogy">
-          <p>{{ node.analogy }}</p>
-        </div>
-      </section>
-
-      <section class="node-card__section">
-        <h3>Exemple</h3>
-        <NodeExample :example="node.example" />
-      </section>
-
-      <section class="node-card__section">
-        <h3>Mini-projets</h3>
-        <div class="node-card__projects">
-          <NodeProject
-            v-for="project in node.projects"
-            :key="project.id"
-            :project="project"
-            :completed="status === 'completed'"
-            @complete="emit('complete', project.id)"
-          />
-        </div>
-      </section>
     </div>
-  </aside>
+  </div>
 </template>
 
 <style scoped>
+.node-card-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
 .node-card {
-  width: 380px;
-  min-width: 380px;
-  height: 100%;
+  position: relative;
+  width: 90vw;
+  max-width: 1100px;
+  max-height: 85vh;
   overflow-y: auto;
-  border-left: 3px solid var(--color-stellar);
   background: var(--color-night);
+  border: 1px solid var(--color-deep);
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
 }
@@ -80,13 +99,14 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.5rem;
-  padding: 1.25rem 1.25rem 1rem;
+  gap: 1rem;
+  padding: 1.5rem 1.75rem 1.25rem;
   border-bottom: 1px solid var(--color-deep);
   position: sticky;
   top: 0;
   background: var(--color-night);
   z-index: 1;
+  border-radius: 16px 16px 0 0;
 }
 
 .node-card__title h2 {
@@ -115,7 +135,7 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   color: var(--color-sand);
   opacity: 0.5;
   line-height: 1;
-  padding: 0.125rem;
+  padding: 0.25rem;
   flex-shrink: 0;
   transition: opacity 0.2s, color 0.2s;
 }
@@ -126,10 +146,21 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 }
 
 .node-card__body {
-  padding: 1.25rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  flex: 1;
+}
+
+.node-card__col {
+  padding: 1.5rem 1.75rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+}
+
+.node-card__col:first-child {
+  border-right: 1px solid var(--color-deep);
 }
 
 .node-card__section h3 {
@@ -157,7 +188,6 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 
 .node-card__analogy p {
   font-style: italic;
-  color: var(--color-sand) !important;
 }
 
 .node-card__projects {
@@ -165,4 +195,6 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   flex-direction: column;
   gap: 0.75rem;
 }
+
+/* transition d'entrée gérée par TechnologyView via <Transition> */
 </style>

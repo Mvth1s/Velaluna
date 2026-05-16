@@ -64,6 +64,10 @@ function progressPercent(tech: Technology): number {
       <div v-if="loading" class="theme-view__state">Chargement...</div>
       <div v-else-if="error" class="theme-view__state theme-view__state--error">{{ error }}</div>
 
+      <button v-if="!loading" class="theme-view__other-theme" @click="router.push('/themes')">
+        ← Choisir un autre thème
+      </button>
+
       <div v-else class="theme-view__grid">
         <button
           v-for="tech in technologies"
@@ -87,9 +91,6 @@ function progressPercent(tech: Technology): number {
         </button>
       </div>
 
-      <button v-if="!loading" class="theme-view__other-theme" @click="router.push('/themes')">
-        ← Choisir un autre thème
-      </button>
     </main>
   </div>
 </template>
@@ -282,8 +283,8 @@ function progressPercent(tech: Technology): number {
 }
 
 .theme-view__other-theme {
-  display: block;
-  margin: 2rem auto 0;
+  display: inline-block;
+  margin-bottom: 2rem;
   font-family: var(--font-ui);
   font-size: 0.875rem;
   color: var(--color-stellar);

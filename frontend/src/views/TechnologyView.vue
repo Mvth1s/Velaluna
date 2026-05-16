@@ -7,7 +7,6 @@ import NodeGraph from '../components/graph/NodeGraph.vue'
 import GraphLegend from '../components/graph/GraphLegend.vue'
 import NodeCard from '../components/node/NodeCard.vue'
 import StarField from '../components/StarField.vue'
-import { LOGO_SQUARE } from '../assets/logos'
 import type { Node, NodeStatus, Technology } from '../types/velaluna'
 
 const route = useRoute()
@@ -101,8 +100,10 @@ function confirmReset() {
     <StarField />
 
     <header class="technology-view__header">
-      <button class="technology-view__back" @click="router.push(`/themes/${themeId}`)">
-        <img :src="LOGO_SQUARE" alt="Velaluna" class="technology-view__logo" />
+      <button class="technology-view__back" aria-label="Retour aux technologies" @click="router.push(`/themes/${themeId}`)">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 12H5M12 5l-7 7 7 7"/>
+        </svg>
       </button>
       <div class="technology-view__title">
         <h1>{{ technology?.label ?? techId }}</h1>
@@ -184,23 +185,24 @@ function confirmReset() {
   min-height: 60px;
 }
 
-.technology-view__logo {
-  height: 32px;
-  object-fit: contain;
-  opacity: 0.85;
-  transition: opacity 0.2s;
-}
-
-.technology-view__logo:hover {
-  opacity: 1;
-}
-
 .technology-view__back {
-  background: none;
-  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--color-deep);
+  color: var(--color-slate);
   cursor: pointer;
-  padding: 0;
+  transition: background 0.2s, color 0.2s;
   flex-shrink: 0;
+}
+
+.technology-view__back:hover {
+  background: rgba(88, 130, 136, 0.15);
+  color: var(--color-ivory);
 }
 
 .technology-view__title {
@@ -266,6 +268,7 @@ function confirmReset() {
   opacity: 1;
   color: var(--color-stellar);
 }
+
 
 .technology-view__completion {
   position: relative;

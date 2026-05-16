@@ -66,6 +66,11 @@ onMounted(async () => {
     contentStore.fetchNodes(techId.value)
   ])
   loading.value = false
+
+  const preselect = route.query.node as string | undefined
+  if (preselect) {
+    selectedNode.value = nodes.value.find(n => n.id === preselect) ?? null
+  }
 })
 
 onUnmounted(() => {

@@ -49,5 +49,17 @@ export const useContentStore = defineStore('content', () => {
     return data
   }
 
-  return { themes, technologies, nodesCache, fetchThemes, fetchTechnologies, fetchTechnology, fetchNodes, fetchNode }
+  async function fetchAllNodes(): Promise<Array<{ node: Node; tech: Technology }>> {
+    const techs = await fetchTechnologies()
+    const entries: Array<{ node: Node; tech: Technology }> = []
+    await Promise.all(
+      techs.map(async tech => {
+        const nodes = await fetchNodes(tech.id)
+        nodes.forEach(node => entries.push({ node, tech }))
+      })
+    )
+    return entries
+  }
+
+  return { themes, technologies, nodesCache, fetchThemes, fetchTechnologies, fetchTechnology, fetchNodes, fetchNode, fetchAllNodes }
 })

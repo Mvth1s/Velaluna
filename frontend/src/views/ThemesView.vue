@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import StarField from '../components/StarField.vue'
+import SearchOverlay from '../components/SearchOverlay.vue'
 import { LOGO_BANNER } from '../assets/logos'
 import type { Theme } from '../types/velaluna'
 
@@ -12,6 +13,7 @@ const contentStore = useContentStore()
 const themes = ref<Theme[]>([])
 const loading = ref(true)
 const error = ref<string | null>(null)
+const searchOpen = ref(false)
 
 onMounted(async () => {
   try {
@@ -32,7 +34,18 @@ onMounted(async () => {
       <button class="top-bar__logo-btn" @click="router.push('/')">
         <img :src="LOGO_BANNER" alt="Velaluna" class="top-bar__logo" />
       </button>
+      <button class="search-btn" title="Rechercher (Ctrl+K)" @click="searchOpen = true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+        </svg>
+        <span class="search-btn__label">Rechercher</span>
+        <kbd class="search-btn__kbd">Ctrl K</kbd>
+      </button>
     </header>
+
+    <Transition name="search">
+      <SearchOverlay v-if="searchOpen" @close="searchOpen = false" />
+    </Transition>
 
     <main class="themes-content">
       <p class="themes-content__eyebrow">Explorer</p>
@@ -94,6 +107,45 @@ onMounted(async () => {
   transition: opacity 0.2s;
 }
 .top-bar__logo:hover { opacity: 1; }
+
+.search-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--text-mute);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+.search-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--color-ivory);
+}
+.search-btn__label {
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.14em;
+}
+.search-btn__kbd {
+  font-family: var(--font-label);
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  color: var(--text-mute);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+.search-enter-active,
+.search-leave-active { transition: opacity 0.18s ease; }
+.search-enter-from,
+.search-leave-to { opacity: 0; }
 
 /* ── Content ── */
 .themes-content {

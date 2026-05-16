@@ -64,32 +64,34 @@ function progressPercent(tech: Technology): number {
       <div v-if="loading" class="theme-view__state">Chargement...</div>
       <div v-else-if="error" class="theme-view__state theme-view__state--error">{{ error }}</div>
 
-      <button v-if="!loading" class="theme-view__other-theme" @click="router.push('/themes')">
-        ← Choisir un autre thème
-      </button>
-
-      <div v-else class="theme-view__grid">
-        <button
-          v-for="tech in technologies"
-          :key="tech.id"
-          class="tech-card"
-          @click="router.push(`/themes/${themeId}/${tech.id}`)"
-        >
-          <div class="tech-card__header">
-            <strong class="tech-card__label">{{ tech.label }}</strong>
-            <span class="tech-card__count">
-              {{ progressStore.getCompletedCountForTech(tech.id) }}/{{ tech.nodes.length }}
-            </span>
-          </div>
-          <p class="tech-card__description">{{ tech.description }}</p>
-          <div class="tech-card__progress-track">
-            <div
-              class="tech-card__progress-fill"
-              :style="{ width: `${progressPercent(tech)}%` }"
-            />
-          </div>
+      <template v-else>
+        <button class="theme-view__other-theme" @click="router.push('/themes')">
+          ← Choisir un autre thème
         </button>
-      </div>
+
+        <div class="theme-view__grid">
+          <button
+            v-for="tech in technologies"
+            :key="tech.id"
+            class="tech-card"
+            @click="router.push(`/themes/${themeId}/${tech.id}`)"
+          >
+            <div class="tech-card__header">
+              <strong class="tech-card__label">{{ tech.label }}</strong>
+              <span class="tech-card__count">
+                {{ progressStore.getCompletedCountForTech(tech.id) }}/{{ tech.nodes.length }}
+              </span>
+            </div>
+            <p class="tech-card__description">{{ tech.description }}</p>
+            <div class="tech-card__progress-track">
+              <div
+                class="tech-card__progress-fill"
+                :style="{ width: `${progressPercent(tech)}%` }"
+              />
+            </div>
+          </button>
+        </div>
+      </template>
 
     </main>
   </div>

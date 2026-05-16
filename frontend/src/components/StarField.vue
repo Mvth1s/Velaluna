@@ -29,7 +29,7 @@ function initStars(w: number, h: number) {
     y: rand(0, h),
     vx: (Math.random() - 0.5) * 0.15,
     vy: (Math.random() - 0.5) * 0.15,
-    size: rand(0.8, 2.5),
+    size: rand(1, 2.5),
     phase: rand(0, Math.PI * 2),
     speed: rand(0.0005, 0.002)
   }))
@@ -54,7 +54,8 @@ function spawnShooting(w: number, h: number) {
 }
 
 function draw(ctx: CanvasRenderingContext2D, w: number, h: number, now: number) {
-  ctx.clearRect(0, 0, w, h)
+  ctx.fillStyle = '#00001A'
+  ctx.fillRect(0, 0, w, h)
 
   for (const star of stars) {
     star.x = (star.x + star.vx + w) % w

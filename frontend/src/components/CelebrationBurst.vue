@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
-const props = defineProps<{ techLabel: string }>()
+defineProps<{ techLabel: string }>()
 const emit = defineEmits<{ done: [] }>()
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)

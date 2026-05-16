@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import { useProgressStore } from '../stores/progressStore'
 import NodeGraph from '../components/graph/NodeGraph.vue'
 import NodeCard from '../components/node/NodeCard.vue'
+import CelebrationBurst from '../components/CelebrationBurst.vue'
 import StarField from '../components/StarField.vue'
 import type { Node, NodeStatus, Technology } from '../types/velaluna'
 
@@ -47,6 +48,12 @@ const progressPercent = computed(() =>
 const isCompleted = computed(() =>
   nodes.value.length > 0 && completedCount.value === nodes.value.length
 )
+
+const showBurst = ref(false)
+
+watch(isCompleted, (val, oldVal) => {
+  if (val && !oldVal && !loading.value) showBurst.value = true
+})
 
 function onKeydown(e: KeyboardEvent) {
   if (e.key === 'Escape') selectedNode.value = null
@@ -187,6 +194,15 @@ function confirmReset() {
         @close="selectedNode = null"
         @start="onStart"
         @complete="onComplete"
+      />
+    </Transition>
+
+    <!-- Celebration -->
+    <Transition name="burst">
+      <CelebrationBurst
+        v-if="showBurst"
+        :tech-label="technology?.label ?? ''"
+        @done="showBurst = false"
       />
     </Transition>
 
@@ -436,6 +452,11 @@ function confirmReset() {
   opacity: 0;
   transform: scale(0.97);
 }
+
+.burst-enter-active { transition: opacity 0.3s; }
+.burst-leave-active  { transition: opacity 0.6s; }
+.burst-enter-from,
+.burst-leave-to      { opacity: 0; }
 
 .toast-enter-active,
 .toast-leave-active {

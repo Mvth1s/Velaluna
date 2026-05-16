@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 import StarField from '../components/StarField.vue'
-import { LOGO_BANNER } from '../assets/logos'
+import { LOGO_BANNER, LOGO_SQUARE } from '../assets/logos'
 
 const router = useRouter()
 </script>
@@ -44,32 +44,9 @@ const router = useRouter()
         </div>
       </div>
 
-      <!-- Right: constellation -->
-      <div class="home-visual" aria-hidden="true">
-        <svg class="constellation" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <line x1="160" y1="60"  x2="80"  y2="140" stroke="rgba(88,130,136,0.4)" stroke-width="1" />
-          <line x1="160" y1="60"  x2="240" y2="140" stroke="rgba(88,130,136,0.4)" stroke-width="1" />
-          <line x1="80"  y1="140" x2="120" y2="230" stroke="rgba(88,130,136,0.3)" stroke-width="1" />
-          <line x1="240" y1="140" x2="200" y2="230" stroke="rgba(88,130,136,0.3)" stroke-width="1" />
-          <line x1="80"  y1="140" x2="200" y2="230" stroke="rgba(88,130,136,0.15)" stroke-width="1" />
-          <line x1="240" y1="140" x2="120" y2="230" stroke="rgba(88,130,136,0.15)" stroke-width="1" />
-          <line x1="120" y1="230" x2="200" y2="230" stroke="rgba(232,227,216,0.2)"  stroke-width="1" />
-          <!-- completed -->
-          <circle cx="160" cy="60" r="30" fill="rgba(232,227,216,0.07)" />
-          <circle cx="160" cy="60" r="24" fill="#E8E3D8" opacity="0.95" />
-          <!-- available -->
-          <circle cx="80"  cy="140" r="20" fill="#588288" opacity="0.9" />
-          <circle cx="240" cy="140" r="20" fill="#588288" opacity="0.9" />
-          <!-- in_progress -->
-          <circle cx="120" cy="230" r="18" fill="#C8832A" opacity="0.88" />
-          <!-- locked -->
-          <circle cx="200" cy="230" r="16" fill="#1A2744" stroke="rgba(138,157,187,0.5)" stroke-width="1" />
-          <!-- Pulse on completed -->
-          <circle cx="160" cy="60" r="24" fill="none" stroke="rgba(232,227,216,0.3)" stroke-width="2">
-            <animate attributeName="r" values="24;32;24" dur="3s" repeatCount="indefinite" />
-            <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite" />
-          </circle>
-        </svg>
+      <!-- Right: logo carré -->
+      <div class="home-visual">
+        <img :src="LOGO_SQUARE" alt="" class="home-visual__logo" />
       </div>
     </div>
   </div>
@@ -221,19 +198,19 @@ const router = useRouter()
   color: var(--text-mute);
 }
 
-/* ── Constellation ── */
+/* ── Logo visuel ── */
 .home-visual {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.constellation {
+.home-visual__logo {
   width: 100%;
-  max-width: 300px;
+  max-width: 280px;
   height: auto;
-  opacity: 0.8;
-  filter: drop-shadow(0 0 40px rgba(88, 130, 136, 0.18));
+  opacity: 0.88;
+  filter: drop-shadow(0 0 48px rgba(88, 130, 136, 0.25));
 }
 
 /* ── Mobile ── */
@@ -245,7 +222,7 @@ const router = useRouter()
   }
   .home-text__title { font-size: 2.25rem; }
   .home-visual { order: -1; }
-  .constellation { max-width: 220px; }
+  .home-visual__logo { max-width: 180px; }
 }
 
 @media (max-width: 480px) {

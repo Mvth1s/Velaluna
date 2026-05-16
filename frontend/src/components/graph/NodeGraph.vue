@@ -42,4 +42,10 @@ useCytoscape(containerRef, nodesRef, statusesRef, {
   overflow: hidden;
   position: relative;
 }
+
+@media (max-width: 640px) {
+  .node-graph {
+    min-height: 0;
+  }
+}
 </style>

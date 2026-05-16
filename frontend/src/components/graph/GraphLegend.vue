@@ -60,4 +60,12 @@
   border: 1px solid rgba(232, 227, 216, 0.7);
   box-shadow: 0 0 6px rgba(88, 130, 136, 0.7);
 }
+
+@media (max-width: 640px) {
+  .graph-legend {
+    gap: 0.875rem;
+    padding: 0.375rem 1rem;
+    flex-wrap: wrap;
+  }
+}
 </style>

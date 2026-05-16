@@ -373,4 +373,30 @@ function confirmReset() {
   opacity: 0;
   transform: translateX(-50%) translateY(0.5rem);
 }
+
+@media (max-width: 640px) {
+  .technology-view__header {
+    padding: 0.625rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .technology-view__description {
+    display: none;
+  }
+
+  .technology-view__title h1 {
+    font-size: 1.125rem;
+  }
+
+  .technology-view__reset {
+    display: none;
+  }
+
+  .technology-view__toast {
+    width: calc(100% - 2rem);
+    text-align: center;
+    white-space: normal;
+    bottom: 1rem;
+  }
+}
 </style>

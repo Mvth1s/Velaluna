@@ -72,4 +72,14 @@ const router = useRouter()
   border-color: var(--color-ivory);
   box-shadow: 0 0 24px rgba(88, 130, 136, 0.35);
 }
+
+@media (max-width: 640px) {
+  .home__logo {
+    max-width: 240px;
+  }
+
+  .home__tagline {
+    font-size: 1.125rem;
+  }
+}
 </style>

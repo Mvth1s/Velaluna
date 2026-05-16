@@ -3,7 +3,7 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import StarField from '../components/StarField.vue'
-import { LOGO_SQUARE } from '../assets/logos'
+import { LOGO_BANNER } from '../assets/logos'
 import type { Theme } from '../types/velaluna'
 
 const router = useRouter()
@@ -30,7 +30,7 @@ onMounted(async () => {
 
     <header class="themes-view__header">
       <button class="themes-view__back" @click="router.push('/')">
-        <img :src="LOGO_SQUARE" alt="Velaluna" class="themes-view__logo" />
+        <img :src="LOGO_BANNER" alt="Velaluna" class="themes-view__logo" />
       </button>
     </header>
 
@@ -80,8 +80,9 @@ onMounted(async () => {
 }
 
 .themes-view__logo {
-  width: 36px;
-  height: 36px;
+  height: 40px;
+  width: auto;
+  max-width: 220px;
   object-fit: contain;
   opacity: 0.85;
   transition: opacity 0.2s;
@@ -162,5 +163,20 @@ onMounted(async () => {
   color: var(--color-sand);
   line-height: 1.5;
   margin: 0;
+}
+
+@media (max-width: 640px) {
+  .themes-view__content {
+    padding: 2rem 1rem;
+  }
+
+  .themes-view__title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .themes-view__grid {
+    grid-template-columns: 1fr;
+  }
 }
 </style>

@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { useContentStore } from '../stores/contentStore'
 import { useProgressStore } from '../stores/progressStore'
 import StarField from '../components/StarField.vue'
-import { LOGO_SQUARE } from '../assets/logos'
+import { LOGO_BANNER } from '../assets/logos'
 import type { Theme, Technology } from '../types/velaluna'
 
 const route = useRoute()
@@ -46,7 +46,7 @@ function progressPercent(tech: Technology): number {
 
     <header class="theme-view__header">
       <button class="theme-view__back" @click="router.push('/themes')">
-        <img :src="LOGO_SQUARE" alt="Velaluna" class="theme-view__logo" />
+        <img :src="LOGO_BANNER" alt="Velaluna" class="theme-view__logo" />
       </button>
       <nav class="theme-view__breadcrumb" aria-label="Fil d'Ariane">
         <button class="theme-view__breadcrumb-link" @click="router.push('/')">Accueil</button>
@@ -124,8 +124,9 @@ function progressPercent(tech: Technology): number {
 }
 
 .theme-view__logo {
-  width: 36px;
-  height: 36px;
+  height: 28px;
+  width: auto;
+  max-width: 180px;
   object-fit: contain;
   opacity: 0.85;
   transition: opacity 0.2s;

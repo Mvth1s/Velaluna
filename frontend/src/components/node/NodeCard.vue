@@ -299,14 +299,21 @@ function handleComplete(projectId: string) {
 @media (max-width: 640px) {
   .node-card-overlay {
     padding: 0;
-    align-items: flex-end;
+    align-items: stretch;
+    background: var(--color-night);
   }
 
   .node-card {
     width: 100%;
     max-width: 100%;
-    max-height: 92vh;
-    border-radius: 16px 16px 0 0;
+    height: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    border: none;
+  }
+
+  .node-card__header {
+    border-radius: 0;
   }
 
   .node-card__body {

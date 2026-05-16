@@ -16,6 +16,17 @@ const LAYOUT_OPTIONS = {
   padding: 40
 }
 
+const LAYOUT_OPTIONS_MOBILE = {
+  ...LAYOUT_OPTIONS,
+  nodeRepulsion: 4000,
+  idealEdgeLength: 70,
+  padding: 20,
+}
+
+function isMobile() {
+  return window.innerWidth < 640
+}
+
 const STYLES: StylesheetStyle[] = [
   {
     selector: 'node',
@@ -47,6 +58,7 @@ const STYLES: StylesheetStyle[] = [
       height: '52px',
     }
   },
+
   {
     selector: 'node[status="available"]',
     style: {
@@ -121,6 +133,15 @@ const STYLES: StylesheetStyle[] = [
   },
 ]
 
+function getMobileStyles(): StylesheetStyle[] {
+  return STYLES.map(s => {
+    if (s.selector === 'node') return { ...s, style: { ...s.style, width: '52px', height: '52px', 'font-size': '10px', 'text-max-width': '44px' } }
+    if (s.selector === 'node[status="locked"]') return { ...s, style: { ...s.style, width: '40px', height: '40px' } }
+    if (s.selector === 'node[status="completed"]') return { ...s, style: { ...s.style, width: '58px', height: '58px' } }
+    return s
+  })
+}
+
 function buildElements(nodes: Node[], statuses: Record<string, NodeStatus>): ElementDefinition[] {
   const nodeSet = new Set(nodes.map(n => n.id))
 
@@ -169,11 +190,12 @@ export function useCytoscape(
     cy?.destroy()
     resizeObserver?.disconnect()
 
+    const mobile = isMobile()
     cy = cytoscape({
       container: container.value,
       elements: buildElements(nodes.value, statuses.value),
-      style: STYLES,
-      layout: LAYOUT_OPTIONS,
+      style: mobile ? getMobileStyles() : STYLES,
+      layout: mobile ? LAYOUT_OPTIONS_MOBILE : LAYOUT_OPTIONS,
       backgroundColor: 'transparent',
     })
 

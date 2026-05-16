@@ -86,6 +86,10 @@ function progressPercent(tech: Technology): number {
           </div>
         </button>
       </div>
+
+      <button v-if="!loading" class="theme-view__other-theme" @click="router.push('/themes')">
+        ← Choisir un autre thème
+      </button>
     </main>
   </div>
 </template>
@@ -275,5 +279,24 @@ function progressPercent(tech: Technology): number {
   border-radius: 6px;
   transition: width 0.4s ease;
   box-shadow: 0 0 6px rgba(88, 130, 136, 0.5);
+}
+
+.theme-view__other-theme {
+  display: block;
+  margin: 2rem auto 0;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  color: var(--color-stellar);
+  background: transparent;
+  border: 1px solid var(--color-deep);
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.theme-view__other-theme:hover {
+  border-color: var(--color-stellar);
+  color: var(--color-ivory);
 }
 </style>

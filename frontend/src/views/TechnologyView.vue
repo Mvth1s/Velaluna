@@ -121,9 +121,6 @@ function confirmReset() {
           title="Réinitialiser la progression"
           @click="confirmReset"
         >↺</button>
-        <button class="technology-view__change-theme" @click="router.push('/themes')">
-          ← Choisir un autre thème
-        </button>
       </div>
     </header>
 
@@ -272,23 +269,6 @@ function confirmReset() {
   color: var(--color-stellar);
 }
 
-.technology-view__change-theme {
-  font-size: 0.8125rem;
-  color: var(--color-stellar);
-  background: transparent;
-  border: 1px solid var(--color-deep);
-  border-radius: 6px;
-  padding: 0.375rem 0.75rem;
-  cursor: pointer;
-  white-space: nowrap;
-  font-family: var(--font-ui);
-  transition: border-color 0.15s, color 0.15s;
-}
-
-.technology-view__change-theme:hover {
-  border-color: var(--color-stellar);
-  color: var(--color-slate);
-}
 
 .technology-view__completion {
   position: relative;

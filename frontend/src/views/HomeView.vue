@@ -197,10 +197,10 @@ const router = useRouter()
 
 .home-visual__logo {
   width: 100%;
-  max-width: 280px;
+  max-width: 420px;
   height: auto;
   opacity: 0.88;
-  filter: drop-shadow(0 0 48px rgba(88, 130, 136, 0.25));
+  filter: drop-shadow(0 0 60px rgba(88, 130, 136, 0.28));
 }
 
 /* ── Mobile ── */
@@ -212,7 +212,7 @@ const router = useRouter()
   }
   .home-text__title { font-size: 2.25rem; }
   .home-visual { order: -1; }
-  .home-visual__logo { max-width: 180px; }
+  .home-visual__logo { max-width: 260px; }
 }
 
 @media (max-width: 480px) {

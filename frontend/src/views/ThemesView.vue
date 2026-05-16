@@ -69,7 +69,7 @@ onMounted(async () => {
   z-index: 1;
   display: flex;
   align-items: center;
-  padding: 14px 28px;
+  padding: 16px 28px;
   border-bottom: 1px solid var(--border);
   background: rgba(0, 0, 26, 0.82);
   backdrop-filter: blur(12px);
@@ -86,11 +86,11 @@ onMounted(async () => {
 }
 
 .top-bar__logo {
-  height: 40px;
+  height: 56px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
-  opacity: 0.85;
+  opacity: 0.9;
   transition: opacity 0.2s;
 }
 .top-bar__logo:hover { opacity: 1; }

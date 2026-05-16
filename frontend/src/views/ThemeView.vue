@@ -103,7 +103,7 @@ function progressPercent(tech: Technology): number {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 14px 28px;
+  padding: 16px 28px;
   border-bottom: 1px solid var(--border);
   background: rgba(0, 0, 26, 0.82);
   backdrop-filter: blur(12px);
@@ -121,9 +121,9 @@ function progressPercent(tech: Technology): number {
 }
 
 .top-bar__logo {
-  height: 40px;
+  height: 56px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
   opacity: 0.85;
   transition: opacity 0.2s;

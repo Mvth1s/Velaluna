@@ -66,6 +66,13 @@ function progressPercent(tech: Technology): number {
         <h1 class="theme-content__title">Choisis ta technologie</h1>
         <p v-if="theme?.description" class="theme-content__desc">{{ theme.description }}</p>
 
+        <button class="other-theme-btn" @click="router.push('/themes')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+          Choisir un autre thème
+        </button>
+
         <div class="tech-grid">
           <button
             v-for="tech in technologies"
@@ -85,10 +92,6 @@ function progressPercent(tech: Technology): number {
             </div>
           </button>
         </div>
-
-        <button class="other-theme-btn" @click="router.push('/themes')">
-          ← Choisir un autre thème
-        </button>
       </template>
     </main>
   </div>
@@ -283,18 +286,28 @@ function progressPercent(tech: Technology): number {
 }
 
 .other-theme-btn {
-  margin-top: 36px;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 28px;
+  padding: 10px 18px;
   font-family: var(--font-label);
   font-size: 11px;
   font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--text-mute);
+  color: var(--color-ivory);
+  background: rgba(26, 39, 68, 0.6);
+  border: 1px solid rgba(232, 227, 216, 0.25);
+  border-radius: 999px;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.other-theme-btn:hover { color: var(--color-ivory); }
+.other-theme-btn:hover {
+  background: rgba(26, 39, 68, 0.85);
+  border-color: rgba(232, 227, 216, 0.45);
+  box-shadow: 0 0 16px rgba(232, 227, 216, 0.08);
+}
 
 @media (max-width: 640px) {
   .top-bar { padding: 12px 16px; }

@@ -46,8 +46,8 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 }
 
 .node-project--completed {
-  border-color: rgba(88, 130, 136, 0.4);
-  background: rgba(88, 130, 136, 0.06);
+  border-color: rgba(34, 197, 94, 0.3);
+  background: rgba(34, 197, 94, 0.05);
 }
 
 .node-project__header {
@@ -123,9 +123,9 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 .node-project__done {
   font-family: var(--font-label);
   font-weight: 300;
-  color: var(--color-stellar);
+  color: var(--color-done);
   font-size: 0.875rem;
   letter-spacing: 0.05em;
-  text-shadow: 0 0 6px rgba(88, 130, 136, 0.5);
+  text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
 }
 </style>

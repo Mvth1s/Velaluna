@@ -241,8 +241,8 @@ function confirmReset() {
 }
 
 .technology-view__progress--done {
-  color: var(--color-stellar);
-  text-shadow: 0 0 8px rgba(88, 130, 136, 0.6);
+  color: var(--color-done);
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.5);
 }
 
 .technology-view__progress span {
@@ -277,15 +277,15 @@ function confirmReset() {
   align-items: center;
   gap: 0.875rem;
   padding: 0.75rem 1.5rem;
-  background: rgba(88, 130, 136, 0.1);
-  border-bottom: 1px solid rgba(88, 130, 136, 0.3);
-  color: var(--color-stellar);
+  background: rgba(34, 197, 94, 0.08);
+  border-bottom: 1px solid rgba(34, 197, 94, 0.25);
+  color: var(--color-done);
 }
 
 .technology-view__completion-icon {
   font-size: 1.25rem;
   line-height: 1;
-  text-shadow: 0 0 8px rgba(88, 130, 136, 0.8);
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
 }
 
 .technology-view__completion strong {

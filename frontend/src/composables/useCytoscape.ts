@@ -43,34 +43,27 @@ const STYLES: StylesheetStyle[] = [
       color: '#E8E3D8',
       'text-wrap': 'wrap',
       'text-max-width': '58px',
+      'border-width': 0,
     }
   },
   {
     selector: 'node[status="locked"]',
     style: {
-      'background-color': '#0A0F1A',
-      'border-width': 1,
-      'border-color': '#2A3A4A',
-      'border-opacity': 0.5,
-      color: '#3A4A5A',
+      'background-color': '#1A2744',
+      color: '#8A9DB8',
       'font-size': '10px',
       width: '52px',
       height: '52px',
     }
   },
-
   {
     selector: 'node[status="available"]',
     style: {
-      'background-fill': 'radial-gradient',
-      'background-gradient-stop-colors': '#1A2744 #0D1830',
-      'background-gradient-stop-positions': '60 100',
-      'border-width': 2,
-      'border-color': '#588288',
-      'border-opacity': 1,
+      'background-color': '#588288',
+      color: '#E8E3D8',
       'shadow-blur': 8,
       'shadow-color': '#588288',
-      'shadow-opacity': 0.3,
+      'shadow-opacity': 0.4,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
     }
@@ -78,46 +71,36 @@ const STYLES: StylesheetStyle[] = [
   {
     selector: 'node[status="in_progress"]',
     style: {
-      'background-fill': 'radial-gradient',
-      'background-gradient-stop-colors': '#2A3A5A #1A2744',
-      'background-gradient-stop-positions': '50 100',
-      'border-width': 2,
-      'border-color': '#8A9DBB',
-      'border-style': 'dashed',
-      'border-dash-pattern': [6, 3],
-      'shadow-blur': 10,
-      'shadow-color': '#8A9DBB',
-      'shadow-opacity': 0.5,
+      'background-color': '#8A9DB8',
+      color: '#00001A',
+      'shadow-blur': 8,
+      'shadow-color': '#8A9DB8',
+      'shadow-opacity': 0.4,
       'shadow-offset-x': 0,
       'shadow-offset-y': 0,
-      color: '#C8B898',
     }
   },
   {
     selector: 'node[status="completed"]',
     style: {
-      'background-fill': 'radial-gradient',
-      'background-gradient-stop-colors': '#588288 #1A2744',
-      'background-gradient-stop-positions': '30 100',
-      'border-width': 2,
-      'border-color': '#E8E3D8',
-      'border-opacity': 0.9,
-      'shadow-blur': 14,
-      'shadow-color': '#588288',
-      'shadow-opacity': 0.7,
-      'shadow-offset-x': 0,
-      'shadow-offset-y': 0,
+      'background-color': '#22c55e',
+      color: '#00001A',
       width: '72px',
       height: '72px',
+      'shadow-blur': 12,
+      'shadow-color': '#22c55e',
+      'shadow-opacity': 0.5,
+      'shadow-offset-x': 0,
+      'shadow-offset-y': 0,
     }
   },
   {
     selector: 'edge',
     style: {
       width: 1.5,
-      'line-color': '#2A4A5A',
-      'line-opacity': 0.6,
-      'target-arrow-color': '#2A4A5A',
+      'line-color': '#1A2744',
+      'line-opacity': 0.8,
+      'target-arrow-color': '#588288',
       'target-arrow-shape': 'triangle',
       'arrow-scale': 0.6,
       'curve-style': 'bezier',
@@ -127,17 +110,17 @@ const STYLES: StylesheetStyle[] = [
     selector: 'edge[?completed]',
     style: {
       'line-color': '#588288',
-      'line-opacity': 0.8,
-      'target-arrow-color': '#588288',
+      'line-opacity': 1,
+      'target-arrow-color': '#22c55e',
     }
   },
 ]
 
 function getMobileStyles(): StylesheetStyle[] {
   return STYLES.map(s => {
-    if (s.selector === 'node') return { ...s, style: { ...s.style, width: '52px', height: '52px', 'font-size': '10px', 'text-max-width': '44px' } }
-    if (s.selector === 'node[status="locked"]') return { ...s, style: { ...s.style, width: '40px', height: '40px' } }
-    if (s.selector === 'node[status="completed"]') return { ...s, style: { ...s.style, width: '58px', height: '58px' } }
+    if (s.selector === 'node') return { ...s, style: { ...s.style, width: '44px', height: '44px', 'font-size': '9px', 'text-max-width': '38px' } }
+    if (s.selector === 'node[status="locked"]') return { ...s, style: { ...s.style, width: '36px', height: '36px' } }
+    if (s.selector === 'node[status="completed"]') return { ...s, style: { ...s.style, width: '48px', height: '48px' } }
     return s
   })
 }

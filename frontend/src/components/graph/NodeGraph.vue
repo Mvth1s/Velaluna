@@ -38,7 +38,7 @@ useCytoscape(containerRef, nodesRef, statusesRef, {
 .node-graph {
   flex: 1;
   min-height: 500px;
-  background: #ffffff;
+  background: transparent;
   overflow: hidden;
   position: relative;
 }

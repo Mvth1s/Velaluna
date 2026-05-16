@@ -1,0 +1,16 @@
+:root {
+  /* Couleurs */
+  --color-space:   #00001A;
+  --color-night:   #101828;
+  --color-deep:    #1A2744;
+  --color-stellar: #588288;
+  --color-slate:   #8A9D88;
+  --color-ivory:   #E8E3D8;
+  --color-sand:    #C8B898;
+
+  /* Typographie */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-ui:      'Instrument Sans', sans-serif;
+  --font-label:   'Jura', sans-serif;
+  --font-mono:    'DM Mono', monospace;
+}

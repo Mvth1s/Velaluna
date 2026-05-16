@@ -27,80 +27,105 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
       <p>{{ project.hint }}</p>
     </details>
     <button v-if="!completed" class="node-project__complete" @click="emit('complete')">
-      Marquer comme terminé
+      Marquer comme maîtrisé
     </button>
-    <div v-else class="node-project__done">✓ Terminé</div>
+    <div v-else class="node-project__done">✦ Maîtrisé</div>
   </div>
 </template>
 
 <style scoped>
 .node-project {
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-deep);
   border-radius: 8px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  background: rgba(26, 39, 68, 0.3);
+  transition: border-color 0.2s;
 }
 
 .node-project--completed {
-  border-color: #22c55e;
-  background: #f0fdf4;
+  border-color: rgba(88, 130, 136, 0.4);
+  background: rgba(88, 130, 136, 0.06);
 }
 
 .node-project__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
+}
+
+.node-project__header strong {
+  font-family: var(--font-ui);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--color-ivory);
 }
 
 .node-project__difficulty {
-  font-size: 0.75rem;
-  color: #6b7280;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: var(--color-sand);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
 }
 
 .node-project__description {
+  font-family: var(--font-ui);
   font-size: 0.875rem;
-  color: #374151;
-  line-height: 1.5;
+  color: var(--color-sand);
+  line-height: 1.55;
 }
 
 .node-project__hint {
+  font-family: var(--font-ui);
   font-size: 0.875rem;
 }
 
 .node-project__hint summary {
   cursor: pointer;
-  color: #3b82f6;
+  color: var(--color-stellar);
   user-select: none;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
 }
 
 .node-project__hint p {
-  margin-top: 0.375rem;
-  color: #6b7280;
+  margin-top: 0.5rem;
+  color: var(--color-sand);
+  opacity: 0.8;
+  line-height: 1.5;
 }
 
 .node-project__complete {
-  background: #3b82f6;
-  color: white;
+  background: var(--color-stellar);
+  color: var(--color-space);
   border: none;
-  border-radius: 6px;
-  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  padding: 0.5rem 1.25rem;
   cursor: pointer;
+  font-family: var(--font-ui);
   font-size: 0.875rem;
+  font-weight: 500;
   align-self: flex-start;
-  transition: background 0.15s;
+  transition: filter 0.2s, box-shadow 0.2s;
 }
 
 .node-project__complete:hover {
-  background: #2563eb;
+  filter: brightness(1.1);
+  box-shadow: 0 0 12px rgba(88, 130, 136, 0.5);
 }
 
 .node-project__done {
-  color: #16a34a;
-  font-weight: 600;
+  font-family: var(--font-label);
+  font-weight: 300;
+  color: var(--color-stellar);
   font-size: 0.875rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 6px rgba(88, 130, 136, 0.5);
 }
 </style>

@@ -38,7 +38,9 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 
       <section class="node-card__section">
         <h3>Analogie</h3>
-        <p class="node-card__analogy">{{ node.analogy }}</p>
+        <div class="node-card__analogy">
+          <p>{{ node.analogy }}</p>
+        </div>
       </section>
 
       <section class="node-card__section">
@@ -68,8 +70,8 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   min-width: 380px;
   height: 100%;
   overflow-y: auto;
-  border-left: 1px solid #e5e7eb;
-  background: #ffffff;
+  border-left: 3px solid var(--color-stellar);
+  background: var(--color-night);
   display: flex;
   flex-direction: column;
 }
@@ -79,39 +81,48 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 1.25rem;
-  border-bottom: 1px solid #e5e7eb;
+  padding: 1.25rem 1.25rem 1rem;
+  border-bottom: 1px solid var(--color-deep);
   position: sticky;
   top: 0;
-  background: #ffffff;
+  background: var(--color-night);
   z-index: 1;
 }
 
 .node-card__title h2 {
-  font-size: 1.125rem;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-ivory);
   margin-bottom: 0.25rem;
+  line-height: 1.2;
 }
 
 .node-card__difficulty {
-  font-size: 0.75rem;
-  color: #6b7280;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 300;
+  color: var(--color-stellar);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
 }
 
 .node-card__close {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.125rem;
-  color: #9ca3af;
+  font-size: 1rem;
+  color: var(--color-sand);
+  opacity: 0.5;
   line-height: 1;
   padding: 0.125rem;
   flex-shrink: 0;
+  transition: opacity 0.2s, color 0.2s;
 }
 
 .node-card__close:hover {
-  color: #374151;
+  opacity: 1;
+  color: var(--color-ivory);
 }
 
 .node-card__body {
@@ -122,23 +133,31 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 }
 
 .node-card__section h3 {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-family: var(--font-label);
+  font-size: 0.6875rem;
+  font-weight: 300;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: #6b7280;
+  letter-spacing: 0.1em;
+  color: var(--color-stellar);
   margin-bottom: 0.625rem;
 }
 
 .node-card__section p {
+  font-family: var(--font-ui);
   font-size: 0.9375rem;
-  line-height: 1.6;
-  color: #374151;
+  line-height: 1.7;
+  color: var(--color-sand);
 }
 
 .node-card__analogy {
+  background: var(--color-deep);
+  border-radius: 8px;
+  padding: 0.875rem 1rem;
+}
+
+.node-card__analogy p {
   font-style: italic;
-  color: #4b5563 !important;
+  color: var(--color-sand) !important;
 }
 
 .node-card__projects {

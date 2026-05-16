@@ -30,14 +30,15 @@ watch(() => props.example.code, highlight)
 
 <style scoped>
 .node-example__code {
-  background: #0d1117;
+  background: #0A0F14;
+  border: 1px solid var(--color-deep);
   padding: 1rem;
   border-radius: 6px;
   overflow-x: auto;
   font-size: 0.8125rem;
   line-height: 1.65;
   margin: 0 0 0.75rem;
-  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+  font-family: var(--font-mono);
 }
 
 .node-example__code code {
@@ -47,9 +48,11 @@ watch(() => props.example.code, highlight)
 }
 
 .node-example__explanation {
+  font-family: var(--font-ui);
   font-size: 0.875rem;
-  color: #4b5563;
+  color: var(--color-sand);
   margin: 0;
   line-height: 1.55;
+  opacity: 0.85;
 }
 </style>

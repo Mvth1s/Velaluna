@@ -5,11 +5,15 @@ import type { Core, ElementDefinition, StylesheetStyle } from 'cytoscape'
 import type { Node, NodeStatus } from '../types/velaluna'
 
 const LAYOUT_OPTIONS = {
-  name: 'dagre',
-  rankDir: 'TB',
-  nodeSep: 60,
-  rankSep: 80,
-  padding: 30
+  name: 'cose',
+  animate: true,
+  animationDuration: 800,
+  nodeRepulsion: 8000,
+  idealEdgeLength: 120,
+  gravity: 0.4,
+  randomize: true,
+  fit: true,
+  padding: 40
 }
 
 const STYLES: StylesheetStyle[] = [
@@ -19,42 +23,102 @@ const STYLES: StylesheetStyle[] = [
       label: 'data(label)',
       'text-valign': 'center',
       'text-halign': 'center',
-      'font-size': '13px',
-      width: '130px',
-      height: '44px',
-      shape: 'roundrectangle',
-      color: '#ffffff',
+      'font-family': 'Jura, sans-serif',
+      'font-weight': 300,
+      'font-size': '11px',
+      width: '68px',
+      height: '68px',
+      shape: 'ellipse',
+      color: '#E8E3D8',
       'text-wrap': 'wrap',
-      'text-max-width': '120px',
-      'font-weight': 500
+      'text-max-width': '58px',
     }
   },
   {
     selector: 'node[status="locked"]',
-    style: { 'background-color': '#9ca3af' }
+    style: {
+      'background-color': '#0A0F1A',
+      'border-width': 1,
+      'border-color': '#2A3A4A',
+      'border-opacity': 0.5,
+      color: '#3A4A5A',
+      'font-size': '10px',
+      width: '52px',
+      height: '52px',
+    }
   },
   {
     selector: 'node[status="available"]',
-    style: { 'background-color': '#3b82f6' }
+    style: {
+      'background-fill': 'radial-gradient',
+      'background-gradient-stop-colors': '#1A2744 #0D1830',
+      'background-gradient-stop-positions': '60 100',
+      'border-width': 2,
+      'border-color': '#588288',
+      'border-opacity': 1,
+      'shadow-blur': 8,
+      'shadow-color': '#588288',
+      'shadow-opacity': 0.3,
+      'shadow-offset-x': 0,
+      'shadow-offset-y': 0,
+    }
   },
   {
     selector: 'node[status="in_progress"]',
-    style: { 'background-color': '#f59e0b' }
+    style: {
+      'background-fill': 'radial-gradient',
+      'background-gradient-stop-colors': '#2A3A5A #1A2744',
+      'background-gradient-stop-positions': '50 100',
+      'border-width': 2,
+      'border-color': '#8A9DBB',
+      'border-style': 'dashed',
+      'border-dash-pattern': [6, 3],
+      'shadow-blur': 10,
+      'shadow-color': '#8A9DBB',
+      'shadow-opacity': 0.5,
+      'shadow-offset-x': 0,
+      'shadow-offset-y': 0,
+      color: '#C8B898',
+    }
   },
   {
     selector: 'node[status="completed"]',
-    style: { 'background-color': '#22c55e' }
+    style: {
+      'background-fill': 'radial-gradient',
+      'background-gradient-stop-colors': '#588288 #1A2744',
+      'background-gradient-stop-positions': '30 100',
+      'border-width': 2,
+      'border-color': '#E8E3D8',
+      'border-opacity': 0.9,
+      'shadow-blur': 14,
+      'shadow-color': '#588288',
+      'shadow-opacity': 0.7,
+      'shadow-offset-x': 0,
+      'shadow-offset-y': 0,
+      width: '72px',
+      height: '72px',
+    }
   },
   {
     selector: 'edge',
     style: {
-      width: 2,
-      'line-color': '#d1d5db',
-      'target-arrow-color': '#d1d5db',
+      width: 1.5,
+      'line-color': '#2A4A5A',
+      'line-opacity': 0.6,
+      'target-arrow-color': '#2A4A5A',
       'target-arrow-shape': 'triangle',
-      'curve-style': 'bezier'
+      'arrow-scale': 0.6,
+      'curve-style': 'bezier',
     }
-  }
+  },
+  {
+    selector: 'edge[?completed]',
+    style: {
+      'line-color': '#588288',
+      'line-opacity': 0.8,
+      'target-arrow-color': '#588288',
+    }
+  },
 ]
 
 function buildElements(nodes: Node[], statuses: Record<string, NodeStatus>): ElementDefinition[] {
@@ -73,7 +137,12 @@ function buildElements(nodes: Node[], statuses: Record<string, NodeStatus>): Ele
     node.unlocks.forEach(targetId => {
       if (nodeSet.has(targetId)) {
         edgeElements.push({
-          data: { id: `${node.id}-->${targetId}`, source: node.id, target: targetId }
+          data: {
+            id: `${node.id}-->${targetId}`,
+            source: node.id,
+            target: targetId,
+            completed: statuses[node.id] === 'completed' ? true : undefined
+          }
         })
       }
     })
@@ -104,7 +173,8 @@ export function useCytoscape(
       container: container.value,
       elements: buildElements(nodes.value, statuses.value),
       style: STYLES,
-      layout: LAYOUT_OPTIONS
+      layout: LAYOUT_OPTIONS,
+      backgroundColor: 'transparent',
     })
 
     cy.on('tap', 'node', event => {
@@ -123,6 +193,10 @@ export function useCytoscape(
     if (!cy) return
     cy.nodes().forEach(node => {
       node.data('status', statuses.value[node.id()] ?? 'locked')
+    })
+    cy.edges().forEach(edge => {
+      const sourceStatus = statuses.value[edge.data('source')]
+      edge.data('completed', sourceStatus === 'completed' ? true : undefined)
     })
     cy.style().update()
   }

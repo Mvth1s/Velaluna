@@ -49,12 +49,12 @@
 }
 
 .graph-legend__item--in-progress::before {
-  background: #8A9DB8;
+  background: #C8832A;
 }
 
 .graph-legend__item--completed::before {
-  background: #22c55e;
-  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+  background: #E8E3D8;
+  box-shadow: 0 0 6px rgba(232, 227, 216, 0.5);
 }
 
 @media (max-width: 640px) {

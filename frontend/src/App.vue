@@ -20,25 +20,22 @@ html, body, #app {
 
 body {
   font-family: var(--font-ui);
+  font-weight: 300;
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: 0.005em;
   background: var(--color-space);
   color: var(--color-ivory);
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-::-webkit-scrollbar {
-  width: 6px;
-}
+button, input, textarea { font-family: inherit; color: inherit; }
+button { background: none; border: none; padding: 0; cursor: pointer; }
+a { color: inherit; text-decoration: none; }
 
-::-webkit-scrollbar-track {
-  background: var(--color-night);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--color-deep);
-  border-radius: 3px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--color-stellar);
-}
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-stellar); }
 </style>

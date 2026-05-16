@@ -1,153 +1,172 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 
-interface Star {
-  x: number; y: number; vx: number; vy: number
-  size: number; phase: number; speed: number
-}
-
-interface ShootingStar {
-  x: number; y: number; angle: number; speed: number
-  length: number; opacity: number; life: number; age: number
-}
-
-interface Nebula { x: number; y: number; size: number; color: string; duration: number; delay: number }
-
 const canvasRef = ref<HTMLCanvasElement | null>(null)
-const nebulae = ref<Nebula[]>([])
-
-let animId = 0
-let stars: Star[] = []
-let shootingStars: ShootingStar[] = []
-let nextShootingAt = 0
-
-function rand(min: number, max: number) { return min + Math.random() * (max - min) }
-
-function initStars(w: number, h: number) {
-  stars = Array.from({ length: 150 }, () => ({
-    x: rand(0, w),
-    y: rand(0, h),
-    vx: (Math.random() - 0.5) * 0.15,
-    vy: (Math.random() - 0.5) * 0.15,
-    size: rand(1, 2.5),
-    phase: rand(0, Math.PI * 2),
-    speed: rand(0.0005, 0.002)
-  }))
-}
-
-function scheduleNextShooting() {
-  nextShootingAt = Date.now() + rand(4000, 10000)
-}
-
-function spawnShooting(w: number, h: number) {
-  const angle = rand(20, 60) * (Math.PI / 180)
-  shootingStars.push({
-    x: rand(0, w * 0.7),
-    y: rand(0, h * 0.33),
-    angle,
-    speed: rand(8, 16),
-    length: rand(80, 180),
-    opacity: 1,
-    life: rand(40, 80),
-    age: 0
-  })
-}
-
-function draw(ctx: CanvasRenderingContext2D, w: number, h: number, now: number) {
-  ctx.fillStyle = '#00001A'
-  ctx.fillRect(0, 0, w, h)
-
-  for (const star of stars) {
-    star.x = (star.x + star.vx + w) % w
-    star.y = (star.y + star.vy + h) % h
-    const brightness = 0.2 + 0.8 * (0.5 + 0.5 * Math.sin(now * star.speed + star.phase))
-    ctx.beginPath()
-    ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2)
-    ctx.fillStyle = `rgba(255,255,255,${brightness.toFixed(3)})`
-    ctx.fill()
-  }
-
-  if (now > nextShootingAt) {
-    spawnShooting(w, h)
-    scheduleNextShooting()
-  }
-
-  shootingStars = shootingStars.filter(s => s.age < s.life)
-  for (const s of shootingStars) {
-    const progress = s.age / s.life
-    const alpha = (1 - progress) * s.opacity
-    const tailX = s.x - Math.cos(s.angle) * s.length
-    const tailY = s.y - Math.sin(s.angle) * s.length
-    const grad = ctx.createLinearGradient(s.x, s.y, tailX, tailY)
-    grad.addColorStop(0, `rgba(200,220,255,${alpha.toFixed(3)})`)
-    grad.addColorStop(1, 'rgba(200,220,255,0)')
-    ctx.beginPath()
-    ctx.moveTo(s.x, s.y)
-    ctx.lineTo(tailX, tailY)
-    ctx.strokeStyle = grad
-    ctx.lineWidth = 1.5
-    ctx.stroke()
-    s.x += Math.cos(s.angle) * s.speed
-    s.y += Math.sin(s.angle) * s.speed
-    s.age++
-  }
-}
-
-function loop() {
-  const canvas = canvasRef.value
-  if (!canvas) return
-  const ctx = canvas.getContext('2d')
-  if (!ctx) return
-  draw(ctx, canvas.width, canvas.height, Date.now())
-  animId = requestAnimationFrame(loop)
-}
-
-function resize() {
-  const canvas = canvasRef.value
-  if (!canvas) return
-  canvas.width = window.innerWidth
-  canvas.height = window.innerHeight
-  initStars(canvas.width, canvas.height)
-}
+let raf = 0
+let resizeCleanup: (() => void) | null = null
 
 onMounted(() => {
-  nebulae.value = Array.from({ length: 3 }, () => ({
-    x: rand(10, 90),
-    y: rand(10, 90),
-    size: rand(200, 400),
-    color: Math.random() > 0.5 ? '#588288' : '#1A2744',
-    duration: rand(15, 30),
-    delay: rand(0, 15)
-  }))
+  const cvs = canvasRef.value
+  if (!cvs) return
+  const ctx = cvs.getContext('2d')
+  if (!ctx) return
+
+  const resize = () => {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2)
+    cvs.width = cvs.offsetWidth * dpr
+    cvs.height = cvs.offsetHeight * dpr
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+  }
   resize()
   window.addEventListener('resize', resize)
-  scheduleNextShooting()
-  loop()
+  resizeCleanup = () => window.removeEventListener('resize', resize)
+
+  type Hue = 'ivory' | 'sand' | 'slate'
+  type Star = {
+    x: number; y: number; r: number
+    twinkle: number; speed: number; hue: Hue
+    dx: number; dy: number
+  }
+
+  const stars: Star[] = Array.from({ length: 220 }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: Math.random() * 1.1 + 0.2,
+    twinkle: Math.random() * Math.PI * 2,
+    speed: 0.0012 + Math.random() * 0.0022,
+    hue: (Math.random() < 0.15 ? 'sand' : Math.random() < 0.5 ? 'ivory' : 'slate') as Hue,
+    dx: (Math.random() - 0.5) * 0.000006,
+    dy: (Math.random() - 0.5) * 0.000006,
+  }))
+
+  const motes = Array.from({ length: 10 }, () => ({
+    x: Math.random(),
+    y: Math.random(),
+    r: 40 + Math.random() * 70,
+    phase: Math.random() * Math.PI * 2,
+  }))
+
+  type Meteor = {
+    x0: number; y0: number
+    x1: number; y1: number
+    startT: number
+    duration: number
+  }
+
+  let meteors: Meteor[] = []
+  let nextMeteorTime = 1500 + Math.random() * 2000
+  let prevT = 0
+
+  function spawnMeteor(t: number) {
+    const angle = (20 + Math.random() * 25) * Math.PI / 180
+    const dist = 0.28 + Math.random() * 0.2
+    const x0 = Math.random() * 0.75
+    const y0 = Math.random() * 0.35
+    meteors.push({
+      x0, y0,
+      x1: x0 + Math.cos(angle) * dist,
+      y1: y0 + Math.sin(angle) * dist,
+      startT: t,
+      duration: 550 + Math.random() * 350,
+    })
+    nextMeteorTime = t + 5000 + Math.random() * 8000
+  }
+
+  const draw = (t: number) => {
+    const dt = prevT === 0 ? 16 : Math.min(t - prevT, 50)
+    prevT = t
+
+    const w = cvs.offsetWidth
+    const h = cvs.offsetHeight
+    ctx.clearRect(0, 0, w, h)
+
+    // Nebula motes
+    for (const m of motes) {
+      const px = m.x * w + Math.sin(t * 0.0001 + m.phase) * 30
+      const py = m.y * h + Math.cos(t * 0.00008 + m.phase) * 20
+      const grad = ctx.createRadialGradient(px, py, 0, px, py, m.r)
+      grad.addColorStop(0, 'rgba(88,130,136,0.06)')
+      grad.addColorStop(1, 'rgba(88,130,136,0)')
+      ctx.fillStyle = grad
+      ctx.fillRect(px - m.r, py - m.r, m.r * 2, m.r * 2)
+    }
+
+    // Stars: drift + twinkle
+    for (const s of stars) {
+      s.x += s.dx * dt
+      s.y += s.dy * dt
+      if (s.x < -0.02) s.x = 1.02
+      if (s.x > 1.02) s.x = -0.02
+      if (s.y < -0.02) s.y = 1.02
+      if (s.y > 1.02) s.y = -0.02
+
+      const px = s.x * w
+      const py = s.y * h
+      const alpha = 0.2 + 0.7 * ((Math.sin(s.twinkle + t * s.speed) + 1) / 2)
+
+      ctx.fillStyle = s.hue === 'ivory' ? `rgba(232,227,216,${alpha.toFixed(3)})`
+                    : s.hue === 'sand'  ? `rgba(200,184,152,${alpha.toFixed(3)})`
+                    :                     `rgba(138,157,187,${alpha.toFixed(3)})`
+      ctx.beginPath()
+      ctx.arc(px, py, s.r, 0, Math.PI * 2)
+      ctx.fill()
+
+      // Occasional faint glow on bright ivory stars
+      if (s.hue === 'ivory' && s.r > 0.9 && alpha > 0.75) {
+        ctx.beginPath()
+        ctx.arc(px, py, s.r * 3, 0, Math.PI * 2)
+        const glow = ctx.createRadialGradient(px, py, 0, px, py, s.r * 3)
+        glow.addColorStop(0, `rgba(232,227,216,${(alpha * 0.12).toFixed(3)})`)
+        glow.addColorStop(1, 'rgba(232,227,216,0)')
+        ctx.fillStyle = glow
+        ctx.fill()
+      }
+    }
+
+    // Spawn meteors
+    if (t >= nextMeteorTime) spawnMeteor(t)
+
+    // Draw meteors
+    meteors = meteors.filter(m => {
+      const progress = (t - m.startT) / m.duration
+      if (progress >= 1) return false
+
+      const alpha = Math.sin(progress * Math.PI)
+      const headX = (m.x0 + (m.x1 - m.x0) * progress) * w
+      const headY = (m.y0 + (m.y1 - m.y0) * progress) * h
+      const tailProgress = Math.max(0, progress - 0.35)
+      const tailX = (m.x0 + (m.x1 - m.x0) * tailProgress) * w
+      const tailY = (m.y0 + (m.y1 - m.y0) * tailProgress) * h
+
+      const grad = ctx.createLinearGradient(tailX, tailY, headX, headY)
+      grad.addColorStop(0, 'rgba(232,227,216,0)')
+      grad.addColorStop(0.65, `rgba(232,227,216,${(alpha * 0.55).toFixed(3)})`)
+      grad.addColorStop(1, `rgba(232,227,216,${(alpha * 0.9).toFixed(3)})`)
+      ctx.beginPath()
+      ctx.moveTo(tailX, tailY)
+      ctx.lineTo(headX, headY)
+      ctx.strokeStyle = grad
+      ctx.lineWidth = 1.4
+      ctx.stroke()
+
+      return m.y0 + (m.y1 - m.y0) * progress < 1.1
+    })
+
+    raf = requestAnimationFrame(draw)
+  }
+  draw(0)
 })
 
 onUnmounted(() => {
-  cancelAnimationFrame(animId)
-  window.removeEventListener('resize', resize)
+  cancelAnimationFrame(raf)
+  resizeCleanup?.()
 })
 </script>
 
 <template>
   <div class="starfield" aria-hidden="true">
     <canvas ref="canvasRef" class="starfield__canvas" />
-    <div
-      v-for="(neb, i) in nebulae"
-      :key="`n${i}`"
-      class="starfield__nebula"
-      :style="{
-        left: `${neb.x}%`,
-        top: `${neb.y}%`,
-        width: `${neb.size}px`,
-        height: `${neb.size}px`,
-        background: neb.color,
-        animationDuration: `${neb.duration}s`,
-        animationDelay: `${neb.delay}s`
-      }"
-    />
+    <div class="starfield__veil" />
   </div>
 </template>
 
@@ -158,7 +177,7 @@ onUnmounted(() => {
   z-index: 0;
   pointer-events: none;
   overflow: hidden;
-  background: var(--color-space);
+  background: radial-gradient(ellipse at 50% 30%, #131e3a 0%, #00001A 60%, #00000c 100%);
 }
 
 .starfield__canvas {
@@ -168,17 +187,11 @@ onUnmounted(() => {
   height: 100%;
 }
 
-.starfield__nebula {
+.starfield__veil {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.07;
-  animation: breathe ease-in-out infinite;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes breathe {
-  0%, 100% { transform: translate(-50%, -50%) scale(1);    opacity: 0.06; }
-  50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 0.10; }
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 90%, rgba(88,130,136,0.12), transparent 50%),
+    radial-gradient(circle at 85% 10%, rgba(200,184,152,0.06), transparent 45%);
 }
 </style>

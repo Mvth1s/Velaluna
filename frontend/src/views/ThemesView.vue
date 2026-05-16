@@ -28,19 +28,20 @@ onMounted(async () => {
   <div class="themes-view">
     <StarField />
 
-    <header class="themes-view__header">
-      <button class="themes-view__back" @click="router.push('/')">
-        <img :src="LOGO_BANNER" alt="Velaluna" class="themes-view__logo" />
+    <header class="top-bar">
+      <button class="top-bar__logo-btn" @click="router.push('/')">
+        <img :src="LOGO_BANNER" alt="Velaluna" class="top-bar__logo" />
       </button>
     </header>
 
-    <main class="themes-view__content">
-      <h1 class="themes-view__title">Quel domaine veux-tu explorer ?</h1>
+    <main class="themes-content">
+      <p class="themes-content__eyebrow">Explorer</p>
+      <h1 class="themes-content__title">Quel domaine veux-tu<br>explorer ?</h1>
 
-      <div v-if="loading" class="themes-view__state">Chargement...</div>
-      <div v-else-if="error" class="themes-view__state themes-view__state--error">{{ error }}</div>
+      <div v-if="loading" class="state-msg">Chargement...</div>
+      <div v-else-if="error" class="state-msg state-msg--error">{{ error }}</div>
 
-      <div v-else class="themes-view__grid">
+      <div v-else class="themes-grid">
         <button
           v-for="theme in themes"
           :key="theme.id"
@@ -48,7 +49,8 @@ onMounted(async () => {
           @click="router.push(`/themes/${theme.id}`)"
         >
           <strong class="theme-card__label">{{ theme.label }}</strong>
-          <p class="theme-card__description">{{ theme.description }}</p>
+          <p class="theme-card__desc">{{ theme.description }}</p>
+          <span class="theme-card__cta">Explorer →</span>
         </button>
       </div>
     </main>
@@ -61,122 +63,132 @@ onMounted(async () => {
   position: relative;
 }
 
-.themes-view__header {
+/* ── Top bar ── */
+.top-bar {
   position: relative;
   z-index: 1;
   display: flex;
   align-items: center;
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid var(--color-deep);
-  background: rgba(0, 0, 26, 0.85);
-  backdrop-filter: blur(8px);
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(0, 0, 26, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-.themes-view__back {
+.top-bar__logo-btn {
   background: none;
   border: none;
   cursor: pointer;
   padding: 0;
+  display: flex;
+  align-items: center;
 }
 
-.themes-view__logo {
-  height: 40px;
+.top-bar__logo {
+  height: 56px;
   width: auto;
-  max-width: 220px;
+  max-width: 280px;
   object-fit: contain;
-  opacity: 0.85;
+  opacity: 0.9;
   transition: opacity 0.2s;
 }
+.top-bar__logo:hover { opacity: 1; }
 
-.themes-view__logo:hover {
-  opacity: 1;
-}
-
-.themes-view__content {
+/* ── Content ── */
+.themes-content {
   position: relative;
   z-index: 1;
-  max-width: 720px;
+  max-width: 780px;
   margin: 0 auto;
-  padding: 3.5rem 2rem;
+  padding: 60px 28px 80px;
 }
 
-.themes-view__title {
+.themes-content__eyebrow {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--color-stellar);
+  margin-bottom: 14px;
+}
+
+.themes-content__title {
   font-family: var(--font-display);
-  font-size: 1.875rem;
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 400;
+  line-height: 1.1;
   color: var(--color-ivory);
-  margin-bottom: 2.5rem;
-  text-align: center;
+  margin-bottom: 48px;
 }
 
-.themes-view__state {
+.state-msg {
   text-align: center;
-  color: var(--color-sand);
+  color: var(--text-mute);
   padding: 3rem;
   font-family: var(--font-ui);
 }
+.state-msg--error { color: #f87171; }
 
-.themes-view__state--error {
-  color: #f87171;
-}
-
-.themes-view__grid {
+/* ── Grid ── */
+.themes-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-  justify-items: center;
+  gap: 20px;
 }
 
 .theme-card {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 2rem;
-  min-width: 260px;
-  min-height: 140px;
-  width: 100%;
-  border: 1px solid var(--color-deep);
-  border-radius: 12px;
-  background: rgba(26, 39, 68, 0.55);
-  backdrop-filter: blur(6px);
+  gap: 12px;
+  padding: 28px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--surface-2);
+  backdrop-filter: blur(8px);
   cursor: pointer;
   text-align: left;
   transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  width: 100%;
 }
 
 .theme-card:hover {
-  border-color: var(--color-stellar);
-  box-shadow: 0 4px 20px rgba(88, 130, 136, 0.25);
-  background: rgba(26, 39, 68, 0.85);
+  border-color: var(--border-strong);
+  box-shadow: 0 8px 32px rgba(88, 130, 136, 0.18), 0 0 0 1px rgba(88, 130, 136, 0.1);
+  background: rgba(26, 39, 68, 0.5);
 }
 
 .theme-card__label {
-  font-family: var(--font-ui);
-  font-size: 1.375rem;
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 400;
+  line-height: 1.1;
   color: var(--color-ivory);
 }
 
-.theme-card__description {
+.theme-card__desc {
   font-family: var(--font-ui);
-  font-size: 1rem;
-  color: var(--color-sand);
-  line-height: 1.5;
-  margin: 0;
+  font-size: 0.9375rem;
+  color: rgba(232, 227, 216, 0.7);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.theme-card__cta {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-stellar);
+  margin-top: 4px;
 }
 
 @media (max-width: 640px) {
-  .themes-view__content {
-    padding: 2rem 1rem;
-  }
-
-  .themes-view__title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .themes-view__grid {
-    grid-template-columns: 1fr;
-  }
+  .themes-content { padding: 40px 16px 60px; }
+  .themes-content__title { font-size: 2rem; margin-bottom: 32px; }
+  .themes-grid { grid-template-columns: 1fr; gap: 14px; }
+  .theme-card { padding: 22px; }
 }
 </style>

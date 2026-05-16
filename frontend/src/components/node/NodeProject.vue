@@ -6,8 +6,6 @@ defineProps<{
   completed: boolean
 }>()
 
-const emit = defineEmits<{ complete: [] }>()
-
 const DIFFICULTY_LABELS: Record<Difficulty, string> = {
   beginner: 'Débutant',
   intermediate: 'Intermédiaire',
@@ -16,116 +14,127 @@ const DIFFICULTY_LABELS: Record<Difficulty, string> = {
 </script>
 
 <template>
-  <div class="node-project" :class="{ 'node-project--completed': completed }">
-    <div class="node-project__header">
-      <strong>{{ project.label }}</strong>
-      <span class="node-project__difficulty">{{ DIFFICULTY_LABELS[project.difficulty] }}</span>
+  <div class="project-card" :class="{ 'project-card--done': completed }">
+    <div class="project-card__head">
+      <h3 class="project-card__title">{{ project.label }}</h3>
+      <div class="project-card__badges">
+        <span class="diff" :class="project.difficulty">{{ DIFFICULTY_LABELS[project.difficulty] }}</span>
+        <span v-if="completed" class="done-chip">✦ Maîtrisé</span>
+      </div>
     </div>
-    <p class="node-project__description">{{ project.description }}</p>
-    <details class="node-project__hint">
-      <summary>Indice</summary>
-      <p>{{ project.hint }}</p>
+    <p class="project-card__desc">{{ project.description }}</p>
+    <details class="project-card__hint">
+      <summary class="project-card__hint-toggle">Voir l'indice</summary>
+      <p class="project-card__hint-text">{{ project.hint }}</p>
     </details>
-    <button v-if="!completed" class="node-project__complete" @click="emit('complete')">
-      Marquer comme maîtrisé
-    </button>
-    <div v-else class="node-project__done">✦ Maîtrisé</div>
   </div>
 </template>
 
 <style scoped>
-.node-project {
-  border: 1px solid var(--color-deep);
-  border-radius: 8px;
-  padding: 1rem;
+.project-card {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-  background: rgba(26, 39, 68, 0.3);
+  gap: 10px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface-2);
   transition: border-color 0.2s;
 }
 
-.node-project--completed {
-  border-color: rgba(34, 197, 94, 0.3);
-  background: rgba(34, 197, 94, 0.05);
+.project-card--done {
+  border-color: rgba(232, 227, 216, 0.25);
+  background: rgba(232, 227, 216, 0.03);
 }
 
-.node-project__header {
+.project-card__head {
   display: flex;
+  align-items: flex-start;
   justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
+  gap: 12px;
 }
 
-.node-project__header strong {
-  font-family: var(--font-ui);
-  font-size: 0.9375rem;
-  font-weight: 500;
+.project-card__title {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.15;
   color: var(--color-ivory);
+  flex: 1;
 }
 
-.node-project__difficulty {
+.project-card__badges {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.diff {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-label);
-  font-size: 0.6875rem;
+  font-size: 10px;
   font-weight: 300;
-  color: var(--color-sand);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  white-space: nowrap;
+}
+.diff::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.diff.beginner    { color: var(--color-slate); }
+.diff.intermediate { color: var(--color-sand); border-color: rgba(200, 184, 152, 0.4); }
+.diff.advanced    { color: #d99780; border-color: rgba(217, 151, 128, 0.4); }
+
+.done-chip {
+  font-family: var(--font-label);
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
   opacity: 0.7;
 }
 
-.node-project__description {
-  font-family: var(--font-ui);
+.project-card__desc {
   font-size: 0.875rem;
-  color: var(--color-sand);
-  line-height: 1.55;
+  line-height: 1.6;
+  color: rgba(232, 227, 216, 0.75);
 }
 
-.node-project__hint {
-  font-family: var(--font-ui);
+.project-card__hint {
   font-size: 0.875rem;
 }
 
-.node-project__hint summary {
+.project-card__hint-toggle {
   cursor: pointer;
   color: var(--color-stellar);
-  user-select: none;
-  font-size: 0.8125rem;
-  letter-spacing: 0.02em;
-}
-
-.node-project__hint p {
-  margin-top: 0.5rem;
-  color: var(--color-sand);
-  opacity: 0.8;
-  line-height: 1.5;
-}
-
-.node-project__complete {
-  background: var(--color-stellar);
-  color: var(--color-space);
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1.25rem;
-  cursor: pointer;
-  font-family: var(--font-ui);
-  font-size: 0.875rem;
-  font-weight: 500;
-  align-self: flex-start;
-  transition: filter 0.2s, box-shadow 0.2s;
-}
-
-.node-project__complete:hover {
-  filter: brightness(1.1);
-  box-shadow: 0 0 12px rgba(88, 130, 136, 0.5);
-}
-
-.node-project__done {
   font-family: var(--font-label);
-  font-weight: 300;
-  color: var(--color-done);
-  font-size: 0.875rem;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  user-select: none;
+  list-style: none;
+}
+.project-card__hint-toggle::-webkit-details-marker { display: none; }
+
+.project-card__hint-text {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: rgba(88, 130, 136, 0.06);
+  border-left: 2px solid var(--accent);
+  border-radius: 0 6px 6px 0;
+  color: rgba(232, 227, 216, 0.8);
+  line-height: 1.6;
 }
 </style>

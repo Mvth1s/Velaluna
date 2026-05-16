@@ -11,7 +11,7 @@ const router = useRouter()
     <StarField />
 
     <div class="home-layout">
-      <!-- Left: logo + text -->
+      <!-- Left: text -->
       <div class="home-text">
         <p class="home-text__eyebrow">Cartographie du savoir</p>
         <h1 class="home-text__title">

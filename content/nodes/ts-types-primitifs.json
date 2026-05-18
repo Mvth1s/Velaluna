@@ -1,0 +1,24 @@
+{
+  "id": "ts-types-primitifs",
+  "label": "Types primitifs",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "TypeScript ajoute des types statiques à JavaScript. Les types primitifs de base sont : number, string, boolean, null, undefined et void. Déclarer un type, c'est dire à TypeScript ce que ta variable est censée contenir — et il t'avertira si tu fais une erreur.",
+  "analogy": "C'est comme des étiquettes sur des boîtes de rangement. Une boîte 'nombre' ne peut pas accueillir du texte. TypeScript joue le rôle du rangement parfait : si tu essaies de mettre une chaussure dans la boîte 'livre', il te stoppe immédiatement.",
+  "example": {
+    "language": "typescript",
+    "code": "let age: number = 25;\nlet prenom: string = 'Alice';\nlet estConnecte: boolean = true;\nlet valeur: null = null;\nlet rien: undefined = undefined;\n\n// TypeScript détecte l'erreur ici :\n// age = 'vingt-cinq'; // Erreur : string n'est pas assignable à number",
+    "explanation": "En ajoutant : type après le nom de variable, TypeScript sait ce que tu as l'intention de stocker et bloque les erreurs de type dès l'écriture du code."
+  },
+  "prerequisites": [],
+  "unlocks": ["ts-annotations"],
+  "projects": [
+    {
+      "id": "ts-fiche-contact",
+      "label": "Fiche contact typée",
+      "difficulty": "beginner",
+      "description": "Crée des variables TypeScript pour stocker les informations d'un contact : nom (string), âge (number), abonné à la newsletter (boolean), date de naissance (null si inconnue). Tente ensuite d'assigner une mauvaise valeur pour voir l'erreur TypeScript.",
+      "hint": "Déclare chaque variable avec son type explicite. Pour tester l'erreur, essaie : nom = 42; et observe le message du compilateur."
+    }
+  ]
+}

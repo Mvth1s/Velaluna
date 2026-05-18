@@ -1,0 +1,24 @@
+{
+  "id": "ts-utility-types",
+  "label": "Utility types",
+  "difficulty": "intermediate",
+  "technologies": ["typescript"],
+  "explanation": "TypeScript inclut des types utilitaires prédéfinis pour transformer d'autres types : Partial<T> rend toutes les propriétés optionnelles, Required<T> les rend toutes obligatoires, Pick<T, K> extrait un sous-ensemble de propriétés, Omit<T, K> en retire, Readonly<T> les rend immuables. Ces outils évitent de dupliquer les définitions de types.",
+  "analogy": "Imagine un moule à gâteau de base. Partial<T> est le même moule mais avec des alvéoles optionnelles — tu n'es pas obligé de tout remplir. Pick<T> découpe seulement la partie qui t'intéresse. Readonly<T> fait un gâteau en marbre qu'on ne peut plus modifier une fois cuit.",
+  "example": {
+    "language": "typescript",
+    "code": "interface Utilisateur {\n  id: number;\n  nom: string;\n  email: string;\n  age: number;\n  admin: boolean;\n}\n\n// Toutes les propriétés deviennent optionnelles\ntype MiseAJourUtilisateur = Partial<Utilisateur>;\n\n// Seulement certaines propriétés\ntype ProfilPublic = Pick<Utilisateur, 'id' | 'nom'>;\n\n// Tout sauf certaines propriétés\ntype UtilisateurSansId = Omit<Utilisateur, 'id' | 'admin'>;\n\n// Immuable\ntype UtilisateurFige = Readonly<Utilisateur>;\n\n// Enregistrement clé-valeur\ntype ScoresParJoueur = Record<string, number>;\n\nconst scores: ScoresParJoueur = { Alice: 95, Bob: 87 };\n\n// Usage pratique : patch API\nfunction mettreAJour(id: number, modifications: Partial<Utilisateur>): void {\n  // modifications peut avoir 0 à N champs de Utilisateur\n}",
+    "explanation": "Record<string, number> crée un type dictionnaire. Ces utility types sont construits en TypeScript avec des mapped types — une fois les génériques maîtrisés, tu peux créer les tiens."
+  },
+  "prerequisites": ["ts-union-intersection"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "ts-api-crud",
+      "label": "API CRUD typée",
+      "difficulty": "intermediate",
+      "description": "Définis une interface Article { id: number; titre: string; contenu: string; auteur: string; publie: boolean }. Crée les types : ArticleCreation (sans id, sans publie), ArticleMiseAJour (tous les champs sauf id sont optionnels), ArticlePublic (seulement id, titre, auteur). Écris des fonctions avec ces types comme paramètres.",
+      "hint": "ArticleCreation = Omit<Article, 'id' | 'publie'>. ArticleMiseAJour = Partial<Omit<Article, 'id'>>. ArticlePublic = Pick<Article, 'id' | 'titre' | 'auteur'>. Les utility types se composent !"
+    }
+  ]
+}

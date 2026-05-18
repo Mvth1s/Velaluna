@@ -1,0 +1,24 @@
+{
+  "id": "ts-enums",
+  "label": "Enums",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "Un enum (énumération) est un ensemble de constantes nommées. Il remplace les 'nombres magiques' et les chaînes brutes par des valeurs parlantes. TypeScript propose les enums numériques (valeurs 0, 1, 2...) et les enums de chaînes (valeurs string explicites). Les enums const sont effacés à la compilation pour produire du JavaScript plus léger.",
+  "analogy": "Imagine un panneau de signalisation routière. Plutôt que de mémoriser que '1 = sens interdit, 2 = stop, 3 = cédez le passage', tu utilises des noms clairs : Direction.STOP, Direction.CEDEZ. Le code se lit comme un texte, pas comme un manuel de codes secrets.",
+  "example": {
+    "language": "typescript",
+    "code": "// Enum numérique (automatique)\nenum Priorite {\n  Basse,     // 0\n  Moyenne,   // 1\n  Haute,     // 2\n  Critique   // 3\n}\n\n// Enum de chaînes (recommandé pour la lisibilité)\nenum Statut {\n  EnAttente = 'EN_ATTENTE',\n  EnCours   = 'EN_COURS',\n  Termine   = 'TERMINE',\n  Annule    = 'ANNULE'\n}\n\nfunction traiterTache(statut: Statut, priorite: Priorite): void {\n  if (statut === Statut.EnCours && priorite >= Priorite.Haute) {\n    console.log('Tâche urgente en cours !');\n  }\n}\n\ntraiterTache(Statut.EnCours, Priorite.Critique);",
+    "explanation": "Les enums de chaînes sont préférés pour le débogage : dans les logs ou les API, vous verrez 'EN_COURS' plutôt que le chiffre 1. const enum va encore plus loin en supprimant l'enum à la compilation — seules les valeurs restent."
+  },
+  "prerequisites": ["ts-annotations"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "ts-jeu-cartes",
+      "label": "Jeu de cartes typé",
+      "difficulty": "beginner",
+      "description": "Crée deux enums : Couleur (Coeur, Carreau, Trefle, Pique) et Valeur (As = 'AS', Roi = 'ROI', ..., chiffres de 2 à 10). Définis un type Carte = { couleur: Couleur; valeur: Valeur }. Crée un tableau de 5 cartes et affiche leur description lisible.",
+      "hint": "Pour les valeurs numériques 2 à 10, tu peux simplement utiliser des strings : Deux = '2', Trois = '3', etc. Ou opter pour un type union de littéraux numériques à la place de l'enum."
+    }
+  ]
+}

@@ -10,7 +10,17 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/technology/:id',
+      path: '/themes',
+      name: 'themes',
+      component: () => import('../views/ThemesView.vue')
+    },
+    {
+      path: '/themes/:themeId',
+      name: 'theme',
+      component: () => import('../views/ThemeView.vue')
+    },
+    {
+      path: '/themes/:themeId/:techId',
       name: 'technology',
       component: () => import('../views/TechnologyView.vue')
     },

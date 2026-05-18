@@ -1,0 +1,24 @@
+{
+  "id": "ts-interfaces",
+  "label": "Interfaces",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "Une interface définit la forme qu'un objet doit avoir : quelles propriétés il contient et de quel type elles sont. C'est un contrat que les objets s'engagent à respecter. Les interfaces peuvent être étendues (héritées) et implémentées par des classes.",
+  "analogy": "C'est comme un formulaire officiel à remplir. Si une interface 'Utilisateur' exige un champ 'email' de type string, tout objet qui prétend être un 'Utilisateur' doit obligatoirement avoir ce champ — pas question d'oublier une case.",
+  "example": {
+    "language": "typescript",
+    "code": "interface Utilisateur {\n  id: number;\n  nom: string;\n  email: string;\n  age?: number; // optionnel\n}\n\n// L'objet respecte l'interface\nconst alice: Utilisateur = {\n  id: 1,\n  nom: 'Alice',\n  email: 'alice@exemple.fr'\n};\n\n// Extension d'interface\ninterface Admin extends Utilisateur {\n  permissions: string[];\n}\n\nconst admin: Admin = {\n  id: 2,\n  nom: 'Bob',\n  email: 'bob@exemple.fr',\n  permissions: ['lire', 'écrire', 'supprimer']\n};",
+    "explanation": "Le ? rend une propriété optionnelle. extends permet à une interface d'hériter d'une autre et d'y ajouter des propriétés supplémentaires."
+  },
+  "prerequisites": ["ts-annotations"],
+  "unlocks": ["ts-union-intersection", "ts-classes"],
+  "projects": [
+    {
+      "id": "ts-catalogue-livres",
+      "label": "Catalogue de livres",
+      "difficulty": "beginner",
+      "description": "Définis une interface Livre avec : titre (string), auteur (string), annee (number), isbn (string, optionnel). Crée une interface LivreNumerique qui étend Livre avec un champ formatsFichier (string[]). Instancie deux objets de chaque type.",
+      "hint": "Pour string[], c'est un tableau de chaînes. Array<string> fonctionne aussi."
+    }
+  ]
+}

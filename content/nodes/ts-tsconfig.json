@@ -1,0 +1,24 @@
+{
+  "id": "ts-tsconfig",
+  "label": "tsconfig.json",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "tsconfig.json est le fichier de configuration du compilateur TypeScript. Il définit quels fichiers compiler, avec quel niveau de rigueur, vers quelle version de JavaScript. Les options les plus importantes : strict active toutes les vérifications strictes d'un coup, target fixe la version JS de sortie, moduleResolution contrôle comment les imports sont résolus.",
+  "analogy": "C'est le réglage de ton four avant de cuire. Tu choisis la température (strict = très chaud = très rigoureux), le mode (cible ES2020 ou ESNext), la durée. Deux développeurs avec le même code TypeScript mais des tsconfig différents peuvent obtenir des comportements très différents.",
+  "example": {
+    "language": "json",
+    "code": "{\n  \"compilerOptions\": {\n    // Version JS produite\n    \"target\": \"ES2020\",\n\n    // Système de modules\n    \"module\": \"ESNext\",\n    \"moduleResolution\": \"bundler\",\n\n    // Active toutes les vérifications strictes\n    \"strict\": true,\n\n    // Interop avec les modules CommonJS\n    \"esModuleInterop\": true,\n\n    // Dossier de sortie\n    \"outDir\": \"./dist\",\n\n    // Inclure les types DOM (pour le navigateur)\n    \"lib\": [\"ES2020\", \"DOM\"],\n\n    // Vérifications supplémentaires utiles\n    \"noUnusedLocals\": true,\n    \"noUnusedParameters\": true,\n    \"exactOptionalPropertyTypes\": true\n  },\n  \"include\": [\"src/**/*\"],\n  \"exclude\": [\"node_modules\", \"dist\"]\n}",
+    "explanation": "strict englobe noImplicitAny, strictNullChecks, strictFunctionTypes et d'autres. C'est la configuration recommandée pour tout nouveau projet. moduleResolution: 'bundler' est adapté aux projets utilisant Vite, webpack ou esbuild."
+  },
+  "prerequisites": [],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "ts-configurer-projet",
+      "label": "Configurer un projet TypeScript",
+      "difficulty": "beginner",
+      "description": "Initialise un projet TypeScript avec npx tsc --init. Modifie le tsconfig généré pour activer strict, cibler ES2020, exclure node_modules, et activer noUnusedLocals. Crée un fichier index.ts avec une variable non utilisée et vérifie que tsc signale l'erreur.",
+      "hint": "npx tsc --init génère un tsconfig commenté avec toutes les options disponibles. Pour tester, crée une variable et ne l'utilise pas : let x = 5; — avec noUnusedLocals: true, TypeScript doit se plaindre."
+    }
+  ]
+}

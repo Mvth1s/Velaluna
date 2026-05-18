@@ -1,0 +1,24 @@
+{
+  "id": "ts-classes",
+  "label": "Classes TypeScript",
+  "difficulty": "intermediate",
+  "technologies": ["typescript"],
+  "explanation": "TypeScript enrichit les classes JavaScript avec des modificateurs d'accès (public, private, protected, readonly), des propriétés typées, et la capacité d'implémenter des interfaces. Le raccourci de constructeur permet de déclarer et d'initialiser les propriétés en une seule ligne.",
+  "analogy": "Une classe JavaScript, c'est un plan d'architecte. TypeScript y ajoute les règles du bâtiment : quelles pièces sont accessibles au public, lesquelles sont réservées aux residents, lesquelles ne peuvent jamais être modifiées après construction.",
+  "example": {
+    "language": "typescript",
+    "code": "interface Identifiable {\n  id: number;\n  getDescription(): string;\n}\n\nclass Produit implements Identifiable {\n  // Raccourci constructeur : déclare + initialise en un coup\n  constructor(\n    public readonly id: number,\n    public nom: string,\n    private prix: number,\n    protected categorie: string\n  ) {}\n\n  getDescription(): string {\n    return `${this.nom} (${this.categorie})`;\n  }\n\n  getPrix(): number {\n    return this.prix;\n  }\n\n  appliquerRemise(pourcentage: number): void {\n    this.prix *= (1 - pourcentage / 100);\n  }\n}\n\nconst t = new Produit(1, 'T-shirt', 29.99, 'Vêtements');\nconsole.log(t.getDescription()); // T-shirt (Vêtements)\n// t.prix // Erreur : 'prix' est private",
+    "explanation": "readonly interdit la modification après construction. private limite l'accès à la classe elle-même. protected permet l'accès aux sous-classes. implements garantit que la classe respecte le contrat d'une interface."
+  },
+  "prerequisites": ["ts-interfaces"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "ts-banque",
+      "label": "Compte bancaire typé",
+      "difficulty": "intermediate",
+      "description": "Crée une classe CompteBancaire avec : un solde private (number), un proprietaire public readonly (string), un historique private (string[]). Méthodes : deposer(montant: number): void, retirer(montant: number): boolean (retourne false si fonds insuffisants), getHistorique(): readonly string[].",
+      "hint": "readonly sur le tableau de retour signale que l'appelant ne devrait pas modifier l'historique. Pour le retour de getHistorique, utilise le type ReadonlyArray<string> ou readonly string[]."
+    }
+  ]
+}

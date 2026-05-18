@@ -1,0 +1,19 @@
+{
+  "id": "typescript",
+  "label": "TypeScript",
+  "theme_id": "web",
+  "description": "JavaScript avec des types statiques. Détecte les erreurs avant l'exécution et rend le code plus robuste.",
+  "logo": "typescript.svg",
+  "nodes": [
+    "ts-types-primitifs",
+    "ts-annotations",
+    "ts-interfaces",
+    "ts-type-alias",
+    "ts-union-intersection",
+    "ts-enums",
+    "ts-classes",
+    "ts-generiques",
+    "ts-utility-types",
+    "ts-tsconfig"
+  ]
+}

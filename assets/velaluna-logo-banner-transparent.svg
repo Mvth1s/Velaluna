@@ -1,0 +1,94 @@
+<svg viewBox="0 0 960 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Italiana&amp;family=Jura:wght@300;400&amp;display=swap');
+    </style>
+    <radialGradient id="glow-bn" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#588288" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#588288" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2-bn" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8E3D8" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#588288" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur-bn" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7"/>
+    </filter>
+    <filter id="blur2-bn" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="3"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  
+
+  <!-- Background particles -->
+  <circle cx="42" cy="38" r="1" fill="#588288" opacity="0.35"/>
+  <circle cx="860" cy="55" r="0.8" fill="#E8E3D8" opacity="0.2"/>
+  <circle cx="920" cy="220" r="1.1" fill="#588288" opacity="0.25"/>
+  <circle cx="55" cy="240" r="0.9" fill="#E8E3D8" opacity="0.18"/>
+  <circle cx="480" cy="22" r="0.7" fill="#8A9DBB" opacity="0.3"/>
+  <circle cx="940" cy="140" r="0.6" fill="#588288" opacity="0.2"/>
+  <circle cx="18" cy="140" r="0.8" fill="#8A9DBB" opacity="0.18"/>
+  <circle cx="700" cy="255" r="0.7" fill="#E8E3D8" opacity="0.15"/>
+  <circle cx="300" cy="260" r="0.6" fill="#588288" opacity="0.18"/>
+
+  <!-- Icon center: (175, 140), ellipse rx=100 ry=44 -->
+  <!-- Node positions (rx=100, ry=44, cos60=0.5, sin60=0.866):
+       E  (275, 140)
+       NE (175+50, 140-38) = (225, 102)
+       NW (175-50, 102) = (125, 102)
+       W  (75, 140)
+       SW (125, 178)
+       SE (225, 178) -->
+
+  <!-- Orbital ellipse -->
+  <ellipse cx="175" cy="140" rx="100" ry="44" fill="none" stroke="#588288" stroke-width="1" opacity="0.45"/>
+
+  <!-- Hub lines center to each node -->
+  <line x1="175" y1="140" x2="275" y2="140" stroke="#588288" stroke-width="0.85" opacity="0.55"/>
+  <line x1="175" y1="140" x2="75" y2="140" stroke="#588288" stroke-width="0.85" opacity="0.55"/>
+  <line x1="175" y1="140" x2="225" y2="102" stroke="#588288" stroke-width="0.75" opacity="0.45"/>
+  <line x1="175" y1="140" x2="125" y2="102" stroke="#588288" stroke-width="0.75" opacity="0.45"/>
+  <line x1="175" y1="140" x2="225" y2="178" stroke="#588288" stroke-width="0.75" opacity="0.45"/>
+  <line x1="175" y1="140" x2="125" y2="178" stroke="#588288" stroke-width="0.75" opacity="0.45"/>
+
+  <!-- Perimeter connections -->
+  <line x1="275" y1="140" x2="225" y2="102" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+  <line x1="225" y1="102" x2="125" y2="102" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+  <line x1="125" y1="102" x2="75" y2="140" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+  <line x1="75" y1="140" x2="125" y2="178" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+  <line x1="125" y1="178" x2="225" y2="178" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+  <line x1="225" y1="178" x2="275" y2="140" stroke="#588288" stroke-width="0.5" opacity="0.28"/>
+
+  <!-- Center glow -->
+  <circle cx="175" cy="140" r="30" fill="url(#glow-bn)" filter="url(#blur-bn)"/>
+
+  <!-- Orbital nodes -->
+  <circle cx="275" cy="140" r="6" fill="#588288"/>
+  <circle cx="75" cy="140" r="6" fill="#588288"/>
+  <circle cx="225" cy="102" r="4.8" fill="#8A9DBB" opacity="0.9"/>
+  <circle cx="125" cy="102" r="4.8" fill="#8A9DBB" opacity="0.9"/>
+  <circle cx="225" cy="178" r="4" fill="#8A9DBB" opacity="0.75"/>
+  <circle cx="125" cy="178" r="4" fill="#8A9DBB" opacity="0.75"/>
+
+  <!-- Center node -->
+  <circle cx="175" cy="140" r="18" fill="url(#glow2-bn)" filter="url(#blur2-bn)"/>
+  <circle cx="175" cy="140" r="9" fill="#588288" opacity="0.6"/>
+  <circle cx="175" cy="140" r="4.5" fill="#E8E3D8"/>
+
+  <!-- Vertical separator between icon and text -->
+  <line x1="320" y1="88" x2="320" y2="192" stroke="#588288" stroke-width="0.6" opacity="0.3"/>
+
+  <!-- Logo name: "Velaluna" -->
+  <!-- Using x=360 for text start, baseline y=170, font-size=90 -->
+  <text x="360" y="170" font-family="Italiana, 'Times New Roman', Georgia, serif" font-size="90" letter-spacing="2">
+    <tspan fill="#E8E3D8">Vela</tspan><tspan fill="#588288">luna</tspan>
+  </text>
+
+  <!-- Separator line under name -->
+  <line x1="360" y1="185" x2="840" y2="185" stroke="#588288" stroke-width="0.6" opacity="0.35"/>
+
+  <!-- Tagline -->
+  <text x="362" y="213" font-family="Jura, 'Gill Sans', 'Trebuchet MS', sans-serif" font-size="16.5" fill="#8A9DBB" letter-spacing="5" font-weight="300">learn by connection</text>
+</svg>

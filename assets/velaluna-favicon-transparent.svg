@@ -1,0 +1,66 @@
+<svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#588288" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#588288" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E8E3D8" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#588288" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+    <filter id="blur2" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  
+
+  <!-- Subtle background particles -->
+  <circle cx="18" cy="22" r="0.8" fill="#588288" opacity="0.4"/>
+  <circle cx="110" cy="30" r="0.6" fill="#E8E3D8" opacity="0.25"/>
+  <circle cx="105" cy="98" r="0.9" fill="#588288" opacity="0.3"/>
+  <circle cx="22" cy="104" r="0.7" fill="#E8E3D8" opacity="0.2"/>
+  <circle cx="64" cy="14" r="0.5" fill="#8A9DBB" opacity="0.3"/>
+
+  <!-- Orbital ellipse -->
+  <ellipse cx="64" cy="64" rx="52" ry="23" fill="none" stroke="#588288" stroke-width="0.9" opacity="0.5"/>
+
+  <!-- Node positions (rx=52, ry=23, center=64,64):
+       E(116,64) NE(90,44) NW(38,44) W(12,64) SW(38,84) SE(90,84) -->
+
+  <!-- Hub lines center to nodes -->
+  <line x1="64" y1="64" x2="116" y2="64" stroke="#588288" stroke-width="0.8" opacity="0.55"/>
+  <line x1="64" y1="64" x2="12" y2="64" stroke="#588288" stroke-width="0.8" opacity="0.55"/>
+  <line x1="64" y1="64" x2="90" y2="44" stroke="#588288" stroke-width="0.7" opacity="0.45"/>
+  <line x1="64" y1="64" x2="38" y2="44" stroke="#588288" stroke-width="0.7" opacity="0.45"/>
+  <line x1="64" y1="64" x2="90" y2="84" stroke="#588288" stroke-width="0.7" opacity="0.45"/>
+  <line x1="64" y1="64" x2="38" y2="84" stroke="#588288" stroke-width="0.7" opacity="0.45"/>
+
+  <!-- Perimeter connections -->
+  <line x1="116" y1="64" x2="90" y2="44" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+  <line x1="90" y1="44" x2="38" y2="44" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+  <line x1="38" y1="44" x2="12" y2="64" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+  <line x1="12" y1="64" x2="38" y2="84" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+  <line x1="38" y1="84" x2="90" y2="84" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+  <line x1="90" y1="84" x2="116" y2="64" stroke="#588288" stroke-width="0.5" opacity="0.3"/>
+
+  <!-- Center glow halo -->
+  <circle cx="64" cy="64" r="18" fill="url(#glow)" filter="url(#blur)"/>
+
+  <!-- Orbital nodes -->
+  <circle cx="116" cy="64" r="4.5" fill="#588288"/>
+  <circle cx="12" cy="64" r="4.5" fill="#588288"/>
+  <circle cx="90" cy="44" r="3.8" fill="#8A9DBB" opacity="0.9"/>
+  <circle cx="38" cy="44" r="3.8" fill="#8A9DBB" opacity="0.9"/>
+  <circle cx="90" cy="84" r="3.2" fill="#8A9DBB" opacity="0.7"/>
+  <circle cx="38" cy="84" r="3.2" fill="#8A9DBB" opacity="0.7"/>
+
+  <!-- Center node -->
+  <circle cx="64" cy="64" r="9" fill="url(#glow2)" filter="url(#blur2)"/>
+  <circle cx="64" cy="64" r="5.5" fill="#588288" opacity="0.7"/>
+  <circle cx="64" cy="64" r="3" fill="#E8E3D8"/>
+</svg>

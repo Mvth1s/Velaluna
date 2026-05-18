@@ -1,0 +1,24 @@
+{
+  "id": "ts-generiques",
+  "label": "Génériques",
+  "difficulty": "intermediate",
+  "technologies": ["typescript"],
+  "explanation": "Les génériques permettent d'écrire du code qui fonctionne avec n'importe quel type, tout en conservant la vérification de types. On utilise des paramètres de type (T, K, V...) comme des variables pour les types. Le type concret est fourni à l'utilisation, et TypeScript l'infère souvent automatiquement.",
+  "analogy": "C'est une boîte universelle avec une étiquette vierge. Quand tu la remplis avec des pommes, l'étiquette devient 'Boîte de pommes' et TypeScript sait que tu ne peux y mettre que des pommes. Si tu la remplis avec des livres, elle devient 'Boîte de livres'. Même boîte, type adapté automatiquement.",
+  "example": {
+    "language": "typescript",
+    "code": "// Fonction générique\nfunction premier<T>(tableau: T[]): T | undefined {\n  return tableau[0];\n}\n\nconst n = premier([1, 2, 3]);      // TypeScript infère : number | undefined\nconst s = premier(['a', 'b']);     // TypeScript infère : string | undefined\n\n// Interface générique\ninterface Pile<T> {\n  empiler(item: T): void;\n  depiler(): T | undefined;\n  taille(): number;\n}\n\n// Contrainte générique\nfunction afficherNom<T extends { nom: string }>(item: T): string {\n  return item.nom;\n}\n\nafficherNom({ nom: 'Alice', age: 30 }); // OK\n// afficherNom({ valeur: 42 });          // Erreur : pas de propriété 'nom'",
+    "explanation": "Le extends dans <T extends { nom: string }> est une contrainte : T peut être n'importe quel type, du moment qu'il a une propriété 'nom' de type string. Cela évite les casts as any et garde la sécurité des types."
+  },
+  "prerequisites": ["ts-union-intersection"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "ts-cache-generique",
+      "label": "Cache générique",
+      "difficulty": "intermediate",
+      "description": "Implémente une classe Cache<T> qui stocke des valeurs avec une clé string et une durée de vie en millisecondes. Méthodes : set(cle: string, valeur: T, dureeMs: number): void, get(cle: string): T | null (retourne null si expiré ou absent), clear(): void.",
+      "hint": "Stocke les entrées sous la forme { valeur: T, expireA: number } où expireA = Date.now() + dureeMs. Dans get(), compare Date.now() à expireA."
+    }
+  ]
+}

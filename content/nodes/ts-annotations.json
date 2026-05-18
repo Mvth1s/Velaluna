@@ -1,0 +1,24 @@
+{
+  "id": "ts-annotations",
+  "label": "Annotations de type",
+  "difficulty": "beginner",
+  "technologies": ["typescript"],
+  "explanation": "Les annotations de type permettent de préciser le type attendu pour les paramètres de fonctions, leurs valeurs de retour, et les propriétés d'objets. C'est la pratique centrale de TypeScript : documenter les contrats de ton code directement dans le code.",
+  "analogy": "Imagine une recette de cuisine qui précise pour chaque ingrédient : '200g de farine' plutôt que juste 'farine'. TypeScript fait pareil pour les fonctions : il exige que tu précises ce que tu donnes et ce que tu obtiens en retour.",
+  "example": {
+    "language": "typescript",
+    "code": "// Annotation sur les paramètres et le retour\nfunction additionner(a: number, b: number): number {\n  return a + b;\n}\n\n// Annotation sur un objet\nfunction afficherProfil(nom: string, age: number): void {\n  console.log(`${nom}, ${age} ans`);\n}\n\n// Paramètre optionnel avec ?\nfunction saluer(prenom: string, titre?: string): string {\n  return titre ? `${titre} ${prenom}` : prenom;\n}",
+    "explanation": "Le type void signifie que la fonction ne retourne rien. Le ? après un nom de paramètre le rend optionnel. TypeScript infère souvent le type de retour, mais l'annoter explicitement rend le code plus lisible et sûr."
+  },
+  "prerequisites": ["ts-types-primitifs"],
+  "unlocks": ["ts-interfaces", "ts-type-alias", "ts-enums"],
+  "projects": [
+    {
+      "id": "ts-calculatrice-typee",
+      "label": "Calculatrice typée",
+      "difficulty": "beginner",
+      "description": "Écris quatre fonctions TypeScript (addition, soustraction, multiplication, division) avec des annotations de type précises sur les paramètres et les valeurs de retour. La division doit retourner number | null si le diviseur est 0.",
+      "hint": "Pour le type de retour conditionnel, utilise : number | null. C'est ton premier aperçu des types union !"
+    }
+  ]
+}

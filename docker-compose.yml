@@ -18,7 +18,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@velaluna.local
+      PGADMIN_DEFAULT_EMAIL: admin@velaluna.dev
       PGADMIN_DEFAULT_PASSWORD: admin
     ports:
       - "5050:80"

@@ -28,6 +28,11 @@ const router = createRouter({
       path: '/node/:id',
       name: 'node',
       component: () => import('../views/NodeView.vue')
+    },
+    {
+      path: '/progress',
+      name: 'progress',
+      component: () => import('../views/ProgressView.vue')
     }
   ]
 })

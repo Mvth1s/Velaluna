@@ -39,6 +39,9 @@ onMounted(async () => {
           <button class="btn-primary" @click="router.push('/themes')">
             Explorer les thèmes <span class="btn-arrow" />
           </button>
+          <button class="btn-secondary" @click="router.push('/progress')">
+            Ma progression
+          </button>
         </div>
         <div class="home-stats">
           <div class="home-stat">
@@ -153,6 +156,27 @@ onMounted(async () => {
 .btn-primary:hover {
   background: linear-gradient(180deg, rgba(88,130,136,0.52), rgba(88,130,136,0.26));
   box-shadow: 0 0 24px rgba(88, 130, 136, 0.22);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 13px 22px;
+  font-family: var(--font-label);
+  font-size: 11px;
+  font-weight: 300;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.btn-secondary:hover {
+  color: var(--color-ivory);
+  border-color: var(--border-strong);
 }
 
 .btn-arrow {

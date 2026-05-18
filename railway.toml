@@ -5,3 +5,7 @@ dockerfile = "Dockerfile"
 healthcheckPath = "/api/themes"
 healthcheckTimeout = 300
 restartPolicyType = "on_failure"
+
+# Variables d'environnement requises sur Railway :
+#   DATABASE_URL  → fourni automatiquement par le plugin PostgreSQL Railway
+#   FRONTEND_URL  → URL publique du déploiement (optionnel, CORS)

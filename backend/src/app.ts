@@ -5,6 +5,7 @@ import fs from 'fs'
 import themesRouter from './routes/themes'
 import technologiesRouter from './routes/technologies'
 import nodesRouter from './routes/nodes'
+import { initDb } from './db/seed'
 
 const app = express()
 const PORT = process.env.PORT ?? 3000
@@ -24,6 +25,13 @@ if (fs.existsSync(publicDir)) {
   })
 }
 
-app.listen(Number(PORT), () => {
-  console.log(`Velaluna API démarrée sur le port ${PORT}`)
-})
+initDb()
+  .then(() => {
+    app.listen(Number(PORT), () => {
+      console.log(`Velaluna API démarrée sur le port ${PORT}`)
+    })
+  })
+  .catch(err => {
+    console.error('Erreur initialisation DB :', err)
+    process.exit(1)
+  })

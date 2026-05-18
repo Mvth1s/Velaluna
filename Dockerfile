@@ -6,26 +6,22 @@ RUN npm ci
 COPY frontend/ ./
 RUN npm run build
 
-# ── Stage 2: Build backend + seed DB ─────────────────────────────────────────
+# ── Stage 2: Build backend ────────────────────────────────────────────────────
 FROM node:20-alpine AS backend-build
-RUN apk add --no-cache python3 make g++
 WORKDIR /backend
 COPY backend/package*.json ./
 RUN npm ci
 COPY backend/ ./
-COPY content/ /content/
 RUN npm run build
-ENV CONTENT_PATH=/content
-RUN node dist/db/seed.js
 
 # ── Stage 3: Production image ─────────────────────────────────────────────────
 FROM node:20-alpine
-RUN apk add --no-cache libstdc++
 WORKDIR /app
 COPY --from=backend-build /backend/dist ./dist
 COPY --from=backend-build /backend/node_modules ./node_modules
-COPY --from=backend-build /backend/data ./data
 COPY --from=frontend-build /frontend/dist ./public
+COPY content/ ./content/
 EXPOSE 3000
 ENV NODE_ENV=production
+ENV CONTENT_PATH=/app/content
 CMD ["node", "dist/app.js"]

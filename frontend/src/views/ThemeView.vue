@@ -80,11 +80,14 @@ function progressPercent(tech: Technology): number {
             class="tech-card"
             @click="router.push(`/themes/${themeId}/${tech.id}`)"
           >
-            <div class="tech-card__head">
-              <strong class="tech-card__label">{{ tech.label }}</strong>
-              <span class="tech-card__count">
-                {{ progressStore.getCompletedCountForTech(tech.id) }}<span class="tech-card__count-total">/{{ tech.nodes.length }}</span>
-              </span>
+            <div class="tech-card__top">
+              <img :src="`/logos/${tech.logo}`" :alt="tech.label" class="tech-card__logo" />
+              <div class="tech-card__head">
+                <strong class="tech-card__label">{{ tech.label }}</strong>
+                <span class="tech-card__count">
+                  {{ progressStore.getCompletedCountForTech(tech.id) }}<span class="tech-card__count-total">/{{ tech.nodes.length }}</span>
+                </span>
+              </div>
             </div>
             <p class="tech-card__desc">{{ tech.description }}</p>
             <div class="tech-card__track">
@@ -215,11 +218,34 @@ function progressPercent(tech: Technology): number {
   gap: 20px;
 }
 
+.tech-card__top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tech-card__logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  object-fit: cover;
+}
+
+.tech-card__head {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
 .tech-card {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 24px 26px;
+  padding: 20px 22px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: var(--surface-2);
@@ -234,13 +260,6 @@ function progressPercent(tech: Technology): number {
   border-color: var(--border-strong);
   box-shadow: 0 8px 32px rgba(88, 130, 136, 0.18);
   background: rgba(26, 39, 68, 0.5);
-}
-
-.tech-card__head {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
 }
 
 .tech-card__label {

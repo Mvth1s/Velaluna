@@ -26,7 +26,7 @@ Aucun prérequis technique n'est nécessaire pour utiliser Velaluna.
 
 ## 3. Concept produit
 
-Quand tu arrives sur Velaluna, tu choisis un thème (Web, Sécurité, Data...) puis une technologie. Tu te retrouves face à un graphe : des nœuds reliés entre eux par des flèches qui montrent quoi apprendre avant quoi.
+Quand tu arrives sur Velaluna, tu choisis un thème (Web, Scripting, Langages...) puis une technologie. Tu te retrouves face à un graphe : des nœuds reliés entre eux par des flèches qui montrent quoi apprendre avant quoi.
 
 Chaque nœud, c'est un concept. En cliquant dessus, tu accèdes à sa fiche :
 
@@ -44,14 +44,15 @@ Ta progression est sauvegardée dans ton navigateur, sans compte à créer. Tout
 
 ---
 
-## 4. MVP
+## 4. MVP — État actuel
 
-L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui permet de valider que le concept fonctionne.
+Le MVP est en production sur Railway.
 
-**2 thèmes, 4 technos :**
+**3 thèmes, 8 technos :**
 
-- Web : HTML/CSS, JavaScript
-- Scripting : Bash (Linux CLI), Python
+- Web : HTML/CSS, JavaScript, TypeScript
+- Scripting : Bash (Linux CLI), Python, Git
+- Langages : Java, C
 
 **Ce que le MVP inclut :**
 
@@ -60,6 +61,8 @@ L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui
 - Les nœuds verrouillés tant que les prérequis ne sont pas validés
 - La validation manuelle : l'utilisateur marque lui-même un nœud comme maîtrisé
 - La progression sauvegardée dans le navigateur (localStorage, sans compte)
+- Une page de progression globale : stats par thème, par techno, barres de progression
+- Une recherche globale (Cmd/Ctrl+K) pour trouver n'importe quel concept
 - Le contenu préparé à l'avance avec un LLM, relu et corrigé avant mise en ligne
 
 **Ce que le MVP n'inclut pas :**
@@ -67,32 +70,31 @@ L'objectif du MVP est simple : une version utilisable, avec du vrai contenu, qui
 - Comptes utilisateurs
 - Fonctionnalités communautaires
 - Suggestions de projets consolidants
-- Moteur de recherche
 
 ---
 
 ## 5. Architecture & Stack
 
 **Framework frontend : Vue.js**
-Composition API, Vue 3 + Vite. Svelte est une bonne alternative à garder en tête pour un futur projet.
+Composition API, Vue 3 + Vite. TypeScript obligatoire.
 
 **Lib de graphe : Cytoscape.js** ✓
 Choix retenu après comparaison avec vis.js. Le layout `dagre` gère nativement les graphes orientés avec prérequis. Les classes CSS dynamiques rendent l'état verrouillé/disponible/complété trivial à implémenter.
 
 **Gestion d'état frontend : Pinia**
-Store officiel Vue 3. Gère la progression locale et l'état du graphe.
+Store officiel Vue 3. Gère la progression locale et les données fetchées depuis l'API.
 
 **Backend : Express (Node.js)**
-Léger, rapide à démarrer, excellent coverage LLM — idéal pour le vibe-coding.
+Léger, rapide à démarrer. API REST en lecture seule uniquement. En production, sert aussi les fichiers statiques du frontend Vue (monolithe).
 
-**Base de données : SQLite (MVP) → PostgreSQL (suite)**
-SQLite pour le MVP : zéro config, embarqué. Migration vers PostgreSQL à l'étape comptes utilisateurs.
+**Base de données : SQLite**
+SQLite pour le MVP : zéro config, embarqué. La base est peuplée au build Docker depuis les JSON dans `/content`. Pas de volume persistant nécessaire (API en lecture seule). Migration vers PostgreSQL à l'étape comptes utilisateurs.
 
 **Environnement de dev : Docker Compose**
-Lance le frontend, le backend et la base de données en une seule commande.
+Lance le frontend Vite et le backend Express en une seule commande.
 
-**Hébergement : à définir**
-Options gratuites pour démarrer : Vercel (frontend), Railway ou Render (backend + base de données).
+**Hébergement : Railway**
+Build multi-stage Docker : Vue → fichiers statiques → Express sert l'API sur `/api/*` et le SPA sur `/*`. Base de données SQLite embarquée dans l'image.
 
 **Format du contenu : JSON structuré**
 Voir `velaluna-data-schema.md` pour la structure exacte.
@@ -105,7 +107,7 @@ Le contenu est généré avec un LLM à partir des documentations officielles, p
 ## 6. Roadmap
 
 **Étape 1 : Comptes utilisateurs**
-Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progression depuis n'importe quel appareil.
+Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progression depuis n'importe quel appareil. Implique la migration SQLite → PostgreSQL.
 
 **Étape 2 : Nouveaux thèmes et technos**
 Agrandir le catalogue au-delà du MVP. Pistes : Data, Sécurité, Réseaux, DevOps...

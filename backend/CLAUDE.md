@@ -1,10 +1,10 @@
-# CLAUDE.md — Backend (agent Backend / Base de données)
+# CLAUDE.md — Backend
 
 ## Contexte agent
 
-Tu es l'agent Backend (ou Base de données) de Velaluna. Tu travailles uniquement dans le dossier `backend/`.
+Tu travailles uniquement dans le dossier `backend/`.
 Tu ne touches pas au frontend ni à la config Docker.
-Avant chaque session : crée une branche `feature/` ou `fix/` depuis `develop`.
+Avant chaque session : crée une branche depuis `dev`.
 
 ---
 
@@ -22,9 +22,9 @@ Avant chaque session : crée une branche `feature/` ou `fix/` depuis `develop`.
 backend/
 ├── src/
 │   ├── routes/
-│   │   ├── themes.ts              ← GET /themes
-│   │   ├── technologies.ts        ← GET /technologies, GET /technologies/:id
-│   │   └── nodes.ts               ← GET /nodes/:id, GET /technologies/:id/nodes
+│   │   ├── themes.ts              ← GET /api/themes
+│   │   ├── technologies.ts        ← GET /api/technologies, /api/technologies/:id
+│   │   └── nodes.ts               ← GET /api/nodes/:id, /api/technologies/:id/nodes
 │   ├── controllers/
 │   │   ├── themesController.ts
 │   │   ├── technologiesController.ts
@@ -32,7 +32,7 @@ backend/
 │   ├── db/
 │   │   ├── database.ts            ← connexion SQLite (singleton)
 │   │   └── seed.ts                ← peuple la DB depuis /content (JSON)
-│   └── app.ts                     ← setup Express, middlewares, routes
+│   └── app.ts                     ← setup Express, middlewares, routes, SPA fallback
 ├── data/
 │   └── velaluna.db                ← fichier SQLite (gitignore)
 └── package.json
@@ -42,15 +42,15 @@ backend/
 
 ## API — Routes disponibles
 
-Toutes les routes sont **en lecture seule** (GET uniquement).
+Toutes les routes sont **en lecture seule** (GET uniquement) et préfixées `/api`.
 La progression utilisateur est gérée côté client en localStorage — pas d'écriture via l'API au MVP.
 
 ```
-GET /themes                        → liste tous les thèmes
-GET /technologies                  → liste toutes les technos
-GET /technologies/:id              → détail d'une techno (avec ses node IDs)
-GET /technologies/:id/nodes        → tous les nœuds d'une techno
-GET /nodes/:id                     → détail complet d'un nœud
+GET /api/themes                        → liste tous les thèmes
+GET /api/technologies                  → liste toutes les technos
+GET /api/technologies/:id              → détail d'une techno (avec ses node IDs)
+GET /api/technologies/:id/nodes        → tous les nœuds d'une techno
+GET /api/nodes/:id                     → détail complet d'un nœud
 ```
 
 **Format de réponse standard :**
@@ -62,6 +62,24 @@ GET /nodes/:id                     → détail complet d'un nœud
 ```json
 { "data": null, "error": "Node not found" }
 ```
+
+---
+
+## Serveur en production
+
+En production (NODE_ENV=production), Express sert aussi les fichiers statiques du SPA Vue :
+
+```ts
+const publicDir = path.join(__dirname, '../public')
+if (fs.existsSync(publicDir)) {
+  app.use(express.static(publicDir))
+  app.get('*', (_req, res) => {
+    res.sendFile(path.join(publicDir, 'index.html'))
+  })
+}
+```
+
+Le frontend Vue est copié dans `backend/public/` au build Docker (voir `Dockerfile` à la racine).
 
 ---
 
@@ -111,6 +129,8 @@ Le script `db/seed.ts` lit les fichiers JSON dans `/content` et insère en base.
 npm run seed   # à relancer à chaque ajout de contenu
 ```
 
+En production, le seed est exécuté au moment du build Docker — pas à l'exécution.
+
 ---
 
 ## Conventions Express
@@ -118,8 +138,19 @@ npm run seed   # à relancer à chaque ajout de contenu
 - Un fichier de routes par entité
 - Les controllers contiennent la logique, les routes font le câblage
 - Les erreurs sont catchées et retournées avec le format standard
-- CORS activé pour `http://localhost:5173` uniquement
+- CORS configuré via `FRONTEND_URL` (env var) — fallback `http://localhost:5173` en dev
 - Pas d'authentification au MVP
+
+---
+
+## Variables d'environnement
+
+| Variable | Défaut | Description |
+|---|---|---|
+| `PORT` | `3000` | Port d'écoute du serveur |
+| `FRONTEND_URL` | `http://localhost:5173` | Origine autorisée par CORS |
+| `CONTENT_PATH` | `/content` | Chemin vers les JSON source (pour le seed) |
+| `NODE_ENV` | — | `production` active le serving du SPA Vue |
 
 ---
 
@@ -130,6 +161,8 @@ npm run seed   # à relancer à chaque ajout de contenu
 - Pas d'ORM (Prisma, Sequelize) — better-sqlite3 suffit et est plus simple à déboguer
 - Pas de `any` en TypeScript
 
+---
+
 ## Git
 
 ```bash
@@ -138,4 +171,5 @@ git checkout -b feature/nom-de-la-feature   # ou fix/ ou devops/
 # ... coder ...
 git commit -m "feat(backend): description"
 git push origin feature/nom-de-la-feature
+# → ouvrir une PR vers dev
 ```

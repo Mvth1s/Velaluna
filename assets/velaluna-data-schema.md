@@ -20,6 +20,33 @@ Un **nœud** peut appartenir à plusieurs technologies (ex: le concept "variable
 
 ---
 
+## Structure des fichiers source
+
+```
+content/
+├── themes/
+│   ├── web.json
+│   ├── scripting.json
+│   └── langages.json
+├── technologies/
+│   ├── html-css.json
+│   ├── javascript.json
+│   ├── typescript.json
+│   ├── bash.json
+│   ├── python.json
+│   ├── git.json
+│   ├── java.json
+│   └── c.json
+└── nodes/              ← fichiers plats, un JSON par nœud (pas de sous-dossiers)
+    ├── variables.json
+    ├── fonctions.json
+    └── ...
+```
+
+Les fichiers de nœuds sont **plats** dans `content/nodes/` — pas de sous-dossiers par techno. Un nœud partagé entre plusieurs technos (ex: `variables`) est référencé dans chaque techno via son ID.
+
+---
+
 ## 1. Schéma : Theme
 
 ```json
@@ -28,7 +55,7 @@ Un **nœud** peut appartenir à plusieurs technologies (ex: le concept "variable
   "label": "Web",
   "description": "Tout ce qui touche au développement web : structure, style, comportement.",
   "icon": "globe",
-  "technologies": ["html-css", "javascript"]
+  "technologies": ["html-css", "javascript", "typescript"]
 }
 ```
 
@@ -61,8 +88,10 @@ Un **nœud** peut appartenir à plusieurs technologies (ex: le concept "variable
 | `label` | string | Nom affiché dans l'UI |
 | `theme_id` | string | ID du thème parent |
 | `description` | string | Une phrase de présentation |
-| `logo` | string | Nom du fichier logo |
+| `logo` | string | Nom du fichier SVG dans `frontend/public/logos/` |
 | `nodes` | string[] | IDs des nœuds qui composent le graphe de cette techno |
+
+Les logos SVG sont servis statiquement depuis `frontend/public/logos/`. Le frontend y accède via `/logos/<nom>.svg`.
 
 ---
 
@@ -180,6 +209,7 @@ Ceci n'est pas stocké en base — c'est géré côté client dans le navigateur
 - Un nœud sans prérequis est `"available"` dès le départ (point d'entrée du graphe).
 - L'apprenant valide lui-même un nœud en marquant un projet comme terminé — il n'y a pas de vérification automatique.
 - Si un nœud appartient à plusieurs technos, sa fiche est la même partout — seuls les exemples de code peuvent varier selon la techno affichée.
+- Ne jamais modifier un JSON directement en prod — modifier le fichier source dans `/content` et relancer le seed.
 
 ---
 

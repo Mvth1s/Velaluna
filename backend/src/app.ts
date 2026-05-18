@@ -12,9 +12,9 @@ const PORT = process.env.PORT ?? 3000
 app.use(cors({ origin: process.env.FRONTEND_URL ?? 'http://localhost:5173' }))
 app.use(express.json())
 
-app.use('/themes', themesRouter)
-app.use('/technologies', technologiesRouter)
-app.use('/nodes', nodesRouter)
+app.use('/api/themes', themesRouter)
+app.use('/api/technologies', technologiesRouter)
+app.use('/api/nodes', nodesRouter)
 
 const publicDir = path.join(__dirname, '../public')
 if (fs.existsSync(publicDir)) {

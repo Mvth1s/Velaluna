@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import db from './database'
+import pool from './database'
 
 const CONTENT_PATH = process.env.CONTENT_PATH || path.join(__dirname, '../../../content')
 
@@ -37,45 +37,90 @@ function readJsonDir<T>(subdir: string): T[] {
     .map(f => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf-8')) as T)
 }
 
-const insertTheme = db.prepare(
-  'INSERT OR REPLACE INTO themes (id, label, description, icon) VALUES (@id, @label, @description, @icon)'
-)
-const insertTechnology = db.prepare(
-  'INSERT OR REPLACE INTO technologies (id, label, theme_id, description, logo) VALUES (@id, @label, @theme_id, @description, @logo)'
-)
-const insertNode = db.prepare(
-  'INSERT OR REPLACE INTO nodes (id, label, difficulty, data) VALUES (@id, @label, @difficulty, @data)'
-)
-const insertTechnologyNode = db.prepare(
-  'INSERT OR IGNORE INTO technology_nodes (technology_id, node_id, position) VALUES (@technology_id, @node_id, @position)'
-)
+async function createTables() {
+  await pool.query(`
+    CREATE TABLE IF NOT EXISTS themes (
+      id          TEXT PRIMARY KEY,
+      label       TEXT NOT NULL,
+      description TEXT,
+      icon        TEXT
+    );
 
-const seed = db.transaction(() => {
+    CREATE TABLE IF NOT EXISTS technologies (
+      id          TEXT PRIMARY KEY,
+      label       TEXT NOT NULL,
+      theme_id    TEXT NOT NULL,
+      description TEXT,
+      logo        TEXT,
+      FOREIGN KEY (theme_id) REFERENCES themes(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS nodes (
+      id         TEXT PRIMARY KEY,
+      label      TEXT NOT NULL,
+      difficulty TEXT NOT NULL CHECK (difficulty IN ('beginner', 'intermediate', 'advanced')),
+      data       JSONB NOT NULL
+    );
+
+    CREATE TABLE IF NOT EXISTS technology_nodes (
+      technology_id TEXT    NOT NULL,
+      node_id       TEXT    NOT NULL,
+      position      INTEGER,
+      PRIMARY KEY (technology_id, node_id),
+      FOREIGN KEY (technology_id) REFERENCES technologies(id),
+      FOREIGN KEY (node_id)       REFERENCES nodes(id)
+    );
+  `)
+}
+
+async function isEmpty(): Promise<boolean> {
+  const { rows } = await pool.query('SELECT COUNT(*) FROM themes')
+  return parseInt(rows[0].count, 10) === 0
+}
+
+async function seedData() {
   const themes = readJsonDir<ThemeJson>('themes')
   for (const theme of themes) {
-    insertTheme.run({ id: theme.id, label: theme.label, description: theme.description, icon: theme.icon })
+    await pool.query(
+      'INSERT INTO themes (id, label, description, icon) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO NOTHING',
+      [theme.id, theme.label, theme.description, theme.icon]
+    )
   }
 
   const nodes = readJsonDir<NodeJson>('nodes')
   for (const node of nodes) {
     const { id, label, difficulty, ...rest } = node
-    insertNode.run({ id, label, difficulty, data: JSON.stringify(rest) })
+    await pool.query(
+      'INSERT INTO nodes (id, label, difficulty, data) VALUES ($1, $2, $3, $4) ON CONFLICT (id) DO NOTHING',
+      [id, label, difficulty, JSON.stringify(rest)]
+    )
   }
 
   const technologies = readJsonDir<TechnologyJson>('technologies')
   for (const tech of technologies) {
-    insertTechnology.run({
-      id: tech.id,
-      label: tech.label,
-      theme_id: tech.theme_id,
-      description: tech.description,
-      logo: tech.logo
-    })
-    tech.nodes.forEach((nodeId, index) => {
-      insertTechnologyNode.run({ technology_id: tech.id, node_id: nodeId, position: index })
-    })
+    await pool.query(
+      'INSERT INTO technologies (id, label, theme_id, description, logo) VALUES ($1, $2, $3, $4, $5) ON CONFLICT (id) DO NOTHING',
+      [tech.id, tech.label, tech.theme_id, tech.description, tech.logo]
+    )
+    for (let i = 0; i < tech.nodes.length; i++) {
+      await pool.query(
+        'INSERT INTO technology_nodes (technology_id, node_id, position) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING',
+        [tech.id, tech.nodes[i], i]
+      )
+    }
   }
-})
 
-seed()
-console.log('Seed terminé.')
+  console.log(`Seed terminé : ${themes.length} thèmes, ${technologies.length} technos, ${nodes.length} nœuds.`)
+}
+
+export async function initDb() {
+  await createTables()
+  if (await isEmpty()) await seedData()
+}
+
+if (require.main === module) {
+  initDb()
+    .then(() => pool.end())
+    .then(() => process.exit(0))
+    .catch(err => { console.error('Seed échoué :', err); process.exit(1) })
+}

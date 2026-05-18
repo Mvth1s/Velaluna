@@ -1,4 +1,57 @@
 services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: velaluna
+      POSTGRES_USER: velaluna
+      POSTGRES_PASSWORD: velaluna
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U velaluna"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@velaluna.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    depends_on:
+      - backend
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - grafana_data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    depends_on:
+      - prometheus
+
   frontend:
     build:
       context: ./frontend
@@ -23,11 +76,17 @@ services:
       - ./backend:/app
       - /app/node_modules
       - ./content:/content
-      - backend_data:/app/data
     environment:
       - PORT=3000
       - CONTENT_PATH=/content
       - FRONTEND_URL=http://localhost:5173
+      - DATABASE_URL=postgresql://velaluna:velaluna@postgres:5432/velaluna
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
-  backend_data:
+  postgres_data:
+  pgadmin_data:
+  prometheus_data:
+  grafana_data:

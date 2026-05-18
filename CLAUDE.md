@@ -13,6 +13,7 @@ Chaque nœud est un concept relié à ses prérequis et à ce qu'il débloque.
 **Docs de référence :**
 - `assets/velaluna-vision.md` — vision produit, MVP, roadmap
 - `assets/velaluna-data-schema.md` — structure exacte des données (lire avant de toucher aux données)
+- `assets/services-locaux.md` — credentials et accès des services Docker
 
 ---
 
@@ -24,7 +25,8 @@ Chaque nœud est un concept relié à ses prérequis et à ce qu'il débloque.
 | Graphe | Cytoscape.js + layout dagre |
 | État | Pinia |
 | Backend | Express (Node.js), REST GET-only |
-| Base de données | SQLite via better-sqlite3 |
+| Base de données | PostgreSQL via pg (node-postgres) |
+| Observabilité | Prometheus + Grafana + prom-client |
 | Dev | Docker Compose |
 | Production | Railway — monolithe Express servant le SPA Vue |
 
@@ -42,12 +44,17 @@ npm install && npm run dev
 
 # Backend seul (dans backend/)
 npm install && npm run dev
-npm run seed                # peupler la DB depuis /content (JSON → SQLite)
 ```
 
-- Frontend : http://localhost:5173
-- Backend API : http://localhost:3000
-- Base de données : `backend/data/velaluna.db` (gitignored)
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:3000 |
+| pgAdmin | http://localhost:5050 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 |
+
+Credentials détaillés → `assets/services-locaux.md`
 
 ---
 
@@ -55,7 +62,7 @@ npm run seed                # peupler la DB depuis /content (JSON → SQLite)
 
 Hiérarchie des entités : `Theme → Technology → Node`
 - Un nœud peut appartenir à plusieurs technos (relation many-to-many via `technology_nodes`)
-- Le contenu statique est stocké en SQLite (chargé depuis `/content` via `npm run seed`)
+- Le contenu statique est stocké en PostgreSQL (seedé au démarrage si la base est vide)
 - La progression utilisateur est stockée **uniquement en localStorage** (pas d'écriture via l'API au MVP)
 
 **API — routes disponibles (GET uniquement, préfixe `/api`) :**
@@ -101,7 +108,18 @@ Un nœud sans prérequis est `available` dès le départ.
 | Backend (Express, routes) | `CLAUDE.md` + `backend/CLAUDE.md` |
 | Base de données (schéma, seed) | `CLAUDE.md` + `backend/CLAUDE.md` + `assets/velaluna-data-schema.md` |
 | Contenu (génération JSON nœuds) | `CLAUDE.md` + `assets/velaluna-data-schema.md` |
-| DevOps (Docker, Railway) | `CLAUDE.md` |
+| DevOps (Docker, Railway, CI/CD) | `CLAUDE.md` |
+
+---
+
+## CI/CD
+
+| Workflow | Déclencheur | Action |
+|---|---|---|
+| `.github/workflows/ci.yml` | PR vers `dev` ou `main` | TypeScript check + build frontend |
+| `.github/workflows/release.yml` | Push sur `main` | Semantic release → tag + CHANGELOG + GitHub Release |
+
+Les messages de commit sont validés par Husky + commitlint (hook `commit-msg`).
 
 ---
 
@@ -115,16 +133,18 @@ fix/*       ← corrections
 content/*   ← ajout/modification de nœuds JSON
 devops/*    ← docker, CI/CD, config
 docs/*      ← documentation
+ci/*        ← pipelines et outils de CI
 ```
 
-**Format des commits :**
+**Format des commits (validé par commitlint) :**
 ```
 feat(frontend): ajoute le composant NodeGraph avec Cytoscape
 fix(backend): corrige le format de réponse sur GET /api/nodes/:id
 content(javascript): ajoute les 8 premiers nœuds JavaScript
 docs: met à jour velaluna-vision et README
+ci: ajoute le pipeline GitHub Actions
 ```
 
-Types : `feat` · `fix` · `chore` · `content` · `docs` · `refactor` · `test`
+Types : `feat` · `fix` · `chore` · `content` · `docs` · `refactor` · `test` · `ci` · `perf` · `revert`
 
 Toujours brancher depuis `dev` et ouvrir une PR vers `dev`.

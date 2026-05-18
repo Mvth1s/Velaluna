@@ -19,11 +19,33 @@ docker-compose up -d
 
 ---
 
+## Lancer avec Docker (recommandé, sans installer k6)
+
+```bash
+# Test de charge complet
+docker run --rm \
+  --network velaluna_default \
+  -v "$(pwd)/k6:/scripts" \
+  -e BASE_URL=http://backend:3000 \
+  grafana/k6 run /scripts/api.js
+
+# Scénarios utilisateurs
+docker run --rm \
+  --network velaluna_default \
+  -v "$(pwd)/k6:/scripts" \
+  -e BASE_URL=http://backend:3000 \
+  grafana/k6 run /scripts/scenarios.js
+```
+
+---
+
 ## Lancer avec k6 installé
 
 ```bash
-# Installation sur Arch Linux
+# Installation sur Arch Linux (AUR)
 yay -S k6
+# ou
+paru -S k6
 
 # Test de charge complet
 k6 run k6/api.js
@@ -33,22 +55,6 @@ k6 run k6/scenarios.js
 
 # Cibler une autre URL (staging, prod)
 k6 run -e BASE_URL=https://velaluna.up.railway.app k6/api.js
-```
-
----
-
-## Lancer avec Docker (sans installer k6)
-
-```bash
-# Test de charge via le réseau Docker Compose
-docker run --rm --network velaluna_default \
-  -e BASE_URL=http://backend:3000 \
-  grafana/k6 run - < k6/api.js
-
-# Scénarios utilisateurs
-docker run --rm --network velaluna_default \
-  -e BASE_URL=http://backend:3000 \
-  grafana/k6 run - < k6/scenarios.js
 ```
 
 ---
@@ -66,7 +72,6 @@ Les deux scripts échouent si :
 Pour envoyer les métriques k6 vers Prometheus (et les voir dans Grafana) :
 
 ```bash
-# Avec l'output Prometheus Remote Write (k6 ≥ 0.42)
 k6 run --out experimental-prometheus-rw k6/api.js
 ```
 

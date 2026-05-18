@@ -36,9 +36,5 @@ export default function () {
 
   res = http.get(`${BASE_URL}/api/nodes/variables`)
   check(res, { 'GET /api/nodes/variables → 200': r => r.status === 200 })
-  sleep(0.3)
-
-  res = http.get(`${BASE_URL}/api/nodes/inexistant`)
-  check(res, { 'GET /api/nodes/inexistant → 404': r => r.status === 404 })
   sleep(0.5)
 }

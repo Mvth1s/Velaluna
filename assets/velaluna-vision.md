@@ -87,14 +87,22 @@ Store officiel Vue 3. Gère la progression locale et les données fetchées depu
 **Backend : Express (Node.js)**
 Léger, rapide à démarrer. API REST en lecture seule uniquement. En production, sert aussi les fichiers statiques du frontend Vue (monolithe).
 
-**Base de données : SQLite**
-SQLite pour le MVP : zéro config, embarqué. La base est peuplée au build Docker depuis les JSON dans `/content`. Pas de volume persistant nécessaire (API en lecture seule). Migration vers PostgreSQL à l'étape comptes utilisateurs.
+**Base de données : PostgreSQL**
+PostgreSQL via pg (node-postgres). La base est peuplée au démarrage si elle est vide (seed depuis `/content`). Migration vers PostgreSQL déjà effectuée — la migration vers un vrai service managé (Railway PostgreSQL plugin) est en place pour la prod.
+
+**Observabilité : Prometheus + Grafana**
+L'API Express expose un endpoint `/metrics` (prom-client). Prometheus scrape toutes les 15s. Grafana affiche les dashboards : req/s, latence p50/p95/p99, taux d'erreur 5xx, mémoire Node.js. Disponible en dev via Docker Compose.
 
 **Environnement de dev : Docker Compose**
-Lance le frontend Vite et le backend Express en une seule commande.
+Lance le frontend, le backend, PostgreSQL, pgAdmin, Prometheus et Grafana en une commande.
 
 **Hébergement : Railway**
-Build multi-stage Docker : Vue → fichiers statiques → Express sert l'API sur `/api/*` et le SPA sur `/*`. Base de données SQLite embarquée dans l'image.
+Build multi-stage Docker : Vue → fichiers statiques → Express sert l'API sur `/api/*` et le SPA sur `/*`. Base PostgreSQL fournie par le plugin Railway (DATABASE_URL injectée automatiquement).
+
+**CI/CD : GitHub Actions + Semantic Release**
+- CI : TypeScript check + build frontend sur toute PR vers `dev` ou `main`
+- CD : semantic-release sur push `main` → tag git, CHANGELOG.md, GitHub Release
+- Qualité : Husky + commitlint valident le format des commits localement
 
 **Format du contenu : JSON structuré**
 Voir `velaluna-data-schema.md` pour la structure exacte.
@@ -107,7 +115,7 @@ Le contenu est généré avec un LLM à partir des documentations officielles, p
 ## 6. Roadmap
 
 **Étape 1 : Comptes utilisateurs**
-Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progression depuis n'importe quel appareil. Implique la migration SQLite → PostgreSQL.
+Remplacer le localStorage par de vrais comptes. L'utilisateur retrouve sa progression depuis n'importe quel appareil. La migration vers PostgreSQL est déjà faite — il reste à ajouter l'authentification et les endpoints d'écriture.
 
 **Étape 2 : Nouveaux thèmes et technos**
 Agrandir le catalogue au-delà du MVP. Pistes : Data, Sécurité, Réseaux, DevOps...

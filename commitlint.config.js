@@ -5,6 +5,8 @@ module.exports = {
       2,
       'always',
       ['feat', 'fix', 'chore', 'content', 'docs', 'refactor', 'test', 'ci', 'perf', 'revert']
-    ]
+    ],
+    'body-max-line-length': [0],
+    'footer-max-line-length': [0]
   }
 }

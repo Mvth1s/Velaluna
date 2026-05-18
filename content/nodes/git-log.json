@@ -1,0 +1,24 @@
+{
+  "id": "git-log",
+  "label": "Historique et diff",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "`git log` affiche l'historique des commits. `git diff` montre les changements ligne par ligne entre deux états. Ces deux outils te permettent de comprendre exactement ce qui a évolué.",
+  "analogy": "C'est le journal de bord de ton projet — chaque entrée raconte ce qui a changé, quand, et par qui. `git diff` c'est la loupe pour voir précisément quelles lignes ont été ajoutées ou supprimées.",
+  "example": {
+    "language": "bash",
+    "code": "# Historique compact\ngit log --oneline\n\n# Voir les changements non stagés\ngit diff\n\n# Voir les changements stagés\ngit diff --staged\n\n# Comparer avec le commit précédent\ngit diff HEAD~1\n\n# Détail d'un commit spécifique\ngit show a3f2c1b",
+    "explanation": "`HEAD` désigne le commit actuel. `HEAD~1` est le précédent. Les lignes en vert (préfixe `+`) sont ajoutées, en rouge (`-`) supprimées."
+  },
+  "prerequisites": ["git-commits"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "exploration-historique",
+      "label": "Exploration de l'historique",
+      "difficulty": "beginner",
+      "description": "Sur un dépôt avec au moins 3 commits, utilise `git log --oneline` pour voir l'historique. Utilise `git show` sur un commit spécifique. Modifie un fichier sans stager et utilise `git diff` pour voir tes changements.",
+      "hint": "Copie le hash d'un commit depuis `git log --oneline` (les 7 premiers caractères suffisent) pour le passer à `git show`."
+    }
+  ]
+}

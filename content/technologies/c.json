@@ -1,0 +1,19 @@
+{
+  "id": "c",
+  "label": "C",
+  "theme_id": "langages",
+  "description": "Langage bas niveau, proche du matériel — comprendre C, c'est comprendre comment un ordinateur fonctionne vraiment.",
+  "logo": "c.svg",
+  "nodes": [
+    "c-bases",
+    "c-types",
+    "c-conditions",
+    "c-boucles",
+    "c-fonctions",
+    "c-tableaux",
+    "c-pointeurs",
+    "c-structs",
+    "c-memoire",
+    "c-pointeurs-avances"
+  ]
+}

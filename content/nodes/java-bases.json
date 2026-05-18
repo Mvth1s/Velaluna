@@ -1,0 +1,24 @@
+{
+  "id": "java-bases",
+  "label": "Bases Java",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "Java est compilé en bytecode et exécuté sur la JVM (Java Virtual Machine). Tout programme Java est une classe avec une méthode `main`. On compile avec `javac`, on exécute avec `java`.",
+  "analogy": "La JVM est comme un traducteur universel : ton code Java est compilé une fois en bytecode, et ce traducteur le fait tourner sur n'importe quel ordinateur — Windows, Mac, Linux — sans recompiler.",
+  "example": {
+    "language": "java",
+    "code": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"Bonjour, Java !\");\n    }\n}",
+    "explanation": "Chaque programme Java a une classe principale et une méthode `main` avec cette signature exacte. `System.out.println` affiche une ligne dans la console. Le fichier doit s'appeler `Main.java`."
+  },
+  "prerequisites": [],
+  "unlocks": ["java-types"],
+  "projects": [
+    {
+      "id": "hello-java",
+      "label": "Hello Java",
+      "difficulty": "beginner",
+      "description": "Crée un fichier `Main.java`. Écris une classe `Main` avec une méthode `main` qui affiche ton prénom et l'année actuelle. Compile avec `javac Main.java` puis exécute avec `java Main`.",
+      "hint": "Le nom du fichier doit correspondre exactement au nom de la classe, respecter la casse (`Main.java` pour `class Main`). Si tu utilises un IDE (IntelliJ, Eclipse), il compile automatiquement."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "c-fonctions",
+  "label": "Fonctions",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "En C, les fonctions doivent être déclarées (prototype) avant d'être utilisées. Les arguments sont passés par valeur — la fonction reçoit une copie, pas la variable originale.",
+  "analogy": "Une fonction, c'est une machine dans une usine. Tu lui passes des matières premières (arguments), elle effectue une transformation, et te rend un produit fini (valeur de retour). La machine ne modifie pas les matières que tu lui as envoyées — elle travaille sur des copies.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\n// Prototype (déclaration)\nint maximum(int a, int b);\nvoid afficher_carre(int n);\n\nint main() {\n    printf(\"Max : %d\\n\", maximum(7, 3));\n    afficher_carre(4);\n    return 0;\n}\n\n// Définitions\nint maximum(int a, int b) {\n    return (a > b) ? a : b;\n}\n\nvoid afficher_carre(int n) {\n    printf(\"%d x %d = %d\\n\", n, n, n * n);\n}",
+    "explanation": "Le prototype indique au compilateur la signature de la fonction avant sa définition complète. `void` signifie pas de valeur de retour. Passage par valeur : modifier `a` dans la fonction ne change pas la variable passée."
+  },
+  "prerequisites": ["c-types"],
+  "unlocks": ["c-pointeurs-avances"],
+  "projects": [
+    {
+      "id": "bibliotheque-maths",
+      "label": "Bibliothèque maths",
+      "difficulty": "beginner",
+      "description": "Écris quatre fonctions : `factorielle(int n)` (retourne n!), `est_premier(int n)` (retourne 1 si premier, 0 sinon), `puissance(int base, int exp)` et `pgcd(int a, int b)`. Teste chacune depuis `main`.",
+      "hint": "Pour `factorielle`, utilise une boucle : `int resultat = 1; for (int i = 2; i <= n; i++) resultat *= i;`. Pour `est_premier`, teste les diviseurs de 2 à `n/2`."
+    }
+  ]
+}

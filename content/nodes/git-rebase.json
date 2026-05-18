@@ -1,0 +1,24 @@
+{
+  "id": "git-rebase",
+  "label": "Rebase",
+  "difficulty": "advanced",
+  "technologies": ["git"],
+  "explanation": "`git rebase` déplace une série de commits sur une nouvelle base, gardant l'historique linéaire. `git rebase -i` (interactif) permet de réécrire, fusionner ou réordonner des commits avant de les pousser.",
+  "analogy": "Tu as écrit un chapitre sur une ancienne version d'un livre. Rebase, c'est réécrire ce chapitre directement sur la version la plus récente — comme si tu l'avais toujours écrit là, sans les traces de fusion.",
+  "example": {
+    "language": "bash",
+    "code": "# Rebaser feature sur main (rejoue les commits de feature sur main)\ngit switch feature/login\ngit rebase main\n\n# Rebase interactif : réécrire les 3 derniers commits\ngit rebase -i HEAD~3\n# Dans l'éditeur : pick, squash, reword, drop...\n\n# Si conflit pendant le rebase\ngit add fichier-resolu.txt\ngit rebase --continue\n# ou annuler\ngit rebase --abort",
+    "explanation": "Contrairement à `merge`, `rebase` ne crée pas de commit de fusion — l'historique reste linéaire. Règle d'or : ne jamais rebaser des commits déjà poussés sur une branche partagée."
+  },
+  "prerequisites": ["git-merge"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "historique-propre-rebase",
+      "label": "Historique propre avec rebase",
+      "difficulty": "advanced",
+      "description": "Crée une branche `feature` depuis un vieux commit de `main`. Fais 3 petits commits sur `feature` (work in progress, typo fix, etc.). Utilise `git rebase -i HEAD~3` pour les fusionner en un seul commit propre avant de fusionner dans `main`.",
+      "hint": "Dans l'éditeur interactif, remplace `pick` par `squash` (ou `s`) pour fusionner les commits avec le précédent. Garde un seul `pick` en tête de liste."
+    }
+  ]
+}

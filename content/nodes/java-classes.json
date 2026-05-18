@@ -1,0 +1,24 @@
+{
+  "id": "java-classes",
+  "label": "Classes et objets",
+  "difficulty": "intermediate",
+  "technologies": ["java"],
+  "explanation": "Une classe est un plan qui décrit des attributs (données) et des méthodes (comportements). Un objet est une instance de ce plan. Le constructeur initialise l'objet à sa création.",
+  "analogy": "La classe, c'est le plan d'architecte d'une maison. L'objet, c'est la maison construite à partir de ce plan. Tu peux construire plusieurs maisons (objets) à partir du même plan (classe) — chacune avec ses propres données.",
+  "example": {
+    "language": "java",
+    "code": "public class Chien {\n    String nom;\n    int age;\n\n    // Constructeur\n    Chien(String nom, int age) {\n        this.nom = nom;\n        this.age = age;\n    }\n\n    void aboyer() {\n        System.out.println(nom + \" dit : Waf !\");\n    }\n}\n\n// Dans main :\nChien rex = new Chien(\"Rex\", 3);\nChien luna = new Chien(\"Luna\", 5);\nrex.aboyer();  // Rex dit : Waf !",
+    "explanation": "`this.nom` fait référence à l'attribut de l'objet, pour le distinguer du paramètre `nom`. `new` alloue de la mémoire et appelle le constructeur. Chaque objet a ses propres valeurs d'attributs."
+  },
+  "prerequisites": ["java-methodes"],
+  "unlocks": ["java-heritage", "java-interfaces", "java-collections"],
+  "projects": [
+    {
+      "id": "classe-compte-bancaire",
+      "label": "Compte bancaire",
+      "difficulty": "intermediate",
+      "description": "Crée une classe `CompteBancaire` avec un titulaire (String) et un solde (double). Ajoute des méthodes `deposer(double montant)`, `retirer(double montant)` (refus si solde insuffisant) et `afficherSolde()`. Teste avec deux comptes distincts.",
+      "hint": "Pour `retirer`, vérifie avec `if (montant > solde)` et affiche un message d'erreur. Utilise `this.solde` pour distinguer l'attribut du paramètre."
+    }
+  ]
+}

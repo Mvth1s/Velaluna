@@ -1,0 +1,24 @@
+{
+  "id": "git-commits",
+  "label": "Commits",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "Un commit est une photo de ton projet à un instant précis, associée à un message qui explique ce que tu as changé et pourquoi. Chaque commit a un identifiant unique (hash SHA-1).",
+  "analogy": "Pense à un commit comme une sauvegarde dans un jeu vidéo. Tu peux toujours revenir à ce point exact si quelque chose se passe mal. Le message, c'est la description de l'étape que tu viens de franchir.",
+  "example": {
+    "language": "bash",
+    "code": "# Créer un commit avec un message\ngit commit -m \"feat: ajoute la page d'accueil\"\n\n# Voir le dernier commit\ngit show\n\n# Voir tous les commits\ngit log --oneline",
+    "explanation": "Un bon message de commit commence par un type (`feat`, `fix`, `docs`) puis décrit ce qui a changé. Le hash comme `a3f2c1b` identifie chaque commit de façon unique dans tout l'historique."
+  },
+  "prerequisites": ["git-staging"],
+  "unlocks": ["git-branches", "git-remote", "git-log", "git-tags"],
+  "projects": [
+    {
+      "id": "historique-propre",
+      "label": "Historique propre",
+      "difficulty": "beginner",
+      "description": "Crée un fichier README.md, fais un premier commit. Modifie le fichier, fais un deuxième commit. Ajoute un second fichier, fais un troisième commit. Vérifie l'historique avec `git log --oneline`.",
+      "hint": "Utilise des messages clairs : `git commit -m \"docs: initialise le README\"`, `git commit -m \"docs: ajoute la section installation\"`, etc."
+    }
+  ]
+}

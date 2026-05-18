@@ -1,0 +1,24 @@
+{
+  "id": "java-interfaces",
+  "label": "Interfaces",
+  "difficulty": "intermediate",
+  "technologies": ["java"],
+  "explanation": "Une interface définit un contrat : la liste des méthodes qu'une classe doit implémenter. Une classe peut implémenter plusieurs interfaces (contrairement à l'héritage, limité à une seule classe parente).",
+  "analogy": "Une interface, c'est un cahier des charges. Si une entreprise signe un contrat 'Livraison', elle s'engage à fournir une méthode `livrer()`. Peu importe si c'est par camion ou à vélo — l'interface garantit juste que la méthode existe.",
+  "example": {
+    "language": "java",
+    "code": "interface Payable {\n    double calculerPaiement();\n}\n\ninterface Imprimable {\n    void imprimer();\n}\n\nclass Facture implements Payable, Imprimable {\n    double montant;\n    Facture(double montant) { this.montant = montant; }\n\n    @Override\n    public double calculerPaiement() { return montant * 1.2; } // TVA 20%\n\n    @Override\n    public void imprimer() {\n        System.out.println(\"Facture : \" + calculerPaiement() + \" €\");\n    }\n}",
+    "explanation": "Une classe peut implémenter plusieurs interfaces avec `implements A, B`. Toutes les méthodes de l'interface doivent être implémentées, sinon le code ne compile pas. Les interfaces peuvent aussi avoir des méthodes `default` avec une implémentation."
+  },
+  "prerequisites": ["java-classes"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "animaux-sons",
+      "label": "Animaux et sons",
+      "difficulty": "intermediate",
+      "description": "Crée une interface `Sonore` avec une méthode `emettreSon()`. Crée trois classes (`Chien`, `Chat`, `Voiture`) qui implémentent cette interface chacune à leur façon. Mets-les dans une liste `List<Sonore>` et appelle `emettreSon()` sur chacun.",
+      "hint": "Utilise `List<Sonore> objets = new ArrayList<>()` et `objets.add(new Chien())`. Le polymorphisme d'interface fonctionne de la même façon que l'héritage."
+    }
+  ]
+}

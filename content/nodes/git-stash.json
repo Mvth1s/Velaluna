@@ -1,0 +1,24 @@
+{
+  "id": "git-stash",
+  "label": "Stash",
+  "difficulty": "intermediate",
+  "technologies": ["git"],
+  "explanation": "`git stash` met tes modifications en attente sans les committer. Tu peux changer de branche, régler un problème urgent, puis revenir et récupérer ton travail en cours.",
+  "analogy": "C'est comme mettre ton travail en pause dans un tiroir temporaire. Tu peux ouvrir d'autres tiroirs (branches) pour faire autre chose, puis revenir et reprendre exactement où tu en étais.",
+  "example": {
+    "language": "bash",
+    "code": "# Mettre les modifications de côté\ngit stash\n\n# Voir les stashs sauvegardés\ngit stash list\n\n# Récupérer le dernier stash et le supprimer\ngit stash pop\n\n# Récupérer un stash spécifique\ngit stash apply stash@{1}\n\n# Nommer un stash\ngit stash push -m \"travail en cours sur le formulaire\"",
+    "explanation": "`git stash pop` applique le stash le plus récent et le supprime de la liste. `git stash apply` l'applique sans le supprimer — utile pour appliquer le même stash sur plusieurs branches."
+  },
+  "prerequisites": ["git-staging"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "urgence-en-cours",
+      "label": "Urgence en cours de travail",
+      "difficulty": "intermediate",
+      "description": "Commence à modifier un fichier sur une branche `feature`. Sans committer, stashe tes changements. Bascule sur `main`, fais un petit fix, commite. Reviens sur `feature` et récupère ton stash avec `git stash pop`.",
+      "hint": "Vérifie avec `git status` avant et après chaque opération pour confirmer que tes modifications disparaissent puis réapparaissent correctement."
+    }
+  ]
+}

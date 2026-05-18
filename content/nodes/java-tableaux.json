@@ -1,0 +1,24 @@
+{
+  "id": "java-tableaux",
+  "label": "Tableaux",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "Un tableau Java a une taille fixe définie à la création. Les éléments sont accessibles par index (à partir de 0). `Arrays` fournit des méthodes utilitaires pour trier, chercher et comparer.",
+  "analogy": "Un tableau, c'est comme une rangée de casiers numérotés dans un vestiaire. Le premier casier est le n°0. La rangée a un nombre fixe de casiers — tu ne peux ni en ajouter ni en supprimer après installation.",
+  "example": {
+    "language": "java",
+    "code": "import java.util.Arrays;\n\n// Déclaration et initialisation\nint[] notes = {12, 15, 9, 18, 11};\n\n// Accès par index\nSystem.out.println(notes[0]); // 12\nSystem.out.println(notes.length); // 5\n\n// Parcours\nfor (int note : notes) {\n    System.out.print(note + \" \");\n}\n\n// Tri\nArrays.sort(notes);\nSystem.out.println(Arrays.toString(notes)); // [9, 11, 12, 15, 18]",
+    "explanation": "L'index commence à 0 — le dernier élément est à `longueur - 1`. `Arrays.sort` trie en place. Pour un tableau de taille variable, utilise `ArrayList` (vu dans Collections)."
+  },
+  "prerequisites": ["java-types"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "statistiques-notes",
+      "label": "Statistiques de notes",
+      "difficulty": "beginner",
+      "description": "Crée un tableau de 6 notes entières. Calcule et affiche la moyenne, la note minimale et la note maximale. N'utilise pas `Arrays` pour le min/max — trouve-les avec une boucle.",
+      "hint": "Pour le min, initialise `int min = notes[0]` puis parcours le tableau en mettant à jour `min` si tu trouves une valeur plus petite. Idem pour le max."
+    }
+  ]
+}

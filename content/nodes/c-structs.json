@@ -1,0 +1,24 @@
+{
+  "id": "c-structs",
+  "label": "Structures",
+  "difficulty": "intermediate",
+  "technologies": ["c"],
+  "explanation": "Une `struct` regroupe des variables de types différents sous un même nom. C'est l'ancêtre des classes — sans méthodes, juste des données. `typedef` permet de nommer la structure pour simplifier son usage.",
+  "analogy": "Une struct, c'est une fiche d'information : la fiche 'Employé' regroupe le nom (texte), l'âge (entier) et le salaire (décimal). Chaque fiche est une instance, mais toutes partagent la même structure.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\ntypedef struct {\n    char nom[50];\n    int age;\n    double salaire;\n} Employe;\n\nvoid afficher(Employe e) {\n    printf(\"%s, %d ans, %.2f€\\n\", e.nom, e.age, e.salaire);\n}\n\nint main() {\n    Employe alice = {\"Alice\", 30, 2500.0};\n    Employe bob = {\"Bob\", 25, 2200.0};\n\n    alice.salaire = 2700.0; // modification\n    afficher(alice);\n    afficher(bob);\n    return 0;\n}",
+    "explanation": "`typedef struct { ... } Employe;` permet d'écrire `Employe e` au lieu de `struct Employe e`. L'accès aux membres se fait avec `.` (valeur) ou `->` (pointeur sur struct)."
+  },
+  "prerequisites": ["c-types"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "gestion-etudiants",
+      "label": "Gestion d'étudiants",
+      "difficulty": "intermediate",
+      "description": "Crée une struct `Etudiant` avec un nom, un numéro et une note. Déclare un tableau de 4 étudiants, remplis-le, puis affiche l'étudiant ayant la meilleure note.",
+      "hint": "Pour trouver le meilleur étudiant, utilise une variable `int meilleur = 0` (index) et compare `etudiants[i].note > etudiants[meilleur].note` dans une boucle."
+    }
+  ]
+}

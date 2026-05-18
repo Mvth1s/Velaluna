@@ -1,0 +1,24 @@
+{
+  "id": "c-bases",
+  "label": "Bases du C",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "C est un langage compilé proche du matériel. Tout programme part d'une fonction `main()`. On compile avec `gcc`, et le résultat est un exécutable natif — pas de machine virtuelle.",
+  "analogy": "Si les autres langages sont des voitures automatiques, le C est une voiture manuelle. Tu contrôles tout : les vitesses (la mémoire), l'embrayage (les pointeurs). Plus d'effort, mais tu comprends vraiment ce qui se passe sous le capot.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nint main() {\n    printf(\"Bonjour, C !\\n\");\n    return 0;\n}\n\n// Compiler et exécuter :\n// gcc -o hello hello.c\n// ./hello",
+    "explanation": "`#include <stdio.h>` importe la bibliothèque d'entrées/sorties standard. `printf` affiche du texte — le `\\n` est un saut de ligne. `return 0` indique au système d'exploitation que le programme s'est terminé sans erreur."
+  },
+  "prerequisites": [],
+  "unlocks": ["c-types"],
+  "projects": [
+    {
+      "id": "hello-c",
+      "label": "Hello C",
+      "difficulty": "beginner",
+      "description": "Crée un fichier `hello.c`. Écris un programme qui affiche ton prénom, l'année actuelle et un message de bienvenue sur trois lignes distinctes. Compile avec `gcc -o hello hello.c` et exécute.",
+      "hint": "Utilise plusieurs `printf` ou un seul avec des `\\n` pour les sauts de ligne. Pour afficher des nombres entiers, utilise `%d` dans le format : `printf(\"Année : %d\\n\", 2025);`"
+    }
+  ]
+}

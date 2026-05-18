@@ -1,0 +1,24 @@
+{
+  "id": "java-collections",
+  "label": "Collections",
+  "difficulty": "intermediate",
+  "technologies": ["java"],
+  "explanation": "`ArrayList` est un tableau dynamique (taille variable). `HashMap` associe des clés à des valeurs. Ces deux classes du package `java.util` couvrent la majorité des besoins de stockage en Java.",
+  "analogy": "`ArrayList`, c'est comme une liste de courses sur laquelle tu peux ajouter ou rayer des articles à tout moment. `HashMap`, c'est comme un dictionnaire : tu cherches un mot (clé) et tu trouves sa définition (valeur) directement.",
+  "example": {
+    "language": "java",
+    "code": "import java.util.ArrayList;\nimport java.util.HashMap;\n\n// ArrayList\nArrayList<String> prenoms = new ArrayList<>();\nprenoms.add(\"Alice\");\nprenoms.add(\"Bob\");\nprenoms.remove(\"Alice\");\nSystem.out.println(prenoms.size()); // 1\n\n// HashMap\nHashMap<String, Integer> ages = new HashMap<>();\nages.put(\"Alice\", 25);\nages.put(\"Bob\", 30);\nSystem.out.println(ages.get(\"Alice\")); // 25\n\n// Parcours\nfor (String prenom : ages.keySet()) {\n    System.out.println(prenom + \" : \" + ages.get(prenom));\n}",
+    "explanation": "Les collections utilisent des génériques (`<String>`, `<Integer>`) pour garantir le type des éléments. `Integer` est la version objet de `int` — les collections ne peuvent pas stocker de types primitifs."
+  },
+  "prerequisites": ["java-classes"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "carnet-adresses",
+      "label": "Carnet d'adresses",
+      "difficulty": "intermediate",
+      "description": "Crée un `HashMap<String, String>` qui associe des prénoms à des numéros de téléphone. Ajoute 5 contacts, affiche-les tous, supprime un contact, puis vérifie si un prénom donné est dans le carnet avec `containsKey`.",
+      "hint": "Pour parcourir la map avec clé et valeur en même temps, utilise `for (Map.Entry<String, String> entry : map.entrySet())` puis `entry.getKey()` et `entry.getValue()`."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "git-init",
+  "label": "Initialiser un dépôt",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "Git suit l'historique de tes fichiers dans un dossier appelé dépôt. `git init` crée un nouveau dépôt local vide. `git clone` copie un dépôt distant existant sur ta machine.",
+  "analogy": "C'est comme créer un carnet de bord vide pour ton projet. Toutes les modifications que tu veux conserver, tu les notes dedans — et tu peux remonter dans le temps pour retrouver n'importe quelle version.",
+  "example": {
+    "language": "bash",
+    "code": "# Créer un nouveau dépôt\ngit init mon-projet\ncd mon-projet\n\n# Ou cloner un dépôt existant\ngit clone https://github.com/utilisateur/projet.git\ncd projet",
+    "explanation": "`git init` crée un dossier `.git/` caché qui stocke tout l'historique. `git clone` télécharge un dépôt distant et configure automatiquement le lien vers l'original."
+  },
+  "prerequisites": [],
+  "unlocks": ["git-staging"],
+  "projects": [
+    {
+      "id": "premier-depot",
+      "label": "Premier dépôt",
+      "difficulty": "beginner",
+      "description": "Crée un nouveau dépôt Git dans un dossier vide. Vérifie son état avec `git status`, puis explore le dossier `.git/` pour voir ce que Git a créé.",
+      "hint": "Lance `ls -la` pour voir le dossier `.git/` caché. Il contient toute la base de données de ton historique."
+    }
+  ]
+}

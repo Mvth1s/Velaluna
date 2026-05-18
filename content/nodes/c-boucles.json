@@ -1,0 +1,24 @@
+{
+  "id": "c-boucles",
+  "label": "Boucles",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "`for`, `while` et `do-while` permettent de répéter des instructions. `do-while` garantit au moins une exécution. `break` sort de la boucle, `continue` passe à l'itération suivante.",
+  "analogy": "`for`, c'est un compteur de tours. `while`, c'est une sentinelle qui surveille une condition. `do-while`, c'est un cuisinier qui goûte son plat au moins une fois avant de décider si c'est assez salé.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nint main() {\n    // For\n    for (int i = 0; i < 5; i++) {\n        printf(\"%d \", i);\n    }\n    printf(\"\\n\");\n\n    // While\n    int n = 1;\n    while (n < 100) n *= 2;\n    printf(\"Première puissance de 2 >= 100 : %d\\n\", n);\n\n    // Do-while\n    int x;\n    do {\n        x = 42; // simulation d'une saisie\n        printf(\"Valeur : %d\\n\", x);\n    } while (x < 0);\n\n    return 0;\n}",
+    "explanation": "`do-while` exécute le corps avant de tester la condition — utile pour les menus ou les saisies. En C, les variables déclarées dans un `for` (`int i`) sont locales à la boucle depuis C99."
+  },
+  "prerequisites": ["c-conditions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "suite-fibonacci",
+      "label": "Suite de Fibonacci",
+      "difficulty": "beginner",
+      "description": "Affiche les 15 premiers termes de la suite de Fibonacci (0, 1, 1, 2, 3, 5, 8, 13...). Chaque terme est la somme des deux précédents.",
+      "hint": "Utilise trois variables : `int a = 0, b = 1, suivant`. Dans une boucle, calcule `suivant = a + b`, affiche `a`, puis décale : `a = b; b = suivant;`."
+    }
+  ]
+}

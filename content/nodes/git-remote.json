@@ -1,0 +1,24 @@
+{
+  "id": "git-remote",
+  "label": "Dépôts distants",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "`git push` envoie tes commits vers un serveur distant (GitHub, GitLab). `git pull` récupère et fusionne les changements de l'équipe. `git fetch` récupère sans fusionner.",
+  "analogy": "C'est comme synchroniser ton carnet de notes local avec une version partagée dans le cloud. Toute ton équipe peut y accéder, y contribuer, et tu récupères leurs changements quand tu veux.",
+  "example": {
+    "language": "bash",
+    "code": "# Lier un dépôt distant\ngit remote add origin https://github.com/toi/projet.git\n\n# Pousser pour la première fois\ngit push -u origin main\n\n# Pousses suivantes\ngit push\n\n# Récupérer les changements\ngit pull",
+    "explanation": "`-u` définit `origin/main` comme branche de suivi — les `git push` et `git pull` suivants n'ont plus besoin d'arguments. `git remote -v` liste les dépôts distants configurés."
+  },
+  "prerequisites": ["git-commits"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "premier-push",
+      "label": "Premier push",
+      "difficulty": "beginner",
+      "description": "Crée un dépôt vide sur GitHub. Lie ton dépôt local avec `git remote add origin`, puis pousse ta branche `main`. Vérifie sur GitHub que tes commits sont bien visibles.",
+      "hint": "Si GitHub rejette le push, c'est peut-être parce que le dépôt distant a déjà un commit (README auto-généré). Utilise `git pull --rebase origin main` d'abord."
+    }
+  ]
+}

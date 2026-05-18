@@ -1,0 +1,24 @@
+{
+  "id": "c-conditions",
+  "label": "Conditions",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "`if`/`else` et `switch` fonctionnent comme dans la plupart des langages. En C, il n'y a pas de type booléen natif — toute valeur non nulle est vraie, 0 est faux.",
+  "analogy": "C'est comme un vigile à l'entrée d'une boîte de nuit : si tu as l'âge requis (condition vraie), tu entres. Sinon, tu restes dehors. Le `switch`, c'est un panneau d'affichage avec des portes numérotées.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nint main() {\n    int note = 14;\n\n    if (note >= 10) {\n        printf(\"Admis\\n\");\n    } else if (note >= 8) {\n        printf(\"Rattrapage\\n\");\n    } else {\n        printf(\"Refusé\\n\");\n    }\n\n    // Switch\n    int jour = 3;\n    switch (jour) {\n        case 1: printf(\"Lundi\\n\"); break;\n        case 2: printf(\"Mardi\\n\"); break;\n        case 3: printf(\"Mercredi\\n\"); break;\n        default: printf(\"Autre jour\\n\");\n    }\n    return 0;\n}",
+    "explanation": "Le `break` dans un `switch` est obligatoire pour éviter le 'fall-through' (exécution des cas suivants). Sans `break`, C continue d'exécuter tous les cas jusqu'au prochain `break` ou la fin du `switch`."
+  },
+  "prerequisites": ["c-types"],
+  "unlocks": ["c-boucles"],
+  "projects": [
+    {
+      "id": "classement-notes-c",
+      "label": "Classement de notes",
+      "difficulty": "beginner",
+      "description": "Écris un programme qui attribue une mention selon une note : 'Très bien' (>= 16), 'Bien' (>= 14), 'Assez bien' (>= 12), 'Passable' (>= 10), 'Insuffisant' (< 10). Teste avec plusieurs valeurs.",
+      "hint": "Enchaîne les `if`/`else if` dans l'ordre décroissant des seuils. En C, assigne la note directement dans le code — il n'y a pas de saisie clavier pour l'instant."
+    }
+  ]
+}

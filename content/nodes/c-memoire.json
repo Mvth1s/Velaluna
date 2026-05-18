@@ -1,0 +1,24 @@
+{
+  "id": "c-memoire",
+  "label": "Gestion mémoire",
+  "difficulty": "intermediate",
+  "technologies": ["c"],
+  "explanation": "`malloc` alloue de la mémoire sur le tas (heap) à l'exécution. `free` la libère. Sans `free`, c'est une fuite mémoire. La pile (stack) gère automatiquement les variables locales.",
+  "analogy": "La pile (stack), c'est le bureau de ton ordinateur — les papiers s'empilent et se retirent automatiquement. Le tas (heap), c'est un entrepôt que tu loues toi-même : tu réserves de l'espace avec `malloc` et tu le rends avec `free`. Si tu oublies de rendre, l'entrepôt se remplit.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n#include <stdlib.h>\n\nint main() {\n    int n = 5;\n\n    // Allouer un tableau de n entiers\n    int *tab = malloc(n * sizeof(int));\n    if (tab == NULL) {\n        printf(\"Erreur d'allocation\\n\");\n        return 1;\n    }\n\n    for (int i = 0; i < n; i++) {\n        tab[i] = i * 10;\n    }\n\n    for (int i = 0; i < n; i++) {\n        printf(\"%d \", tab[i]);\n    }\n    printf(\"\\n\");\n\n    free(tab); // libérer la mémoire\n    tab = NULL; // bonne pratique\n    return 0;\n}",
+    "explanation": "Toujours vérifier si `malloc` retourne `NULL` (échec d'allocation). `sizeof(int)` donne la taille d'un `int` en octets — portable sur toutes les architectures. Mettre le pointeur à `NULL` après `free` évite un double-free accidentel."
+  },
+  "prerequisites": ["c-pointeurs"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "tableau-dynamique",
+      "label": "Tableau dynamique",
+      "difficulty": "intermediate",
+      "description": "Écris un programme qui demande une taille N, alloue dynamiquement un tableau de N doubles, le remplit avec des valeurs calculées (ex: i * 1.5), calcule la moyenne, affiche le résultat puis libère la mémoire.",
+      "hint": "Utilise `double *tab = malloc(n * sizeof(double))`. N'oublie pas de vérifier que `tab != NULL` avant d'utiliser le tableau. Termine toujours par `free(tab)`."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "java-boucles",
+  "label": "Boucles",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "`for` est utilisé quand tu connais le nombre d'itérations. `while` boucle tant qu'une condition est vraie. `for-each` parcourt élégamment un tableau ou une collection.",
+  "analogy": "Une boucle `for`, c'est comme une liste de tâches numérotées : tu fais la tâche 1, 2, 3... jusqu'à la fin. `while`, c'est comme attendre que la minuterie sonne — tu répètes tant que la condition n'est pas remplie.",
+  "example": {
+    "language": "java",
+    "code": "// For classique\nfor (int i = 0; i < 5; i++) {\n    System.out.println(\"Tour \" + i);\n}\n\n// While\nint n = 1;\nwhile (n < 100) {\n    n *= 2;\n}\nSystem.out.println(n); // 128\n\n// For-each sur un tableau\nint[] notes = {12, 15, 9, 18};\nfor (int note : notes) {\n    System.out.println(note);\n}",
+    "explanation": "Le for-each (`for (type element : collection)`) est plus lisible et évite les erreurs d'index. Utilise `break` pour sortir d'une boucle et `continue` pour passer à l'itération suivante."
+  },
+  "prerequisites": ["java-conditions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "table-multiplication",
+      "label": "Table de multiplication",
+      "difficulty": "beginner",
+      "description": "Affiche la table de multiplication de 1 à 10 pour un nombre donné (par exemple 7). Utilise une boucle `for`. En bonus, affiche toutes les tables de 1 à 10 avec deux boucles imbriquées.",
+      "hint": "Pour les tables de 1 à 10, imbrique deux boucles : `for (int i = 1; i <= 10; i++)` à l'extérieur et `for (int j = 1; j <= 10; j++)` à l'intérieur."
+    }
+  ]
+}

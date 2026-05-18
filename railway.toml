@@ -1,0 +1,7 @@
+[build]
+dockerfile = "Dockerfile"
+
+[deploy]
+healthcheckPath = "/themes"
+healthcheckTimeout = 300
+restartPolicyType = "on_failure"

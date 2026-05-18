@@ -1,0 +1,7 @@
+{
+  "id": "langages",
+  "label": "Langages",
+  "description": "Langages de programmation polyvalents — maîtrise les fondamentaux du code.",
+  "icon": "code",
+  "technologies": ["java", "c"]
+}

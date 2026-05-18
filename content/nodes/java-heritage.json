@@ -1,0 +1,24 @@
+{
+  "id": "java-heritage",
+  "label": "Héritage",
+  "difficulty": "intermediate",
+  "technologies": ["java"],
+  "explanation": "`extends` permet à une classe enfant d'hériter des attributs et méthodes d'une classe parente. L'enfant peut surcharger (`@Override`) des méthodes pour adapter le comportement. `super` accède à la classe parente.",
+  "analogy": "L'héritage, c'est comme un arbre généalogique : l'enfant hérite des traits de ses parents mais peut développer ses propres caractéristiques. Il peut aussi 'surcharger' un comportement — comme un enfant qui gère sa chambre autrement que ses parents.",
+  "example": {
+    "language": "java",
+    "code": "class Animal {\n    String nom;\n    Animal(String nom) { this.nom = nom; }\n    void parler() { System.out.println(nom + \" fait un son\"); }\n}\n\nclass Chien extends Animal {\n    Chien(String nom) { super(nom); }\n\n    @Override\n    void parler() {\n        System.out.println(nom + \" dit : Waf !\");\n    }\n}\n\nclass Chat extends Animal {\n    Chat(String nom) { super(nom); }\n\n    @Override\n    void parler() {\n        System.out.println(nom + \" dit : Miaou !\");\n    }\n}\n\n// Polymorphisme\nAnimal a = new Chien(\"Rex\");\na.parler(); // Rex dit : Waf !",
+    "explanation": "`@Override` n'est pas obligatoire mais recommandé — il demande au compilateur de vérifier que tu surcharges bien une méthode existante. Le polymorphisme permet d'utiliser une variable de type `Animal` pour référencer n'importe quel sous-type."
+  },
+  "prerequisites": ["java-classes"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "formes-geometriques",
+      "label": "Formes géométriques",
+      "difficulty": "intermediate",
+      "description": "Crée une classe `Forme` avec une méthode `aire()` qui retourne 0. Crée `Rectangle` (largeur, hauteur) et `Cercle` (rayon) qui héritent de `Forme` et surchargent `aire()`. Stocke-les dans un tableau `Forme[]` et affiche l'aire de chacune.",
+      "hint": "Pour le cercle, utilise `Math.PI * rayon * rayon`. Le tableau de type `Forme[]` peut contenir des `Rectangle` et des `Cercle` grâce au polymorphisme."
+    }
+  ]
+}

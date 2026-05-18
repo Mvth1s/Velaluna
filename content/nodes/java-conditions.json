@@ -1,0 +1,24 @@
+{
+  "id": "java-conditions",
+  "label": "Conditions",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "`if`/`else` exécute du code selon une condition booléenne. `switch` compare une valeur à plusieurs cas. L'opérateur ternaire condense un if/else simple en une expression.",
+  "analogy": "C'est comme un carrefour avec des panneaux : si la condition est vraie, prends à gauche ; sinon, prends à droite. `switch`, c'est un aiguillage de train — plusieurs destinations possibles selon la valeur.",
+  "example": {
+    "language": "java",
+    "code": "int note = 14;\n\nif (note >= 10) {\n    System.out.println(\"Admis\");\n} else if (note >= 8) {\n    System.out.println(\"Rattrapage\");\n} else {\n    System.out.println(\"Refusé\");\n}\n\n// Switch expression (Java 14+)\nString mention = switch (note / 5) {\n    case 4 -> \"Très bien\";\n    case 3 -> \"Bien\";\n    default -> \"Passable\";\n};\n\n// Ternaire\nString resultat = (note >= 10) ? \"Admis\" : \"Refusé\";",
+    "explanation": "Le switch expression moderne avec `->` est plus concis et ne nécessite pas de `break`. Le ternaire `condition ? valeurSiVrai : valeurSiFaux` est utile pour des assignations simples."
+  },
+  "prerequisites": ["java-types"],
+  "unlocks": ["java-boucles"],
+  "projects": [
+    {
+      "id": "calculatrice-imc",
+      "label": "Calculatrice d'IMC",
+      "difficulty": "beginner",
+      "description": "Calcule l'IMC (poids / taille²) à partir de variables. Utilise des conditions pour afficher la catégorie : 'Insuffisance pondérale' (< 18.5), 'Poids normal' (18.5-25), 'Surpoids' (25-30), 'Obésité' (> 30).",
+      "hint": "Déclare `double poids` et `double taille`, calcule `double imc = poids / (taille * taille)`, puis enchaîne les `if`/`else if`."
+    }
+  ]
+}

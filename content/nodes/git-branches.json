@@ -1,0 +1,24 @@
+{
+  "id": "git-branches",
+  "label": "Branches",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "Une branche est une ligne de développement parallèle. Tu travailles sur une feature ou un fix sans toucher au code principal. Quand c'est prêt, tu fusionne la branche.",
+  "analogy": "Imagine un arbre. Le tronc (`main`) c'est ton code stable. Les branches, ce sont tes fonctionnalités en développement. Tu les greffes sur le tronc quand elles sont prêtes — et si ça rate, le tronc est intact.",
+  "example": {
+    "language": "bash",
+    "code": "# Créer et basculer sur une nouvelle branche\ngit switch -c feature/login\n\n# Voir toutes les branches\ngit branch\n\n# Basculer sur une branche existante\ngit switch main\n\n# Supprimer une branche fusionnée\ngit branch -d feature/login",
+    "explanation": "`git switch -c` crée et bascule en une seule commande. `git branch` liste toutes les branches locales, avec une `*` sur la branche active."
+  },
+  "prerequisites": ["git-commits"],
+  "unlocks": ["git-merge"],
+  "projects": [
+    {
+      "id": "workflow-branches",
+      "label": "Workflow par branches",
+      "difficulty": "beginner",
+      "description": "Depuis `main`, crée une branche `feature/salutation`. Ajoute un fichier `hello.txt` avec un contenu, commite sur cette branche. Reviens sur `main` et vérifie que `hello.txt` n'y existe pas.",
+      "hint": "Utilise `git switch main` pour revenir sur la branche principale. Le fichier disparaît de l'explorateur car Git restaure l'état de `main`."
+    }
+  ]
+}

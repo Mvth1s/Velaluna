@@ -1,0 +1,24 @@
+{
+  "id": "c-pointeurs-avances",
+  "label": "Pointeurs avancés",
+  "difficulty": "advanced",
+  "technologies": ["c"],
+  "explanation": "Les pointeurs sur fonctions permettent de passer des fonctions en argument. Les pointeurs de pointeurs (`**`) permettent de modifier un pointeur depuis une fonction. L'arithmétique de pointeurs navigue dans la mémoire.",
+  "analogy": "Un pointeur sur fonction, c'est comme enregistrer le numéro d'une machine dans ton carnet. Tu peux choisir quelle machine appeler au dernier moment — pratique pour trier avec différents critères, ou pour des callbacks.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n#include <stdlib.h>\n\n// Pointeur sur fonction\nint comparer_asc(const void *a, const void *b) {\n    return (*(int*)a - *(int*)b);\n}\n\nint comparer_desc(const void *a, const void *b) {\n    return (*(int*)b - *(int*)a);\n}\n\nint main() {\n    int tab[] = {5, 2, 8, 1, 9, 3};\n    int n = 6;\n\n    // qsort prend un pointeur sur fonction\n    qsort(tab, n, sizeof(int), comparer_asc);\n    for (int i = 0; i < n; i++) printf(\"%d \", tab[i]);\n    printf(\"\\n\"); // 1 2 3 5 8 9\n\n    qsort(tab, n, sizeof(int), comparer_desc);\n    for (int i = 0; i < n; i++) printf(\"%d \", tab[i]);\n    printf(\"\\n\"); // 9 8 5 3 2 1\n    return 0;\n}",
+    "explanation": "`qsort` de la bibliothèque standard prend un pointeur sur fonction de comparaison — c'est le design pattern 'stratégie' en C. `const void *` est un pointeur générique, casté en `int*` dans la fonction."
+  },
+  "prerequisites": ["c-pointeurs", "c-fonctions"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "tri-generique",
+      "label": "Tri générique",
+      "difficulty": "advanced",
+      "description": "Crée un tableau de structs `Personne` (nom, age). Utilise `qsort` avec deux fonctions de comparaison différentes pour trier d'abord par âge croissant, puis par nom alphabétique. Affiche le résultat après chaque tri.",
+      "hint": "Pour comparer des strings dans la fonction de comparaison, utilise `strcmp` de `<string.h>`. Pour accéder aux champs de la struct depuis `const void *`, caste en `const Personne *`."
+    }
+  ]
+}

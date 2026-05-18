@@ -1,0 +1,24 @@
+{
+  "id": "c-types",
+  "label": "Types et variables",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "En C, chaque type a une taille précise en mémoire : `int` (4 octets), `char` (1 octet), `float` (4 octets), `double` (8 octets). Il n'y a pas de type `String` — les chaînes sont des tableaux de `char`.",
+  "analogy": "C'est comme louer des casiers de différentes tailles : un `char` loue 1 casier, un `int` en loue 4, un `double` en loue 8. Tu dois choisir la bonne taille à l'avance — le système réserve exactement cet espace.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nint main() {\n    int age = 25;\n    double taille = 1.75;\n    char initiale = 'A';\n    char prenom[] = \"Alice\"; // tableau de char\n\n    printf(\"%s a %d ans et mesure %.2f m\\n\", prenom, age, taille);\n    printf(\"Taille d'un int : %lu octets\\n\", sizeof(int));\n    return 0;\n}",
+    "explanation": "`printf` utilise des spécificateurs de format : `%d` (int), `%f` (double), `%c` (char), `%s` (chaîne). `sizeof` retourne la taille en octets d'un type. `%.2f` affiche un flottant avec 2 décimales."
+  },
+  "prerequisites": ["c-bases"],
+  "unlocks": ["c-conditions", "c-fonctions", "c-tableaux", "c-pointeurs", "c-structs"],
+  "projects": [
+    {
+      "id": "fiche-personne-c",
+      "label": "Fiche personne",
+      "difficulty": "beginner",
+      "description": "Déclare des variables pour un prénom (char[]), un âge (int) et une taille (double). Affiche une présentation formatée. Utilise `sizeof` pour afficher la taille en octets de chaque variable.",
+      "hint": "Pour un tableau de char de 20 caractères maximum : `char prenom[20] = \"Alice\";`. La chaîne se termine toujours par un caractère nul `\\0` — prévoie un caractère de plus que le texte."
+    }
+  ]
+}

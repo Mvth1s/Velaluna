@@ -1,0 +1,24 @@
+{
+  "id": "git-staging",
+  "label": "Zone de staging",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "Avant de sauvegarder, tu sélectionnes exactement quels changements inclure avec `git add`. La zone de staging est une étape intermédiaire entre tes modifications et le commit.",
+  "analogy": "C'est comme préparer une valise avant un voyage. Tu ne mets pas tout ce qu'il y a dans ta chambre — tu choisis soigneusement ce dont tu as besoin pour ce trajet précis.",
+  "example": {
+    "language": "bash",
+    "code": "# Ajouter un fichier spécifique\ngit add index.html\n\n# Ajouter tous les fichiers modifiés\ngit add .\n\n# Voir ce qui est stagé et ce qui ne l'est pas\ngit status\n\n# Désindexer un fichier\ngit restore --staged index.html",
+    "explanation": "`git add` déplace les changements vers la zone de staging. `git status` distingue les fichiers stagés (prêts à être commités) des fichiers modifiés non stagés."
+  },
+  "prerequisites": ["git-init"],
+  "unlocks": ["git-commits", "git-stash"],
+  "projects": [
+    {
+      "id": "staging-selectif",
+      "label": "Staging sélectif",
+      "difficulty": "beginner",
+      "description": "Crée trois fichiers dans ton dépôt. Modifie-les tous, puis stage uniquement deux d'entre eux. Vérifie avec `git status` que tu vois bien la différence entre les fichiers stagés et non stagés.",
+      "hint": "Utilise `git add fichier1 fichier2` pour stager plusieurs fichiers à la fois sans inclure le troisième."
+    }
+  ]
+}

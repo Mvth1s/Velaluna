@@ -1,0 +1,24 @@
+{
+  "id": "git-tags",
+  "label": "Tags",
+  "difficulty": "beginner",
+  "technologies": ["git"],
+  "explanation": "Les tags marquent des versions importantes de ton projet (`v1.0.0`, `v2.0.0`). Contrairement aux branches, un tag pointe toujours sur le même commit et ne bouge jamais.",
+  "analogy": "C'est comme coller une étiquette permanente sur une boîte d'archives. La boîte ne change pas — c'est une référence fixe que tu peux retrouver à tout moment, même des années plus tard.",
+  "example": {
+    "language": "bash",
+    "code": "# Tag léger (juste un pointeur)\ngit tag v1.0.0\n\n# Tag annoté (avec message, recommandé pour les releases)\ngit tag -a v1.0.0 -m \"Première version stable\"\n\n# Voir tous les tags\ngit tag\n\n# Pousser les tags vers le remote\ngit push --tags\n\n# Revenir à une version taguée\ngit checkout v1.0.0",
+    "explanation": "Les tags annotés (`-a`) stockent des métadonnées supplémentaires (auteur, date, message). Ils sont préférés pour les releases car `git show v1.0.0` affiche ces informations."
+  },
+  "prerequisites": ["git-commits"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "versionnage-projet",
+      "label": "Versionnage de projet",
+      "difficulty": "beginner",
+      "description": "Sur un dépôt avec plusieurs commits, crée un tag annoté `v0.1.0` sur ton commit actuel avec un message de release. Pousse les tags vers GitHub et vérifie qu'ils apparaissent dans l'onglet Releases.",
+      "hint": "GitHub affiche automatiquement les tags dans l'onglet 'Releases' / 'Tags'. Un tag annoté peut être transformé en release officielle depuis l'interface GitHub."
+    }
+  ]
+}

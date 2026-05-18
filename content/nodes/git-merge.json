@@ -1,0 +1,24 @@
+{
+  "id": "git-merge",
+  "label": "Merge",
+  "difficulty": "intermediate",
+  "technologies": ["git"],
+  "explanation": "`git merge` fusionne une branche dans une autre. Si les mêmes lignes ont été modifiées des deux côtés, Git signale un conflit que tu dois résoudre manuellement.",
+  "analogy": "Deux personnes ont travaillé sur le même document en parallèle. Il faut maintenant fusionner leurs versions. Si elles ont modifié les mêmes paragraphes, quelqu'un doit décider quelle version garder.",
+  "example": {
+    "language": "bash",
+    "code": "# Fusionner feature/login dans main\ngit switch main\ngit merge feature/login\n\n# En cas de conflit, ouvrir les fichiers concernés\n# Chercher les marqueurs <<<<<<, ======= et >>>>>>>\n# Résoudre, puis :\ngit add fichier-resolu.txt\ngit commit",
+    "explanation": "Les marqueurs de conflit délimitent ta version (`<<<<<<< HEAD`) et celle de la branche fusionnée (`>>>>>>> feature/login`). Supprime les marqueurs et garde le code souhaité."
+  },
+  "prerequisites": ["git-branches"],
+  "unlocks": ["git-rebase"],
+  "projects": [
+    {
+      "id": "fusion-avec-conflit",
+      "label": "Fusion avec conflit",
+      "difficulty": "intermediate",
+      "description": "Crée deux branches depuis `main`. Sur chacune, modifie la même ligne du même fichier différemment. Fusionne la première dans `main`, puis la seconde — tu auras un conflit à résoudre manuellement.",
+      "hint": "Ouvre le fichier en conflit dans ton éditeur. Cherche `<<<<<<<`, modifie le fichier pour garder ce que tu veux, puis sauvegarde, `git add`, `git commit`."
+    }
+  ]
+}

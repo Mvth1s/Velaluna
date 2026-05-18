@@ -1,0 +1,24 @@
+{
+  "id": "java-methodes",
+  "label": "Méthodes",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "Une méthode est un bloc de code réutilisable avec un nom, des paramètres et un type de retour. En Java, toute méthode appartient à une classe. `static` signifie qu'elle peut être appelée sans créer d'objet.",
+  "analogy": "Une méthode, c'est comme une recette de cuisine : tu lui donnes des ingrédients (paramètres), elle suit des étapes, et elle te rend un plat (valeur de retour). Tu peux utiliser la recette autant de fois que tu veux.",
+  "example": {
+    "language": "java",
+    "code": "public class Main {\n    // Méthode qui retourne une valeur\n    static int addition(int a, int b) {\n        return a + b;\n    }\n\n    // Méthode sans retour\n    static void afficherBonjour(String prenom) {\n        System.out.println(\"Bonjour, \" + prenom + \" !\");\n    }\n\n    public static void main(String[] args) {\n        int resultat = addition(5, 3);\n        System.out.println(resultat); // 8\n        afficherBonjour(\"Alice\");\n    }\n}",
+    "explanation": "`void` signifie que la méthode ne retourne rien. Le type de retour (`int`, `String`, etc.) doit correspondre à la valeur après `return`. Les paramètres sont des variables locales à la méthode."
+  },
+  "prerequisites": ["java-types"],
+  "unlocks": ["java-classes"],
+  "projects": [
+    {
+      "id": "calculatrice-methodes",
+      "label": "Calculatrice modulaire",
+      "difficulty": "beginner",
+      "description": "Crée quatre méthodes statiques : `addition`, `soustraction`, `multiplication`, `division`. Chacune prend deux `double` et retourne un `double`. Gère la division par zéro en retournant `0` dans ce cas.",
+      "hint": "Pour la division par zéro, utilise `if (b == 0) return 0;` en début de méthode. Pense à tester tes méthodes depuis `main` avec des valeurs connues."
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "java-types",
+  "label": "Types et variables",
+  "difficulty": "beginner",
+  "technologies": ["java"],
+  "explanation": "Java est fortement typé : chaque variable a un type déclaré et fixe. Les types primitifs (`int`, `double`, `boolean`, `char`) stockent des valeurs directement. `String` est un objet — il se manipule différemment.",
+  "analogy": "C'est comme des cases de formulaire avec une règle stricte : la case 'Âge' n'accepte que des entiers, la case 'Nom' que du texte. Tu ne peux pas mélanger les types — le compilateur te l'interdit.",
+  "example": {
+    "language": "java",
+    "code": "int age = 25;\ndouble taille = 1.75;\nboolean estActif = true;\nchar initiale = 'A';\nString prenom = \"Alice\";\n\n// Java infère le type avec var (Java 10+)\nvar score = 42;  // int\n\nSystem.out.println(prenom + \" a \" + age + \" ans\");",
+    "explanation": "`var` permet à Java de déduire le type automatiquement — pratique pour éviter la verbosité. `String` s'écrit avec une majuscule car c'est une classe, pas un type primitif."
+  },
+  "prerequisites": ["java-bases"],
+  "unlocks": ["java-conditions", "java-methodes", "java-tableaux"],
+  "projects": [
+    {
+      "id": "fiche-contact",
+      "label": "Fiche contact",
+      "difficulty": "beginner",
+      "description": "Déclare des variables pour stocker un prénom (String), un âge (int), une taille (double) et un statut actif (boolean). Affiche une phrase de présentation formatée avec toutes ces informations.",
+      "hint": "Pour concaténer des valeurs de types différents avec des String, utilise l'opérateur `+`. Java convertit automatiquement les primitifs en texte."
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "java",
+  "label": "Java",
+  "theme_id": "langages",
+  "description": "Langage orienté objet fortement typé, porté par la JVM — robuste, portable et omniprésent en entreprise.",
+  "logo": "java.svg",
+  "nodes": [
+    "java-bases",
+    "java-types",
+    "java-conditions",
+    "java-boucles",
+    "java-methodes",
+    "java-tableaux",
+    "java-classes",
+    "java-heritage",
+    "java-interfaces",
+    "java-collections"
+  ]
+}

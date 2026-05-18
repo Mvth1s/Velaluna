@@ -1,0 +1,24 @@
+{
+  "id": "c-tableaux",
+  "label": "Tableaux",
+  "difficulty": "beginner",
+  "technologies": ["c"],
+  "explanation": "Un tableau C est une zone mémoire contiguë de même type. Sa taille est fixe et doit être connue à la compilation. Attention : C ne vérifie pas les dépassements de bornes — c'est ta responsabilité.",
+  "analogy": "Un tableau, c'est une rangée de maisons numérotées dans une rue. Toutes les maisons sont identiques (même type), construites côte à côte (mémoire contiguë). Il n'y a pas de garde-fou — si tu vas au n°200 dans une rue de 10 maisons, tu entres chez le voisin d'une autre rue.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nint main() {\n    int notes[5] = {12, 15, 9, 18, 11};\n    int taille = 5;\n    int somme = 0;\n\n    for (int i = 0; i < taille; i++) {\n        somme += notes[i];\n    }\n\n    printf(\"Moyenne : %.1f\\n\", (double)somme / taille);\n    printf(\"Premier élément : %d\\n\", notes[0]);\n    printf(\"Dernier élément : %d\\n\", notes[taille - 1]);\n    return 0;\n}",
+    "explanation": "L'index commence à 0. Le dernier élément est à `taille - 1`. `(double)somme` est un cast — il convertit `somme` en `double` pour une division décimale. Sans ce cast, `somme / taille` serait une division entière."
+  },
+  "prerequisites": ["c-types"],
+  "unlocks": [],
+  "projects": [
+    {
+      "id": "tri-tableau",
+      "label": "Tri à bulles",
+      "difficulty": "beginner",
+      "description": "Implémente le tri à bulles sur un tableau de 8 entiers : compare chaque paire d'éléments adjacents et échange-les si le premier est plus grand que le second. Répète jusqu'à ce que le tableau soit trié. Affiche le tableau avant et après.",
+      "hint": "Le tri à bulles nécessite deux boucles imbriquées. La boucle externe répète N fois, la boucle interne parcourt le tableau. Pour l'échange : `int temp = t[i]; t[i] = t[i+1]; t[i+1] = temp;`"
+    }
+  ]
+}

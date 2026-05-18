@@ -1,0 +1,19 @@
+{
+  "id": "git",
+  "label": "Git",
+  "theme_id": "scripting",
+  "description": "Le système de contrôle de version incontournable pour suivre, collaborer et ne jamais perdre son travail.",
+  "logo": "git.svg",
+  "nodes": [
+    "git-init",
+    "git-staging",
+    "git-commits",
+    "git-branches",
+    "git-remote",
+    "git-log",
+    "git-stash",
+    "git-merge",
+    "git-tags",
+    "git-rebase"
+  ]
+}

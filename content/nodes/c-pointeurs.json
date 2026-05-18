@@ -1,0 +1,24 @@
+{
+  "id": "c-pointeurs",
+  "label": "Pointeurs",
+  "difficulty": "intermediate",
+  "technologies": ["c"],
+  "explanation": "Un pointeur est une variable qui stocke une adresse mémoire. `&variable` donne l'adresse d'une variable. `*pointeur` accède à la valeur à cette adresse. C'est le concept central du C.",
+  "analogy": "Un pointeur, c'est une adresse postale. La maison, c'est la donnée. L'adresse (le pointeur) te permet de trouver et modifier la maison directement. Deux personnes peuvent avoir la même adresse — et si l'une déplace les meubles, l'autre verra le changement.",
+  "example": {
+    "language": "c",
+    "code": "#include <stdio.h>\n\nvoid incrementer(int *n) {\n    *n = *n + 1; // modifie la variable originale\n}\n\nint main() {\n    int age = 25;\n    int *p = &age; // p pointe sur age\n\n    printf(\"Valeur : %d\\n\", age);    // 25\n    printf(\"Adresse : %p\\n\", p);     // 0x7fff...\n    printf(\"Via ptr : %d\\n\", *p);   // 25\n\n    *p = 30; // modifie age via le pointeur\n    printf(\"Après : %d\\n\", age);    // 30\n\n    incrementer(&age);\n    printf(\"Après incr : %d\\n\", age); // 31\n    return 0;\n}",
+    "explanation": "`&` donne l'adresse (référence), `*` déréférence (accède à la valeur). Passer `&age` à une fonction lui permet de modifier `age` directement — c'est le passage par adresse, contournant le passage par valeur."
+  },
+  "prerequisites": ["c-types"],
+  "unlocks": ["c-memoire", "c-pointeurs-avances"],
+  "projects": [
+    {
+      "id": "echange-valeurs",
+      "label": "Échange de valeurs",
+      "difficulty": "intermediate",
+      "description": "Écris une fonction `echanger(int *a, int *b)` qui échange les valeurs de deux variables entières. Teste-la depuis `main` en affichant les valeurs avant et après l'échange.",
+      "hint": "Sans pointeurs, une fonction de swap ne peut pas fonctionner (elle modifie des copies). Avec `int *a`, tu modifies la variable originale. Utilise une variable temporaire : `int temp = *a; *a = *b; *b = temp;`"
+    }
+  ]
+}

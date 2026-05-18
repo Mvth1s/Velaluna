@@ -18,11 +18,17 @@ cd frontend && npm install && npm run dev
 
 # Backend seul
 cd backend && npm install && npm run dev
-npm run seed                # (re)peupler la DB depuis /content
 ```
 
-- Frontend : http://localhost:5173
-- Backend API : http://localhost:3000
+| Service | URL |
+|---|---|
+| Frontend | http://localhost:5173 |
+| Backend API | http://localhost:3000 |
+| pgAdmin | http://localhost:5050 |
+| Prometheus | http://localhost:9090 |
+| Grafana | http://localhost:3001 |
+
+Voir `assets/services-locaux.md` pour les credentials de chaque service.
 
 ---
 
@@ -34,7 +40,8 @@ npm run seed                # (re)peupler la DB depuis /content
 | Graphe | Cytoscape.js + layout dagre |
 | État | Pinia |
 | Backend | Express (Node.js), REST GET-only |
-| Base de données | SQLite via better-sqlite3 |
+| Base de données | PostgreSQL via pg (node-postgres) |
+| Observabilité | Prometheus + Grafana + prom-client |
 | Dev | Docker Compose |
 | Production | Railway (monolithe Express servant le SPA Vue) |
 
@@ -45,12 +52,16 @@ npm run seed                # (re)peupler la DB depuis /content
 ```
 Velaluna/
 ├── frontend/          ← Vue 3 + Vite
-├── backend/           ← Express + SQLite
+├── backend/           ← Express + PostgreSQL
 ├── content/           ← données source en JSON (themes, technologies, nodes)
 │   ├── themes/
 │   ├── technologies/
 │   └── nodes/         ← fichiers plats, un JSON par nœud
+├── k6/                ← scripts de tests de charge
+├── prometheus/        ← config de scraping Prometheus
+├── grafana/           ← provisioning Grafana (datasources + dashboards)
 ├── assets/            ← documentation produit et schéma des données
+├── .github/workflows/ ← pipelines CI/CD GitHub Actions
 ├── Dockerfile         ← build multi-stage (frontend → backend → prod)
 ├── railway.toml       ← config déploiement Railway
 └── docker-compose.yml ← environnement de développement local
@@ -75,11 +86,26 @@ Velaluna/
 
 ## Ajouter du contenu
 
-Le contenu est stocké en JSON dans `/content` et chargé en SQLite au build.
+Le contenu est stocké en JSON dans `/content` et chargé en PostgreSQL au démarrage si la base est vide.
 
 1. Ajouter le fichier JSON dans `content/nodes/` (voir `assets/velaluna-data-schema.md` pour le schéma exact)
 2. Référencer le nœud dans `content/technologies/<id>.json`
 3. Relancer le seed : `cd backend && npm run seed`
+
+---
+
+## Tests de charge (k6)
+
+```bash
+# Avec Docker (recommandé)
+docker run --rm \
+  --network velaluna_default \
+  -v "$(pwd)/k6:/scripts" \
+  -e BASE_URL=http://backend:3000 \
+  grafana/k6 run /scripts/api.js
+```
+
+Voir `k6/README.md` pour tous les scripts et options.
 
 ---
 
@@ -88,10 +114,21 @@ Le contenu est stocké en JSON dans `/content` et chargé en SQLite au build.
 Le projet tourne sur Railway. Le `Dockerfile` à la racine fait un build multi-stage :
 
 1. Build du frontend Vue → fichiers statiques
-2. Build du backend + seed SQLite
+2. Build du backend TypeScript
 3. Image de production : Express sert l'API sur `/api/*` et les fichiers Vue sur `/*`
 
-La base de données est seedée au build — pas de volume persistant nécessaire (API en lecture seule au MVP).
+La base PostgreSQL est fournie par le plugin Railway. La variable `DATABASE_URL` est injectée automatiquement. Le seed s'exécute au démarrage si la base est vide.
+
+---
+
+## CI/CD
+
+| Workflow | Déclencheur | Action |
+|---|---|---|
+| `ci.yml` | PR vers `dev` ou `main` | TypeScript check + build frontend |
+| `release.yml` | Push sur `main` | Semantic release → tag + CHANGELOG + GitHub Release |
+
+Les messages de commit sont validés localement par Husky + commitlint (format Conventional Commits).
 
 ---
 
@@ -99,6 +136,7 @@ La base de données est seedée au build — pas de volume persistant nécessair
 
 - `assets/velaluna-vision.md` — vision produit, roadmap
 - `assets/velaluna-data-schema.md` — schéma des données (lire avant de toucher au contenu)
+- `assets/services-locaux.md` — accès et credentials des services Docker (pgAdmin, Grafana, Prometheus)
 - `CLAUDE.md` — guide pour les agents IA (Claude Code)
 - `frontend/CLAUDE.md` — contexte frontend
 - `backend/CLAUDE.md` — contexte backend

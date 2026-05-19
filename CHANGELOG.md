@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/Mvth1s/Velaluna/compare/v1.0.0...v1.0.1) (2026-05-19)
+
+
+### Bug Fixes
+
+* set DATABASE_URL reference variable in railway.toml ([6acdf8b](https://github.com/Mvth1s/Velaluna/commit/6acdf8bcd8f612b95cf8d4909ed6aacfc85a2863))
+
 # 1.0.0 (2026-05-18)
 
 

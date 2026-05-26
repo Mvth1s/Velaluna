@@ -6,17 +6,46 @@ Tu choisis un thème → une technologie → tu navigues dans un graphe de nœud
 
 ---
 
+## Setup de l'environnement
+
+Avant de lancer le projet, configure les variables d'environnement :
+
+```bash
+# 1. Copier le template
+cp .env.docker.example .env.docker
+
+# 2. Remplir les vraies valeurs dans .env.docker
+#    NE PAS commiter ce fichier — il est dans .gitignore
+```
+
+| Variable | Description |
+|---|---|
+| `POSTGRES_USER` | Utilisateur PostgreSQL |
+| `POSTGRES_PASSWORD` | Mot de passe PostgreSQL |
+| `POSTGRES_DB` | Nom de la base de données |
+| `DATABASE_URL` | URL de connexion complète (doit correspondre aux 3 variables ci-dessus) |
+| `PGADMIN_DEFAULT_EMAIL` | Email de connexion pgAdmin |
+| `PGADMIN_DEFAULT_PASSWORD` | Mot de passe pgAdmin |
+| `GF_SECURITY_ADMIN_PASSWORD` | Mot de passe admin Grafana |
+
+```bash
+# 3. Lancer avec le fichier de variables
+docker-compose --env-file .env.docker up --build
+```
+
+---
+
 ## Lancer le projet
 
 ```bash
 # Tout lancer en une commande (recommandé)
-docker-compose up --build   # premier lancement
-docker-compose up           # suivants
+docker-compose --env-file .env.docker up --build   # premier lancement
+docker-compose --env-file .env.docker up           # suivants
 
 # Frontend seul
 cd frontend && npm install && npm run dev
 
-# Backend seul
+# Backend seul (DATABASE_URL doit être définie dans l'environnement)
 cd backend && npm install && npm run dev
 ```
 

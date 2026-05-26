@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/Mvth1s/Velaluna/compare/v1.0.1...v1.0.2) (2026-05-26)
+
+
+### Bug Fixes
+
+* **security:** supprime les credentials hardcodés et sécurise la config ([27823fb](https://github.com/Mvth1s/Velaluna/commit/27823fb950180f02be6bb1f683da9f07f7d03f4c))
+
 ## [1.0.1](https://github.com/Mvth1s/Velaluna/compare/v1.0.0...v1.0.1) (2026-05-19)
 
 

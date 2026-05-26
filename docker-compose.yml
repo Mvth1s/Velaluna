@@ -2,15 +2,15 @@ services:
   postgres:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: velaluna
-      POSTGRES_USER: velaluna
-      POSTGRES_PASSWORD: velaluna
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U velaluna"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
       interval: 5s
       timeout: 5s
       retries: 10
@@ -18,8 +18,8 @@ services:
   pgadmin:
     image: dpage/pgadmin4:latest
     environment:
-      PGADMIN_DEFAULT_EMAIL: admin@velaluna.dev
-      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
     ports:
       - "5050:80"
     volumes:
@@ -47,7 +47,7 @@ services:
       - grafana_data:/var/lib/grafana
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD}
       - GF_USERS_ALLOW_SIGN_UP=false
     depends_on:
       - prometheus
@@ -80,7 +80,7 @@ services:
       - PORT=3000
       - CONTENT_PATH=/content
       - FRONTEND_URL=http://localhost:5173
-      - DATABASE_URL=postgresql://velaluna:velaluna@postgres:5432/velaluna
+      - DATABASE_URL=${DATABASE_URL}
     depends_on:
       postgres:
         condition: service_healthy

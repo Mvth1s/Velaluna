@@ -14,6 +14,14 @@ backend/data/*.db-wal
 .env
 .env.local
 .env.*.local
+.env.docker
+.env.production
+
+# Certificates & keys
+*.key
+*.pem
+*.p12
+*.pfx
 
 # Editor
 .vscode/
